@@ -14,11 +14,9 @@ interface PostCategoriesProps {
 
 export default function PostCategories({ categories }: PostCategoriesProps) {
   return (
-    <ul className='relative z-20 flex items-center justify-start gap-0 md:gap-2'>
+    <ul className='relative z-20 flex items-center justify-start gap-1 md:gap-2'>
       <li className="text-nowrap">
-        <CategoryLink
-          href={`/blog`}
-        >
+        <CategoryLink href={`/blog`}>
           All Posts
         </CategoryLink>
       </li>
@@ -51,9 +49,9 @@ function CategoryLink({ href, category, children }: {
   return (
     <Link 
       href={href}
-      className={cn('py-2 px-3.5 rounded-full border border-transparent backdrop-blur-md transition-all duration-300', {
-        'mr-2 md:mr-0 border-black bg-black text-white': isActive,
-        'hover:bg-white hover:border-gray-200': !isActive
+      className={cn('py-1.5 px-3.5 rounded-full text-sm border border-transparent transition-all duration-300', {
+        'border-white/20 bg-white/10 text-white font-medium': isActive,
+        'text-white/50 hover:text-white hover:bg-white/5': !isActive
       })}
     >
       {children}

@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Heading from '@/components/shared/heading';
 import { AllProjectsQueryResult } from '../../../../../sanity.types';
-import AnimatedUnderline from '@/components/shared/animated-underline';
 
 export default function ProjectCard({ project }: {
   project: AllProjectsQueryResult[number];
@@ -12,55 +11,33 @@ export default function ProjectCard({ project }: {
   const { title, category, slug, excerpt, image } = project;
 
   return (
-    <article aria-label={title ?? ''} className='relative group pb-10 border-b border-dashed'>
-      <Link href={`/projects/${slug}`} className='relative'>
-        <Category>
-          {category?.title}
-        </Category>
-        <Thumbnail image={image} />
-        <Heading tag="h2" size="md" className='mt-5 md:mt-6 text-balance'>
-          {title}   
-        </Heading>
-        <Excerpt>
-          {excerpt}
-        </Excerpt>
+    <article aria-label={title ?? ''} className='relative group hover-lift'>
+      <Link href={`/projects/${slug}`} className='block'>
+        <div className='overflow-hidden rounded-xl border border-white/[0.08] group-hover:border-white/[0.15] transition-colors duration-300'>
+          <div className='relative'>
+            {category?.title && (
+              <span className='z-10 absolute top-4 left-4 px-2.5 py-1 rounded-full text-xs font-medium bg-white/10 backdrop-blur-md text-white/80 border border-white/[0.08]'>
+                {category.title}
+              </span>
+            )}
+            <Image
+              src={image?.asset?.url ?? ''}
+              width={800}
+              height={800}
+              alt={image?.altText ?? ''}
+              className='aspect-[3/2] object-cover group-hover:scale-105 transition-transform duration-500'
+            />
+          </div>
+        </div>
+        <div className='mt-5 space-y-3'>
+          <Heading tag="h2" size="md" className='text-balance text-white group-hover:text-white/80 transition-colors'>
+            {title}   
+          </Heading>
+          <p className='text-sm text-white/40 leading-relaxed line-clamp-2'>
+            {excerpt}
+          </p>
+        </div>
       </Link>
-      <AnimatedUnderline className='-translate-y-0.5' />
     </article>
-  )
-}
-
-function Thumbnail({ image }: {
-  image?: {
-    asset?: { url?: string | null } | null;
-    altText?: string | null;
-  } | null;
-}) {
-  return (
-    <div className='p-4 rounded-3xl border border-dashed backdrop-blur-md backdrop-opacity-50 pattern-bg--2'>
-      <Image
-        src={image?.asset?.url ?? ''}
-        width={800}
-        height={800}
-        alt={image?.altText ?? ''}
-        className='aspect-[3/2] rounded-2xl'
-      />
-    </div>
-  )
-}
-
-function Category({ children }: { children: React.ReactNode }) {
-  return (
-    <div className='z-10 absolute top-10 left-10 px-1.5 rounded-md text-sm font-medium text-nowrap bg-white'>
-      {children}
-    </div>
-  )
-}
-
-function Excerpt({ children }: { children: React.ReactNode }) {
-  return (
-    <p className='mt-4 text-balance text-neutral-500'>
-      {children}
-    </p>
   )
 }

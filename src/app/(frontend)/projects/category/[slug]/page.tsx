@@ -46,7 +46,7 @@ export default async function ProjectsByCategoryPage(props: {
 
   if (projects.length === 0) {
     return (
-      <div className="py-20 flex items-center justify-center gap-2 border border-dashed rounded-3xl text-center text-gray-600 bg-white">
+      <div className="py-20 flex items-center justify-center gap-2 border border-white/[0.08] rounded-xl text-center text-white/40">
         <CircleSlash size={20} className='text-red-500' /> <span className='font-medium antialiased'>No projects found in this category.</span>
       </div>
     )

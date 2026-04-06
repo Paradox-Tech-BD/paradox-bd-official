@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { stegaClean } from 'next-sanity';
 import { PageBuilderType } from '@/types';
+import { useInView } from '@/hooks/use-in-view';
 import Container from '@/components/global/container';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
@@ -19,16 +20,22 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
     cornerRadiusBottom,
   } = props;
 
+  const { ref, isInView } = useInView();
+
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
+      ref={ref}
       className={cn('relative py-24 lg:py-32 bg-white text-dark-bg overflow-hidden', {
         'rounded-t-4xl': stegaClean(cornerRadiusTop) === 'rounded',
         'rounded-b-4xl': stegaClean(cornerRadiusBottom) === 'rounded'
       })}
     >
       <Container className='space-y-12'>
-        <div className='text-center'>
+        <div className={cn(
+          'text-center transition-all duration-700',
+          isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        )}>
           {eyebrow && (
             <div className='w-fit mx-auto px-3 h-7 flex items-center justify-between rounded-full text-center text-xs font-medium tracking-wider uppercase bg-dark-bg/5 text-dark-bg/60'>
               {eyebrow}
@@ -39,24 +46,29 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
             <span className='text-dark-bg/30'> from our clients.</span>
           </h2>
         </div>
-        {testimonials && testimonials.length > 1 ? (
-          <Carousel className="w-full max-w-[38rem] xl:max-w-[44rem] mx-auto">
-            <CarouselContent>
-              {testimonials?.map((testimonial) => (
-                <CarouselItem key={testimonial._id}>
-                  <TestimonialCard testimonial={testimonial} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
-            <CarouselNext className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
-          </Carousel>
-        ): (
-          <TestimonialCard 
-            testimonial={testimonials?.[0] ?? null} 
-            classNames='border border-dark-bg/10 rounded-xl'
-          />
-        )}       
+        <div className={cn(
+          'transition-all duration-700 delay-200',
+          isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        )}>
+          {testimonials && testimonials.length > 1 ? (
+            <Carousel className="w-full max-w-[38rem] xl:max-w-[44rem] mx-auto">
+              <CarouselContent>
+                {testimonials?.map((testimonial) => (
+                  <CarouselItem key={testimonial._id}>
+                    <TestimonialCard testimonial={testimonial} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
+              <CarouselNext className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
+            </Carousel>
+          ): (
+            <TestimonialCard 
+              testimonial={testimonials?.[0] ?? null} 
+              classNames='border border-dark-bg/10 rounded-xl'
+            />
+          )}
+        </div>
       </Container>
     </section>
   )

@@ -1,6 +1,8 @@
+"use client"
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 import { PageBuilderType } from '@/types';
+import { useInView } from '@/hooks/use-in-view';
 import Heading from '@/components/shared/heading';
 import ButtonRenderer from '@/components/shared/button-renderer';
 import PortableTextEditor from '@/components/portable-text/portable-text-editor';
@@ -21,9 +23,12 @@ export default function FeaturesMinimalBlock(props: FeaturesMinimalBlockProps) {
     anchorId,
   } = props;
 
+  const { ref, isInView } = useInView();
+
   return (
     <section
       {...(anchorId ? { id: anchorId } : {})} 
+      ref={ref}
       className={cn('py-24 lg:py-32 bg-dark-card', {
         'border-t border-white/[0.06]': enableBorderTop,
         'border-b border-white/[0.06]': enableBorderBottom,
@@ -33,7 +38,10 @@ export default function FeaturesMinimalBlock(props: FeaturesMinimalBlockProps) {
     >
       <div className='max-w-[1400px] mx-auto px-6 lg:px-12 space-y-12 md:space-y-16'>
         <div className='grid grid-cols-12 gap-y-12 md:gap-y-20 xl:gap-x-20'>
-          <div className='col-span-12 xl:col-span-5 max-w-[400px] md:max-w-full space-y-8'>
+          <div className={cn(
+            'col-span-12 xl:col-span-5 max-w-[400px] md:max-w-full space-y-8 transition-all duration-700',
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          )}>
             <div className='lg:flex justify-between xl:flex-col gap-12'>
               <div>
                 <span className='section-label mb-6 block'>Capabilities</span>
@@ -54,8 +62,15 @@ export default function FeaturesMinimalBlock(props: FeaturesMinimalBlockProps) {
           </div>
           <div className='col-span-12 xl:col-span-7'>
             <div className='grid md:grid-cols-2 gap-y-0 md:gap-x-10'>
-              {features?.map((feature: string) => (
-                <div key={feature} className='py-4 flex items-center gap-3.5 border-b border-white/[0.06]'>
+              {features?.map((feature: string, index: number) => (
+                <div 
+                  key={feature} 
+                  className={cn(
+                    'py-4 flex items-center gap-3.5 border-b border-white/[0.06] transition-all duration-500',
+                    isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'
+                  )}
+                  style={{ transitionDelay: isInView ? `${index * 60}ms` : '0ms' }}
+                >
                   <Check size={18} className='text-white/40 shrink-0' />
                   <span className='text-sm md:text-base text-white/60'>
                     {feature}

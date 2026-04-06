@@ -1,7 +1,9 @@
+"use client"
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { PageBuilderType } from '@/types';
 import { CircleCheck } from 'lucide-react';
+import { useInView } from '@/hooks/use-in-view';
 import { Button } from '@/components/ui/button';
 import Heading from '@/components/shared/heading';
 import ButtonRenderer from '@/components/shared/button-renderer';
@@ -12,14 +14,19 @@ export type FeatureCardsBlockProps = PageBuilderType<"featureCardsBlock">;
 export default function FeatureCardsBlock(props: FeatureCardsBlockProps) {
 
   const { heading, buttons, features, showCallToAction, anchorId } = props;
+  const { ref, isInView } = useInView();
 
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
+      ref={ref}
       className='py-24 lg:py-32'
     >
       <div className='max-w-[1400px] mx-auto px-6 lg:px-12 space-y-12'>
-        <div className='flex flex-col md:flex-row md:items-end justify-between gap-6'>
+        <div className={cn(
+          'flex flex-col md:flex-row md:items-end justify-between gap-6 transition-all duration-700',
+          isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        )}>
           <Heading tag="h2" size="xl" className='text-balance text-white'>
             {heading}
           </Heading>
@@ -28,8 +35,15 @@ export default function FeatureCardsBlock(props: FeatureCardsBlockProps) {
           )}
         </div>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-          {features?.map((feature) => (
-            <div key={feature._key} className='col-span-1'>
+          {features?.map((feature, index) => (
+            <div 
+              key={feature._key} 
+              className={cn(
+                'col-span-1 transition-all duration-700',
+                isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              )}
+              style={{ transitionDelay: isInView ? `${index * 100}ms` : '0ms' }}
+            >
               <FeatureCard feature={feature} />
             </div>
           ))}
@@ -46,15 +60,17 @@ function FeatureCard({ feature }: {
   feature:  NonNullable<FeatureCardsBlockProps['features']>[number];
 }) {
   return (
-    <div className='border border-white/[0.08] rounded-xl bg-dark-card hover:border-white/[0.15] transition-colors duration-300 overflow-hidden'>
+    <div className='border border-white/[0.08] rounded-xl bg-dark-card hover:border-white/[0.15] transition-all duration-300 overflow-hidden hover-lift'>
       <div className='p-3'>
-        <Image
-          src={feature.image?.asset?.url ?? ''}
-          width={600}
-          height={400}
-          alt={feature.title ?? ''}
-          className='rounded-lg h-[280px] object-cover overflow-hidden'
-        />
+        <div className='overflow-hidden rounded-lg'>
+          <Image
+            src={feature.image?.asset?.url ?? ''}
+            width={600}
+            height={400}
+            alt={feature.title ?? ''}
+            className='rounded-lg h-[280px] object-cover overflow-hidden hover:scale-105 transition-transform duration-500'
+          />
+        </div>
       </div>
       <div className='mt-4 px-6 md:px-8 pb-2'>
         <div className='space-y-4'>

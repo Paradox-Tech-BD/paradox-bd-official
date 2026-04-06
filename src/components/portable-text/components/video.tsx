@@ -5,8 +5,8 @@ export default function Video({ data }: {
   data: { videoUrl: string; };
 }) {
   return (
-    <div className='mt-12 p-4 md:p-4 border border-dashed rounded-3xl aspect-video'>
-      <div className="h-full w-full rounded-2xl overflow-hidden">
+    <div className='mt-12 overflow-hidden border border-white/[0.08] rounded-xl aspect-video'>
+      <div className="h-full w-full overflow-hidden">
         <ReactPlayer 
           url={data.videoUrl} 
           width="100%"

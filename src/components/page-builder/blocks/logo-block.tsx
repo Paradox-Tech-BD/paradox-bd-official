@@ -1,22 +1,29 @@
+"use client"
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { stegaClean } from 'next-sanity';
 import { PageBuilderType } from '@/types';
+import { useInView } from '@/hooks/use-in-view';
 
 export type LogoBlockProps = PageBuilderType<"logoBlock">;
 
 export default function LogoBlock(props: LogoBlockProps) {
 
   const { heading, logos, anchorId } = props;
+  const { ref, isInView } = useInView();
   
   const items = logos ? [...logos, ...logos] : [];
   
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
+      ref={ref}
       className='py-12 md:py-16 border-y border-white/[0.06]'
     >
-      <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
+      <div className={cn(
+        'max-w-[1400px] mx-auto px-6 lg:px-12 transition-all duration-700',
+        isInView ? 'opacity-100' : 'opacity-0'
+      )}>
         <div className='text-center mb-10'>
           <span className='font-mono text-xs md:text-sm text-white/30 tracking-wider uppercase'>
             {heading}

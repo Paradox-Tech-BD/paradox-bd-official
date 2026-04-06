@@ -10,8 +10,8 @@ interface RelatedPostsProps {
 
 export default function RelatedPosts({ posts }: RelatedPostsProps) {
   return (
-    <section className='mt-12 md:mt-24 pt-10 md:pt-16 pb-10 md:pb-16 space-y-8 border-y border-dashed'>
-      <div className='py-4 flex items-center justify-between gap-6 border-y border-dashed'>
+    <section className='mt-12 md:mt-24 pt-10 md:pt-16 pb-10 md:pb-16 space-y-8 border-y border-white/[0.06]'>
+      <div className='py-4 flex items-center justify-between gap-6 border-y border-white/[0.06]'>
         <Heading tag="h2" size="xl">
           Related Posts
         </Heading>

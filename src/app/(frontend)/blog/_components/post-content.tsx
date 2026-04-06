@@ -42,7 +42,7 @@ export default function PostContent({ post }: PostGridProps) {
       <aside className='col-span-12 xl:col-span-2 xl:sticky xl:top-28 h-fit -translate-x-1 md:-translate-x-0'>
         <BackButton />
       </aside>
-      <div className='order-2 xl:order-1 col-span-12 xl:col-span-7 xl:pl-10 xl:border-l xl:border-dashed'>
+      <div className='order-2 xl:order-1 col-span-12 xl:col-span-7 xl:pl-10 xl:border-l xl:border-white/[0.06]'>
         <div className='flex items-center gap-3'>
           <Author author={author} />
           <Category category={category} /> 
@@ -60,7 +60,7 @@ export default function PostContent({ post }: PostGridProps) {
           )}
         </aside>
         <Thumbnail image={image} />
-        <p className='text-lg xl:text-xl my-10 xl:my-14 py-8 border-y border-dashed'>
+        <p className='text-lg xl:text-xl text-white/60 my-10 xl:my-14 py-8 border-y border-white/[0.06]'>
           {excerpt}
         </p>
         <div>
@@ -87,19 +87,21 @@ function Thumbnail({ image }: {
 }) {
   return (
     <>
-      <div className='mt-10 p-4 rounded-3xl border border-dashed backdrop-blur-md backdrop-opacity-50'>
+      <div className='mt-10 overflow-hidden rounded-xl border border-white/[0.08]'>
         <Image
           src={image?.asset?.url ?? ''}
           width={800}
           height={800}
           alt={image?.altText ?? ''}
-          className='aspect-[3/2] w-full rounded-2xl'
+          className='aspect-[3/2] w-full object-cover'
         />
       </div>
-      <div className='flex items-center justify-center gap-1 mt-4 text-center text-gray-600'>
-        <ImageIcon size={15} />
-        {image?.altText}
-      </div>
+      {image?.altText && (
+        <div className='flex items-center justify-center gap-1 mt-4 text-center text-sm text-white/40'>
+          <ImageIcon size={14} />
+          {image.altText}
+        </div>
+      )}
     </>
   )
 }
@@ -110,13 +112,13 @@ function Category({ category }: {
   return (
     <Link 
       href={`/blog/category/${category?.slug}`} 
-      className='flex items-center gap-1 px-1.5 rounded-full bg-black'
+      className='flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 border border-white/[0.08]'
     >
       <span 
-        className='h-2 w-2 rounded bg-violet-300' 
-        style={{ backgroundColor: category?.categoryColor?.value ?? '#FFFFFF' }} 
+        className='h-2 w-2 rounded-full' 
+        style={{ backgroundColor: category?.categoryColor?.value ?? '#a78bfa' }} 
       />
-      <span className='pr-[1.5px] text-sm text-white'>
+      <span className='text-xs text-white/70'>
         {category?.title}
       </span>
     </Link>
@@ -136,35 +138,35 @@ function PostCategories({ categories }: {
       className="space-y-4"
     >
       <CollapsibleTrigger className="w-full">
-        <div className="py-1.5 pl-2 flex items-center justify-between border border-dashed rounded-lg">
+        <div className="py-1.5 pl-2 flex items-center justify-between border border-white/[0.08] rounded-lg">
           <div className="flex items-center gap-2">
-            <span className='h-5 w-5 flex items-center justify-center rounded bg-gray-200 text-black'>
+            <span className='h-5 w-5 flex items-center justify-center rounded bg-white/10 text-white'>
               <Tag size={12} />
             </span>
-            <span className='font-medium text-sm'>
+            <span className='font-medium text-sm text-white/70'>
               Explore Categories
             </span>
           </div>
           <ChevronDown 
             size={15} 
-            className={cn('mr-2.5 -rotate-90 transition-transform duration-200', {
+            className={cn('mr-2.5 -rotate-90 transition-transform duration-200 text-white/40', {
               '-rotate-0': isOpen
             })}
           />
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transition-all duration-200">
-        <ul role="list" className="space-y-2 border-l border-dashed">
+        <ul role="list" className="space-y-2 border-l border-white/[0.06]">
           {categories?.map((category) => (
             <li key={category?.slug}>
               <Link 
                 href={`/blog/category/${category?.slug}`}
-                className="flex items-center gap-2 scroll-smooth focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                className="flex items-center gap-2 scroll-smooth focus:outline-none"
               >
-                <span className="block w-2.5 border-t border-dashed text-gray-300" /> 
-                <span className="relative group w-fit">
+                <span className="block w-2.5 border-t border-white/[0.06]" /> 
+                <span className="relative group w-fit text-white/60 hover:text-white transition-colors">
                   {category?.title}
-                  <AnimatedUnderline />
+                  <AnimatedUnderline className='bg-white' />
                 </span>
               </Link>
             </li>

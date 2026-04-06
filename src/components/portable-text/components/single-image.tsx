@@ -19,7 +19,7 @@ export default function SingleImage({ data }: {
   return (
     <div>
       {data.image?.asset._ref && (
-        <div className='mt-12 md:mt-14 p-4 md:p-4 border border-dashed rounded-3xl'>
+        <div className='mt-12 md:mt-14 overflow-hidden border border-white/[0.08] rounded-xl'>
           <Image
             src={
               urlForImage(data.image)
@@ -30,7 +30,7 @@ export default function SingleImage({ data }: {
             width={800}
             height={800}
             alt={data.image?.alt ?? ''}
-            className={cn('h-auto w-full my-0 object-cover aspect-auto rounded-2xl', {
+            className={cn('h-auto w-full my-0 object-cover aspect-auto', {
               'aspect-[3/2]': data?.image?.aspectRatio === 'rectangle',
               'aspect-[3/4]': data?.image?.aspectRatio === 'portrait',
             })}

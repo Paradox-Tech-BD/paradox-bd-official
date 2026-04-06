@@ -1,13 +1,14 @@
+"use client"
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { stegaClean } from 'next-sanity';
 import { PageBuilderType } from '@/types';
+import { useInView } from '@/hooks/use-in-view';
 import Heading from '@/components/shared/heading';
 import Container from '@/components/global/container';
 import ButtonRenderer from '@/components/shared/button-renderer';
-import AnimatedUnderline from '@/components/shared/animated-underline';
 
 export type ServicesBlockProps = PageBuilderType<"servicesBlock">;
 
@@ -24,9 +25,12 @@ export default function ServicesBlock(props: ServicesBlockProps) {
     paddingBottom 
   } = props;
 
+  const { ref, isInView } = useInView();
+
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
+      ref={ref}
       className={cn('', {
         'rounded-t-4xl border-t border-white/[0.06]': stegaClean(topCornerRadius) === 'rounded'
       })}
@@ -37,7 +41,10 @@ export default function ServicesBlock(props: ServicesBlockProps) {
           paddingBottom={stegaClean(paddingBottom) ?? undefined}
           className='space-y-12'
         >
-          <div className='flex items-end justify-between gap-6'>
+          <div className={cn(
+            'flex items-end justify-between gap-6 transition-all duration-700',
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          )}>
             <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance text-white'>
               {heading}
             </Heading>
@@ -48,8 +55,17 @@ export default function ServicesBlock(props: ServicesBlockProps) {
             )}
           </div>
           <div className='grid md:grid-cols-3 gap-6'>
-            {services && services.map((service) => (
-              <ServiceCard key={service._id} service={service} />
+            {services && services.map((service, index) => (
+              <div 
+                key={service._id}
+                className={cn(
+                  'transition-all duration-700',
+                  isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                )}
+                style={{ transitionDelay: isInView ? `${index * 100}ms` : '0ms' }}
+              >
+                <ServiceCard service={service} />
+              </div>
             ))}
           </div>
           {buttons && buttons.length > 0 && (
@@ -70,7 +86,7 @@ function ServiceCard({ service }: {
   const { title, slug, shortDescription, image } = service;
 
   return (
-    <div aria-label={title ?? ''} className='relative group'>
+    <div aria-label={title ?? ''} className='relative group hover-lift'>
       <Link href={`/services/${slug}`} className='block space-y-5'>
         <div className='overflow-hidden rounded-xl border border-white/[0.08] group-hover:border-white/[0.15] transition-colors duration-300'>
           <Image
@@ -88,7 +104,6 @@ function ServiceCard({ service }: {
           {shortDescription}
         </p>
       </Link>
-      <AnimatedUnderline className='bg-white' />
     </div>
   )
 }

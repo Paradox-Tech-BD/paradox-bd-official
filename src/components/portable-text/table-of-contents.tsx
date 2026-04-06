@@ -25,7 +25,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
       className="space-y-4"
     >
       <CollapsibleTrigger className="w-full">
-        <div className="py-1.5 pl-2 flex items-center justify-between border border-dashed rounded-lg">
+        <div className="py-1.5 pl-2 flex items-center justify-between border border-white/[0.08] rounded-lg">
           <div className="flex items-center gap-2">
             <span className='h-5 w-5 flex items-center justify-center rounded bg-white/10 text-white'>
               <Text size={12} />
@@ -44,14 +44,14 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
       </CollapsibleTrigger>
       <CollapsibleContent className="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transition-all duration-200">
         <nav aria-label="Table of contents" className="scroll-smooth">
-          <ul role="list" className="space-y-2 border-l border-dashed">
+          <ul role="list" className="space-y-2 border-l border-white/[0.06]">
             {contentArray?.map((item) => (
               <li key={item?._key}>
                 <a 
                   href={`#${slugify(item?.children?.[0]?.text ?? '')}`} 
                   className="flex items-center gap-2 scroll-smooth focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 >
-                  <span className="block w-2.5 border-t border-dashed text-white/20" /> 
+                  <span className="block w-2.5 border-t border-white/[0.06]" /> 
                   <span className="relative group w-fit">
                     {truncateText(item?.children?.[0]?.text ?? '', 33)}
                     <AnimatedUnderline />

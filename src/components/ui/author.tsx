@@ -33,7 +33,7 @@ export default function Author({ author, classNames }: AuthorProps) {
         <div className='text-sm text-white/50'>
           @{author.username}
         </div>
-        <div className='mt-3 pt-3 border-t border-white/[0.06] border-dashed text-sm text-white/50'>
+        <div className='mt-3 pt-3 border-t border-white/[0.06] text-sm text-white/50'>
           {author.bio}
         </div>
       </HoverCardContent>

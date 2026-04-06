@@ -24,8 +24,19 @@ A Next.js 15 + Sanity CMS marketing website template, themed for Research & Deve
 ## CSS Utilities
 - `.section-label` — mono font, `::before` horizontal line, `white/40` text
 - `.mono-label` — JetBrains Mono, `white/40` text
+- `.hover-lift` — `translateY(-4px)` on hover with spring cubic-bezier
+- `.noise-overlay` — subtle SVG noise texture overlay via `::after`
+- `.animate-fade-in` — opacity 0→1 animation (0.7s ease-out)
+- `.animate-fade-in-up` — opacity + translateY(16px→0) animation (0.7s ease-out)
 - `.pattern-bg` / `.pattern-bg--2` — dark background fills
 - `.play-icon` — CSS clip-path triangle for video play buttons
+
+## Animation System
+- **Scroll-triggered**: `useInView` hook (`src/hooks/use-in-view.ts`) uses IntersectionObserver to trigger fade-in/translate transitions when elements enter viewport
+- **Entrance animations**: Hero/header blocks use `useState(false)` → `useEffect(() => setIsVisible(true))` for page-load entrance
+- **Staggered delays**: Card grids use `animationDelay: ${index * 80}ms` for cascading reveal
+- **Hover lift**: Cards use `.hover-lift` class with spring easing + `group-hover:scale-105` on images
+- **Decorative glows**: Subtle `bg-white/[0.02] blur-[100-150px]` radial gradient orbs on hero/header sections
 
 ## Font Variables
 - `--font-instrument-sans` → `font-sans`
@@ -62,6 +73,7 @@ src/
     shared/       — Buttons, Headings, Forms, SiteLogo
     ui/           — Radix-based primitives (dialog, sheet, etc.)
     portable-text/ — Rich text rendering
+  hooks/          — Custom hooks (useInView, useSearch, etc.)
   sanity/         — Sanity schemas, queries, client
 ```
 
@@ -70,3 +82,4 @@ src/
 - Testimonial block intentionally inverts to white bg + dark text
 - Logo images use `brightness-0 invert` for white logos on dark bg
 - Pre-existing hydration warning: button-inside-button in PlayVideo component
+- Hero entrance animation causes expected hydration mismatch (client-side `isVisible` state)

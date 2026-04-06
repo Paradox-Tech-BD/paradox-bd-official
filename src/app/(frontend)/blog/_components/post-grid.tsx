@@ -8,9 +8,15 @@ interface PostGridProps {
 
 export default function PostGrid({ posts }: PostGridProps) {
   return (
-    <div className='grid md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6'>
-      {posts.map((post) => (
-        <PostCard key={post._id} post={post} />
+    <div className='grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10'>
+      {posts.map((post, index) => (
+        <div
+          key={post._id}
+          className='animate-fade-in-up'
+          style={{ animationDelay: `${index * 80}ms`, opacity: 0 }}
+        >
+          <PostCard post={post} />
+        </div>
       ))}
     </div>
   )
