@@ -23,13 +23,13 @@ export default function MediaBlock(props: MediaBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})} 
-      className={cn('border-t border-gray-200/60 pattern-bg--2', {
-        'px-4 md:px-10': stegaClean(backgroundWidth) === 'contained'
+      className={cn('', {
+        'px-6 lg:px-12 max-w-[1400px] mx-auto': stegaClean(backgroundWidth) === 'contained'
       })}
     >
-      <Container 
+      <div 
         className={cn('relative h-[18rem] md:h-[48rem] overflow-hidden', {
-          'border-x border-gray-200/60 border-dashed': stegaClean(backgroundWidth) === 'contained'
+          'rounded-xl border border-white/[0.08]': stegaClean(backgroundWidth) === 'contained'
         })}
       >
         {backgroundType === 'image' && image && (
@@ -39,7 +39,7 @@ export default function MediaBlock(props: MediaBlockProps) {
               width={2400}
               height={1200}
               alt={image?.asset?.altText ?? ''}
-              className='w-full h-full object-cover opacity-80'
+              className='w-full h-full object-cover'
             />
             {overlayType === 'dark' && (
               <DarkOverlay />
@@ -49,7 +49,7 @@ export default function MediaBlock(props: MediaBlockProps) {
         {dialogType === 'video' && videoUrl && (
           <PlayVideo videoUrl={videoUrl} />
         )}
-      </Container>
+      </div>
     </section>
   )
 }
@@ -57,8 +57,8 @@ export default function MediaBlock(props: MediaBlockProps) {
 function DarkOverlay() {
   return (
     <>
-      <div className='absolute inset-0 bg-white/50' />
-      <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white to-transparent h-[50%] w-full' />
+      <div className='absolute inset-0 bg-dark-bg/40' />
+      <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-dark-bg to-transparent h-[50%] w-full' />
     </>
   )
 }

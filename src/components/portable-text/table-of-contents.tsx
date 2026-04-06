@@ -27,7 +27,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
       <CollapsibleTrigger className="w-full">
         <div className="py-1.5 pl-2 flex items-center justify-between border border-dashed rounded-lg">
           <div className="flex items-center gap-2">
-            <span className='h-5 w-5 flex items-center justify-center rounded bg-gray-200 text-black'>
+            <span className='h-5 w-5 flex items-center justify-center rounded bg-white/10 text-white'>
               <Text size={12} />
             </span>
             <span className='font-medium text-sm'>
@@ -51,7 +51,7 @@ export default function TableOfContents({ content }: TableOfContentsProps) {
                   href={`#${slugify(item?.children?.[0]?.text ?? '')}`} 
                   className="flex items-center gap-2 scroll-smooth focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 >
-                  <span className="block w-2.5 border-t border-dashed text-gray-300" /> 
+                  <span className="block w-2.5 border-t border-dashed text-white/20" /> 
                   <span className="relative group w-fit">
                     {truncateText(item?.children?.[0]?.text ?? '', 33)}
                     <AnimatedUnderline />

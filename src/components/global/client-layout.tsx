@@ -2,7 +2,7 @@
 import Navbar from './navbar';
 import Footer from './footer';
 import localFont from "next/font/local";
-import { Space_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Instrument_Sans, Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import { usePathname } from 'next/navigation';
 import { GeneralSettingsQueryResult, NavigationSettingsQueryResult } from '../../../sanity.types';
@@ -13,10 +13,9 @@ interface ClientLayoutProps {
   navigationSettings: NavigationSettingsQueryResult;
 }
 
-const spaceGrotesk = Space_Grotesk({
+const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-instrument-sans",
 });
 
 const instrumentSerif = Instrument_Serif({
@@ -30,6 +29,12 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains-mono",
   weight: ["400", "500"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const geistSans = localFont({
@@ -54,7 +59,7 @@ export default function ClientLayout({
   if (pathname.includes('/studio')) return (children);
   
   return (
-    <div className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${geistSans.variable} ${geistMono.variable} font-spaceGrotesk antialiased grid min-h-[100dvh] grid-rows-[auto_1fr_auto]`}>
+    <div className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${geistSans.variable} ${geistMono.variable} font-sans antialiased grid min-h-[100dvh] grid-rows-[auto_1fr_auto]`}>
       <Navbar 
         settings={settings}
         navigationSettings={navigationSettings}
@@ -73,9 +78,9 @@ export default function ClientLayout({
           style: {
             borderRadius: '300px',
             padding: '4px 8px',
-            color: '#FFFFFF',
+            color: '#0c0c12',
             fontWeight: '500',
-            backgroundColor: '#000000'
+            backgroundColor: '#ededf0'
           }
         }}
       />

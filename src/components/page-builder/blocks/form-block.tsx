@@ -2,7 +2,6 @@
 import { PageBuilderType } from '@/types';
 import Form from '@/components/shared/form';
 import Heading from '@/components/shared/heading';
-import Container from '@/components/global/container';
 import PortableTextEditor from '@/components/portable-text/portable-text-editor';
 
 export type FormBlockProps = PageBuilderType<"formBlock">;
@@ -14,14 +13,14 @@ export default function FormBlock(props: FormBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})} 
-      className='px-4 xl:px-10 pattern-bg'
+      className='py-24 lg:py-32'
     >
-      <Container className='py-16 md:py-28 border-x border-gray-200/60 border-dashed'>
-        <div className='flex flex-col justify-center items-center gap-4 md:gap-6'>
+      <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
+        <div className='flex flex-col justify-center items-center gap-6'>
           {heading && (
             <div className='text-center'>
-              <div className='mono-label mb-4 text-center'>Contact</div>
-              <Heading tag="h2" size="xl" className='text-balance text-center leading-normal text-gray-900'>
+              <span className='section-label mb-6 block justify-center'>Contact</span>
+              <Heading tag="h2" size="xl" className='text-balance text-center text-white'>
                 {heading}
               </Heading>
             </div>
@@ -29,14 +28,14 @@ export default function FormBlock(props: FormBlockProps) {
           {content && (
             <PortableTextEditor 
               data={content}
-              classNames='max-w-[320px] mb-4 md:text-xl text-balance text-center text-gray-500'
+              classNames='max-w-[320px] mb-4 md:text-xl text-balance text-center text-white/50'
             />
           )}
           {form && (
             <Form form={form} />
           )}
         </div>
-      </Container>
+      </div>
     </section>
   )
 }

@@ -26,95 +26,104 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
   
   return (
     <header 
-      className={cn('z-40 fixed transition-all duration-500 ease-in-out', {
-        'top-0 left-0 w-full': !hasScrolled,
-        'top-3 left-3 right-3': hasScrolled,
+      className={cn('z-40 fixed transition-all duration-500', {
+        'top-0 left-0 right-0': !hasScrolled,
+        'top-4 left-4 right-4': hasScrolled,
       })}
     >
-      <div 
+      <nav 
         className={cn(
-          'mx-auto flex items-center justify-between transition-all duration-500',
+          'mx-auto transition-all duration-500',
           hasScrolled
-            ? 'bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-sm max-w-5xl px-4 py-3'
-            : 'max-w-8xl px-4 md:px-8 py-5 md:py-6 bg-transparent'
+            ? 'bg-dark-bg/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg max-w-[1200px]'
+            : 'bg-transparent max-w-[1400px]'
         )}
       >
-        <SiteLogo settings={settings} theme="dark" />
-        <div className='flex items-center gap-3'>
-          <NavigationMenu className='hidden md:block'>
-            <NavigationMenuList className='space-x-8 group/nav'>
-              {navbarMenuItems?.map((item) => (
-                <React.Fragment key={item._key}>
-                  {!item.isButton ? (
-                    <>
-                      {item.menuItemType === 'group' ? (
-                        <NavigationMenuItem>
-                          <NavigationMenuTrigger className='text-gray-600 hover:text-gray-900 bg-transparent group-hover/nav:opacity-40 hover:!opacity-100 data-[state=open]:text-blue-600 text-sm font-medium'>
-                            {item.title}
-                          </NavigationMenuTrigger>
-                          <NavigationMenuContent className='min-w-[180px] text-nowrap py-3 px-3 flex flex-col gap-2 bg-white border border-gray-200 shadow-lg rounded-xl'>
-                            {item.pageReferences?.map((page) => (
-                              <Link 
-                                key={page.slug} 
-                                href={resolveHref(page._type, page.slug ?? '') ?? '/'}
-                                className='group py-1.5 pl-3 pr-2 flex items-center justify-between gap-6 rounded-lg border border-gray-100 hover:border-blue-200 hover:bg-blue-50/50 text-gray-600 hover:text-blue-600 transition-all duration-200'
-                              >
-                                {page.title}
-                                <ChevronRight 
-                                  size={14} 
-                                  className='text-gray-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all duration-300' 
-                                />
-                              </Link>
-                            ))}
-                          </NavigationMenuContent>
-                        </NavigationMenuItem>
-                      ): (
-                        <NavigationMenuItem>
-                          <Link 
-                            href={resolveHref(item?.pageReference?._type ?? '', item?.pageReference?.slug ?? '') ?? '/'}
-                            className={cn('relative inline-flex text-sm font-medium transition-all duration-200 group-hover/nav:opacity-40 hover:!opacity-100 text-gray-600 hover:text-gray-900 group', {
-                              'text-gray-900': pathname.includes(`/${item.pageReference?.slug ?? ''}`)
-                            })}
-                          >
-                            <AnimatedText>
-                              {item.title}
-                            </AnimatedText>
-                            <span className={cn(
-                              'absolute -bottom-0.5 left-0 h-px bg-gray-900 transition-all duration-300',
-                              pathname.includes(`/${item.pageReference?.slug ?? ''}`) ? 'w-full' : 'w-0 group-hover:w-full'
-                            )} />
-                          </Link>
-                        </NavigationMenuItem>
-                      )}
-                    </>
-                  ): (
-                    <NavigationMenuItem>
-                      <Button 
-                        variant="primary" 
-                        disableIcon={true}
-                        buttonType="internal"
-                        pageReference={item.pageReference}
-                      >
-                        {item.title}
-                      </Button>
-                    </NavigationMenuItem>
-                  )}
-                </React.Fragment>
-              ))}
-            </NavigationMenuList>
-          </NavigationMenu>
-          {showSlideOutMenu && (
-            <SlideOutMenu 
-              settings={settings} 
-              navigationSettings={navigationSettings}
-            >
-              <button aria-label='Open menu' className='p-2.5 border border-gray-200 rounded-full cursor-pointer hover:border-gray-300 hover:bg-gray-50 transition-all duration-200'>
-                <Menu size={18} className='text-gray-700' />
-              </button>
-            </SlideOutMenu>
+        <div 
+          className={cn(
+            'flex items-center justify-between transition-all duration-500 px-6 lg:px-8',
+            hasScrolled ? 'h-14' : 'h-20'
           )}
+        >
+          <SiteLogo settings={settings} theme="light" />
+          <div className='flex items-center gap-3'>
+            <NavigationMenu className='hidden md:block'>
+              <NavigationMenuList className='space-x-8 group/nav'>
+                {navbarMenuItems?.map((item) => (
+                  <React.Fragment key={item._key}>
+                    {!item.isButton ? (
+                      <>
+                        {item.menuItemType === 'group' ? (
+                          <NavigationMenuItem>
+                            <NavigationMenuTrigger className='text-white/60 hover:text-white bg-transparent group-hover/nav:opacity-40 hover:!opacity-100 data-[state=open]:text-white text-sm'>
+                              {item.title}
+                            </NavigationMenuTrigger>
+                            <NavigationMenuContent className='min-w-[180px] text-nowrap py-3 px-3 flex flex-col gap-1 bg-dark-card/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl'>
+                              {item.pageReferences?.map((page) => (
+                                <Link 
+                                  key={page.slug} 
+                                  href={resolveHref(page._type, page.slug ?? '') ?? '/'}
+                                  className='group py-2 pl-3 pr-2 flex items-center justify-between gap-6 rounded-lg hover:bg-white/5 text-white/60 hover:text-white transition-all duration-200'
+                                >
+                                  {page.title}
+                                  <ChevronRight 
+                                    size={14} 
+                                    className='text-white/20 group-hover:text-white/60 group-hover:translate-x-0.5 transition-all duration-300' 
+                                  />
+                                </Link>
+                              ))}
+                            </NavigationMenuContent>
+                          </NavigationMenuItem>
+                        ): (
+                          <NavigationMenuItem>
+                            <Link 
+                              href={resolveHref(item?.pageReference?._type ?? '', item?.pageReference?.slug ?? '') ?? '/'}
+                              className={cn('relative inline-flex text-sm transition-all duration-300 group-hover/nav:opacity-40 hover:!opacity-100 group', {
+                                'text-white': pathname.includes(`/${item.pageReference?.slug ?? ''}`),
+                                'text-white/60 hover:text-white': !pathname.includes(`/${item.pageReference?.slug ?? ''}`)
+                              })}
+                            >
+                              <AnimatedText>
+                                {item.title}
+                              </AnimatedText>
+                              <span className={cn(
+                                'absolute -bottom-1 left-0 h-px bg-white transition-all duration-300',
+                                pathname.includes(`/${item.pageReference?.slug ?? ''}`) ? 'w-full' : 'w-0 group-hover:w-full'
+                              )} />
+                            </Link>
+                          </NavigationMenuItem>
+                        )}
+                      </>
+                    ): (
+                      <NavigationMenuItem>
+                        <Button 
+                          variant="primary" 
+                          size="sm"
+                          disableIcon={true}
+                          buttonType="internal"
+                          pageReference={item.pageReference}
+                        >
+                          {item.title}
+                        </Button>
+                      </NavigationMenuItem>
+                    )}
+                  </React.Fragment>
+                ))}
+              </NavigationMenuList>
+            </NavigationMenu>
+            {showSlideOutMenu && (
+              <SlideOutMenu 
+                settings={settings} 
+                navigationSettings={navigationSettings}
+              >
+                <button aria-label='Open menu' className='p-2.5 border border-white/10 rounded-full cursor-pointer hover:border-white/20 hover:bg-white/5 transition-all duration-200'>
+                  <Menu size={18} className='text-white/60' />
+                </button>
+              </SlideOutMenu>
+            )}
+          </div>
         </div>
-      </div>
+      </nav>
     </header>
   )
 }

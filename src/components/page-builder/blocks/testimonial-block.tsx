@@ -22,18 +22,21 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className={cn('pb-10 md:pb-0 xl:px-10 pattern-bg border-y border-gray-200/60', {
+      className={cn('relative py-24 lg:py-32 bg-white text-dark-bg overflow-hidden', {
         'rounded-t-4xl': stegaClean(cornerRadiusTop) === 'rounded',
         'rounded-b-4xl': stegaClean(cornerRadiusBottom) === 'rounded'
       })}
     >
-      <Container className='py-16 md:py-28 space-y-10 border-x border-gray-200/60 border-dashed'>
-        <div>
-          <div className='w-fit mx-auto px-3 h-7 flex items-center justify-between rounded-full text-center text-xs font-medium tracking-widest uppercase bg-blue-600/10 border border-blue-200 text-blue-600'>
-            {eyebrow}
-          </div>
-          <h2 className='mt-6 py-2 text-center text-xl md:text-2xl font-semibold border-y border-gray-200/60 w-fit mx-auto bg-gradient-to-r from-white via-blue-100 to-transparent text-gray-900'>
+      <Container className='space-y-12'>
+        <div className='text-center'>
+          {eyebrow && (
+            <div className='w-fit mx-auto px-3 h-7 flex items-center justify-between rounded-full text-center text-xs font-medium tracking-wider uppercase bg-dark-bg/5 text-dark-bg/60'>
+              {eyebrow}
+            </div>
+          )}
+          <h2 className='mt-6 text-2xl md:text-3xl font-display text-dark-bg'>
             {heading}
+            <span className='text-dark-bg/30'> from our clients.</span>
           </h2>
         </div>
         {testimonials && testimonials.length > 1 ? (
@@ -45,13 +48,13 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className='border-gray-200/60 text-gray-600 hover:border-blue-200 hover:text-blue-600 bg-white' />
-            <CarouselNext className='border-gray-200/60 text-gray-600 hover:border-blue-200 hover:text-blue-600 bg-white' />
+            <CarouselPrevious className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
+            <CarouselNext className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
           </Carousel>
         ): (
           <TestimonialCard 
             testimonial={testimonials?.[0] ?? null} 
-            classNames='border border-gray-200/60 rounded-xl'
+            classNames='border border-dark-bg/10 rounded-xl'
           />
         )}       
       </Container>
@@ -64,8 +67,8 @@ function TestimonialCard({ testimonial, classNames }: {
   classNames?: string;
 }) {
   return (
-    <div className={cn('h-full mx-auto max-w-[38rem] md:max-w-[44rem] p-8 md:p-12 space-y-10 md:space-y-20 flex flex-col justify-between bg-white', classNames)}>
-      <h2 className='text-base md:text-xl text-pretty text-gray-800 italic'>
+    <div className={cn('h-full mx-auto max-w-[38rem] md:max-w-[44rem] p-8 md:p-12 space-y-12 md:space-y-20 flex flex-col justify-between', classNames)}>
+      <h2 className='text-base md:text-xl text-pretty text-dark-bg/80 font-display italic leading-relaxed'>
         &ldquo;{testimonial?.quote}&rdquo;
       </h2>
       <div className='flex flex-col md:flex-row md:items-center justify-between'>
@@ -75,13 +78,13 @@ function TestimonialCard({ testimonial, classNames }: {
             width={50}
             height={50}
             alt={testimonial?.name ?? ''}
-            className='w-12 h-12 rounded-full border border-gray-200/60'
+            className='w-12 h-12 rounded-full border border-dark-bg/10'
           />
           <div className='-space-y-0.5'>
-            <h3 className='text-sm md:text-base font-medium text-gray-800'>
+            <h3 className='text-sm md:text-base font-medium text-dark-bg'>
               {testimonial?.name}
             </h3>
-            <p className='text-sm text-gray-400'>
+            <p className='text-sm text-dark-bg/40'>
               {testimonial?.jobTitle}
             </p>
           </div>
@@ -92,7 +95,7 @@ function TestimonialCard({ testimonial, classNames }: {
             width={80}
             height={40}
             alt={`${testimonial?.company} Logo`}
-            className='hidden md:block opacity-60'
+            className='hidden md:block opacity-40'
           />
         </div>
       </div>

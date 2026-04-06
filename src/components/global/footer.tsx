@@ -22,22 +22,21 @@ export default function Footer({ settings, navigationSettings }: FooterProps) {
   } = navigationSettings?.footer ?? {};
 
   return (
-    <footer className='px-4 xl:px-10 border-t border-gray-200/60 bg-gray-50'>
-      <Container className='pt-14 md:pt-16 border-x border-gray-200/60 border-dashed'>
-        <div className='w-full space-y-14 md:space-y-16'>
-          <div className='flex-none py-4 md:py-0 border-y border-gray-200/60 border-dashed md:border-none'>
-            <SiteLogo settings={settings} location="footer" theme="dark" />
+    <footer className='border-t border-white/[0.06] bg-dark-bg'>
+      <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
+        <div className='pt-16 md:pt-20 pb-8 space-y-16 md:space-y-20'>
+          <div className='flex-none'>
+            <SiteLogo settings={settings} location="footer" theme="light" />
           </div>
           <FooterColumns columns={columns ?? []} />
         </div>
-        <div className='relative mt-10 md:mt-20 mb-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-1 md:gap-0 border-y border-gray-200/60 border-dashed text-xs pattern-bg--2'>
-          <div className='z-20 relative text-gray-400'>
+        <div className='py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-white/10'>
+          <div className='text-sm text-white/30'>
             {copyright} © {new Date().getFullYear()}
           </div>
           <LegalMenuItems legalMenuItems={legalMenuItems ?? []} />
-          <EdgeBlur />
         </div>
-      </Container>
+      </div>
     </footer>
   )
 }
@@ -60,49 +59,42 @@ function FooterColumns({ columns }: {
   }> | null;
 }) {
   return (
-    <ul className='flex-1 grid md:grid-cols-2 lg:grid-cols-4 gap-0 md:gap-2 border-y border-gray-200/60 border-dashed pattern-bg--2'>
-      {columns?.map((column, index) => (
-        <li 
-          key={column._key} 
-          className={cn('md:py-10 px-10 w-full space-y-7 border-x border-gray-200/60 border-dashed bg-white', { 
-            'pb-8': index === columns.length - 1 
-          })}>
-          <Heading tag="h2" size="xs" className='relative mt-8 md:mt-0 py-2.5 font-semibold text-gray-900 border-y border-gray-200/60 border-dashed pattern-bg--2'>
-            <span className='z-20 relative'>
-              {column.title}
-            </span>
-            <EdgeBlur />
-          </Heading>
-          <ul className='space-y-1 md:space-y-2'>
+    <div className='grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12'>
+      {columns?.map((column) => (
+        <div key={column._key} className='space-y-6'>
+          <h3 className='text-sm font-medium text-white'>
+            {column.title}
+          </h3>
+          <ul className='space-y-3'>
             {column?.menuItems?.map((item) => (
               <li key={item._key}>
                 {item.linkType === 'internal' ? (
                   <Link 
                     href={`/${item?.pageReference?.slug}`}
-                    className='relative group text-sm md:text-base text-gray-500 hover:text-blue-600 transition-colors duration-200'
+                    className='relative group text-sm text-white/40 hover:text-white transition-colors duration-200'
                   >
                     {item.title}
-                    <AnimatedUnderline className='bg-blue-600' />
+                    <AnimatedUnderline className='bg-white' />
                   </Link>
                 ): (
                   <a 
                     href={item?.externalUrl ?? ''}
                     rel="noopener noreferrer" target="_blank"
-                    className='group flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors duration-200'
+                    className='group flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors duration-200'
                   >
                     <span className='relative'>
                       {item.title}
-                      <AnimatedUnderline className='bg-blue-600' />
+                      <AnimatedUnderline className='bg-white' />
                     </span>
-                    <ExternalLink size={14} className='group-hover:rotate-12 group-hover:text-blue-600 transition-all duration-300' />
+                    <ExternalLink size={12} className='opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
                   </a>
                 )}
               </li>
             ))}
           </ul>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   )
 }
 
@@ -118,30 +110,17 @@ function LegalMenuItems({ legalMenuItems }: {
   }> | null;
 }) {
   return (
-    <ul className='z-20 relative flex items-center gap-1'>
-      {legalMenuItems?.map((item, index) => (
-        <li key={item._key} className='text-xs font-medium text-gray-400'>
+    <ul className='flex items-center gap-4'>
+      {legalMenuItems?.map((item) => (
+        <li key={item._key}>
           <Link 
             href={`/${item?.pageReference?.slug}`}
-            className='relative group hover:text-blue-600 transition-colors duration-200'
+            className='text-sm text-white/30 hover:text-white transition-colors duration-200'
           >
-            <span>{item.title}</span>
-            <AnimatedUnderline className='bg-blue-600' />
+            {item.title}
           </Link>
-          {index !== legalMenuItems.length - 1 && (
-            <span className='ml-1 text-gray-300'>/</span>
-          )}
         </li>
       ))}
     </ul>
-  )
-}
-
-function EdgeBlur() {
-  return (
-    <div className='absolute inset-0 flex items-center justify-between pointer-events-none'>
-      <div className='relative bg-gradient-to-r from-white to-transparent h-full w-[100px]'></div>
-      <div className='bg-gradient-to-l from-white to-transparent h-full w-[100px]'></div>
-    </div>
   )
 }

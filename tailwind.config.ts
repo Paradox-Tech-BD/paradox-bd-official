@@ -14,10 +14,18 @@ const config: Config = {
       borderRadius: {
         '4xl': '2.4rem'
       },
+      colors: {
+        dark: {
+          bg: 'rgb(var(--color-bg) / <alpha-value>)',
+          card: 'rgb(var(--color-card) / <alpha-value>)',
+          surface: 'rgb(var(--color-surface) / <alpha-value>)',
+        },
+      },
       fontFamily: {
+        sans: ['var(--font-instrument-sans)', 'Instrument Sans', 'system-ui', 'sans-serif'],
+        display: ['var(--font-instrument-serif)', 'Instrument Serif', 'Georgia', 'serif'],
+        mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'Courier New', 'monospace'],
         spaceGrotesk: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
-        instrumentSerif: ['var(--font-instrument-serif)', 'Georgia', 'serif'],
-        jetbrainsMono: ['var(--font-jetbrains-mono)', 'Courier New', 'monospace'],
         geistSans: ['var(--font-geist-sans)'],
         geistMono: ['var(--font-geist-mono)'],
       },

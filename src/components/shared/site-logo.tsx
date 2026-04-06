@@ -20,17 +20,15 @@ export default function SiteLogo({ settings, location, theme }: {
     <button 
       aria-label="Go to home page"
       onClick={() => pathname === '/' ? scrollToElement('home') : router.push(`/#home`)}
-      className={cn('hover:scale-[0.95] transition-transform duration-300 ease-in-out', {
-        'text-white': theme === 'light',
-        'text-gray-900': theme === 'dark' || !theme,
-      })}
+      className='hover:scale-[0.95] transition-transform duration-300 ease-in-out'
     >
       {!siteLogo ? ( 
         <span 
-          className={cn('font-spaceGrotesk font-bold tracking-tight text-xl', {
+          className={cn('font-display tracking-tight', {
             'text-3xl': location === 'footer',
-            'text-white': theme === 'light',
-            'text-gray-900': theme === 'dark' || !theme,
+            'text-xl': location !== 'footer',
+            'text-white': theme === 'light' || !theme,
+            'text-dark-bg': theme === 'dark',
           })}
         >
           {siteTitle}
@@ -43,7 +41,7 @@ export default function SiteLogo({ settings, location, theme }: {
           src={siteLogo?.asset?.url ?? ''}
           alt={`${siteTitle} Logo`}
           className={cn('w-[140px] h-auto object-contain', {
-            'brightness-0 invert': theme === 'light',
+            'brightness-0 invert': theme === 'light' || !theme,
           })}
         />
       )}

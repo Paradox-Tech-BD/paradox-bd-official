@@ -82,7 +82,7 @@ function LinkIcon() {
   return (
     <Link 
       size={18} 
-      className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-gray-500'
+      className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white/40'
     />
   )
 }

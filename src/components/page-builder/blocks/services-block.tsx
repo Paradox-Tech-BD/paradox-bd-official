@@ -27,37 +27,38 @@ export default function ServicesBlock(props: ServicesBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className={cn('px-4 xl:px-10 bg-white', {
-        'pattern-bg': stegaClean(background) === 'pattern',
-        'rounded-t-4xl border-t border-gray-200/60': stegaClean(topCornerRadius) === 'rounded'
+      className={cn('', {
+        'rounded-t-4xl border-t border-white/[0.06]': stegaClean(topCornerRadius) === 'rounded'
       })}
     >
-      <Container 
-        paddingTop={stegaClean(paddingTop) ?? undefined}
-        paddingBottom={stegaClean(paddingBottom) ?? undefined}
-        className='space-y-10 border-x border-gray-200/60 border-dashed'
-      >
-        <div className='py-4 flex items-center justify-between gap-6 border-y border-gray-200/60 border-dashed'>
-          <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance leading-tight text-gray-900'>
-            {heading}
-          </Heading>
+      <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
+        <Container
+          paddingTop={stegaClean(paddingTop) ?? undefined}
+          paddingBottom={stegaClean(paddingBottom) ?? undefined}
+          className='space-y-12'
+        >
+          <div className='flex items-end justify-between gap-6'>
+            <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance text-white'>
+              {heading}
+            </Heading>
+            {buttons && buttons.length > 0 && (
+              <div className='hidden md:block shrink-0'>
+                <ButtonRenderer buttons={buttons} />  
+              </div>
+            )}
+          </div>
+          <div className='grid md:grid-cols-3 gap-6'>
+            {services && services.map((service) => (
+              <ServiceCard key={service._id} service={service} />
+            ))}
+          </div>
           {buttons && buttons.length > 0 && (
-            <div className='hidden md:block'>
+            <div className='md:hidden pt-4'>
               <ButtonRenderer buttons={buttons} />  
             </div>
           )}
-        </div>
-        <div className='grid md:grid-cols-3 gap-x-6 gap-y-10'>
-          {services && services.map((service) => (
-            <ServiceCard key={service._id} service={service} />
-          ))}
-        </div>
-        {buttons && buttons.length > 0 && (
-          <div className='md:hidden pt-4'>
-            <ButtonRenderer buttons={buttons} />  
-          </div>
-        )}
-      </Container>
+        </Container>
+      </div>
     </section>
   )
 }
@@ -69,25 +70,25 @@ function ServiceCard({ service }: {
   const { title, slug, shortDescription, image } = service;
 
   return (
-    <div aria-label={title ?? ''} className='relative pb-8 group border-b border-gray-200/60 border-dashed hover:border-blue-200 transition-colors duration-300'>
-      <Link href={`/services/${slug}`} className='relative space-y-4 md:space-y-6'>
-        <div className='p-3 rounded-3xl border border-gray-200/60 bg-white group-hover:border-blue-200 transition-colors duration-300'>
+    <div aria-label={title ?? ''} className='relative group'>
+      <Link href={`/services/${slug}`} className='block space-y-5'>
+        <div className='overflow-hidden rounded-xl border border-white/[0.08] group-hover:border-white/[0.15] transition-colors duration-300'>
           <Image
             src={image?.asset?.url ?? ''}
             width={800}
             height={800}
             alt={image?.asset?.altText ?? ''}
-            className='aspect-[3/2] rounded-2xl object-cover'
+            className='aspect-[3/2] object-cover group-hover:scale-105 transition-transform duration-500'
           />
         </div>
-        <Heading tag="h2" size="md" className='pt-1 md:pt-0 text-balance text-gray-900'>
+        <h3 className='text-lg font-medium text-white group-hover:text-white/80 transition-colors'>
           {title}
-        </Heading>
-        <p className='text-sm md:text-base md:text-balance text-gray-500'>
+        </h3>
+        <p className='text-sm text-white/40 leading-relaxed'>
           {shortDescription}
         </p>
       </Link>
-      <AnimatedUnderline className='-translate-y-0.5 bg-blue-600' />
+      <AnimatedUnderline className='bg-white' />
     </div>
   )
 }

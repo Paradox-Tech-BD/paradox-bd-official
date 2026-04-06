@@ -27,7 +27,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-white md:rounded-l-2xl p-6 shadow-lg transition-all ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
+  "fixed z-50 gap-4 bg-dark-card md:rounded-l-2xl p-6 shadow-lg transition-all ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
   {
     variants: {
       side: {
@@ -61,7 +61,7 @@ const SheetContent = React.forwardRef<
       {...props}
     >
       <SheetPrimitive.Close className="z-30 fixed right-5 top-[26px] group rounded-sm opacity-70 transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-black outline-none">
-        <X className="h-6 w-6 text-black group-hover:rotate-180 transition-all duration-300" />
+        <X className="h-6 w-6 text-white/60 group-hover:text-white group-hover:rotate-180 transition-all duration-300" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
       {children}

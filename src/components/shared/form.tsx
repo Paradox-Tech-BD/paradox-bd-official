@@ -57,12 +57,12 @@ export default function Form({ form }: { form: FormType; }) {
   return(
     <form 
       onSubmit={handleSubmit(onSubmit)} 
-      className="w-full max-w-xl p-6 md:p-8 space-y-6 border border-gray-200/60 rounded-xl md:rounded-3xl bg-white"
+      className="w-full max-w-xl p-6 md:p-8 space-y-6 border border-white/[0.08] rounded-xl bg-dark-card"
     >
       {fields?.map((field) => (
         <div key={field.name} className="space-y-2">
-          <label htmlFor={formatFieldId(field.name ?? '')} className="text-sm font-medium text-gray-600 mono-label">
-            {field.name} {field.isRequired && <span className="text-blue-600">*</span>}
+          <label htmlFor={formatFieldId(field.name ?? '')} className="text-sm font-mono text-white/50">
+            {field.name} {field.isRequired && <span className="text-white/30">*</span>}
           </label>
           <FieldRenderer field={field} register={register} />
           {errors[field.name as keyof typeof errors] && (
@@ -74,7 +74,7 @@ export default function Form({ form }: { form: FormType; }) {
       ))}
       <button
         type="submit"
-        className="group w-full flex items-center justify-between gap-2 px-6 py-3 rounded-full text-white bg-blue-700 hover:bg-blue-600 font-medium text-sm transition-all duration-200"
+        className="group w-full flex items-center justify-between gap-2 px-6 py-3 rounded-full bg-white text-dark-bg hover:bg-white/90 font-medium text-sm transition-all duration-200"
       >
         <span>{submitButtonText}</span> <ArrowRight size={16} className='group-hover:translate-x-1 transition-transform duration-300' />
       </button>
@@ -86,7 +86,7 @@ function FieldRenderer({ field, register }: {
   field: NonNullable<FormType['fields']>[number];
   register: UseFormRegister<Record<string, string>>;
 }) {
-  const baseClass = "w-full px-4 py-2.5 border border-gray-300 rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400/20 transition-colors duration-200";
+  const baseClass = "w-full px-4 py-2.5 border border-white/[0.08] rounded-lg bg-dark-surface text-white placeholder:text-white/30 focus:outline-none focus:border-white/20 transition-colors duration-200";
   switch (field.inputType) {
     case 'text':
     case 'email':

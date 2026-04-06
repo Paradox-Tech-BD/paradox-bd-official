@@ -4,7 +4,6 @@ import { cn } from '@/lib/utils';
 import { stegaClean } from 'next-sanity';
 import { Button } from '@/components/ui/button';
 import Heading from '@/components/shared/heading';
-import Container from '@/components/global/container';
 import { ButtonType, PageBuilderType } from '@/types';
 import PortableTextEditor from '@/components/portable-text/portable-text-editor';
 
@@ -17,15 +16,12 @@ export default function FreeformBlock(props: FreeformBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})} 
-      className='px-4 md:px-10 bg-white'
+      className={cn('py-16 md:py-24', {
+        'border-t border-white/[0.06]': stegaClean(border) === 'topBottom' || stegaClean(border) === 'top',
+        'border-b border-white/[0.06]': stegaClean(border) === 'topBottom' || stegaClean(border) === 'bottom',
+      })}
     >
-      <Container
-        className={cn('py-16 md:py-28 border-x border-gray-200/60 border-dashed', {
-          'border-y border-gray-200/60': stegaClean(border) === 'topBottom',
-          'border-t border-gray-200/60': stegaClean(border) === 'top',
-          'border-b border-gray-200/60': stegaClean(border) === 'bottom',
-        })}
-      >
+      <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
         <div 
           className={cn('grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8', {
             'md:grid-cols-3': stegaClean(columnsPerRow) === '3',
@@ -63,17 +59,17 @@ export default function FreeformBlock(props: FreeformBlockProps) {
                   {(item?._type === 'richTextObject' && item?.richTextContent) && (
                     <PortableTextEditor 
                       data={item?.richTextContent} 
-                      classNames='text-balance text-gray-600'
+                      classNames='text-balance text-white/60'
                     />
                   )}
                   {(item?._type === 'singleImageObject' && item?.image?.asset?.url) && (
-                    <div className='p-3 border border-gray-200/60 rounded-3xl pattern-bg--2'>
+                    <div className='overflow-hidden rounded-xl border border-white/[0.08]'>
                       <Image
                         src={item?.image?.asset?.url ?? ''}
                         width={800}
                         height={800}
                         alt={item?.image?.asset?.altText ?? ''}
-                        className={cn('object-cover aspect-square rounded-2xl', {
+                        className={cn('object-cover aspect-square', {
                           'aspect-[3/2]': stegaClean(item?.image?.aspectRatio) === 'rectangle',
                           'aspect-[3/4]': stegaClean(item?.image?.aspectRatio) === 'portrait',
                         })}
@@ -96,7 +92,7 @@ export default function FreeformBlock(props: FreeformBlockProps) {
             </div>
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   )
 }

@@ -6,19 +6,19 @@ import { cn, getAnchorHref, resolveHref } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "px-4 md:px-5 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50",
+  "px-5 md:px-6 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all duration-300 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "text-white bg-blue-700 hover:bg-blue-600",
-        secondary: "text-white bg-gray-900 hover:bg-blue-700",
-        tertiary: "text-gray-900 hover:text-white border border-gray-300/80 hover:border-blue-500 bg-gray-100 hover:bg-blue-600",
-        outline: "text-gray-900 border border-gray-300/80 hover:border-gray-900 hover:bg-gray-900 hover:text-white",
-        underline: "xl:px-0 mb-2 underline underline-offset-[10px] decoration-[1.5px] decoration-gray-800",
+        primary: "text-dark-bg bg-white hover:bg-white/90",
+        secondary: "text-white bg-white/10 hover:bg-white/[0.15] border border-white/10",
+        tertiary: "text-white/70 hover:text-white border border-white/10 hover:border-white/20",
+        outline: "text-white border border-white/20 hover:border-white/40 hover:bg-white/5",
+        underline: "xl:px-0 mb-2 underline underline-offset-[10px] decoration-[1.5px] decoration-white/40 text-white/70 hover:text-white",
       },
       size: {
-        default: "h-9 md:h-10",
-        sm: "h-9 px-4",
+        default: "h-10 md:h-11",
+        sm: "h-9 px-4 text-xs",
       },
       width: {
         auto: "w-auto",

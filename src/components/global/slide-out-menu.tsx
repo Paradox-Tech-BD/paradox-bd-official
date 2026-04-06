@@ -31,14 +31,14 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
       <SheetTrigger asChild>
         {children}
       </SheetTrigger>
-      <SheetContent className='overflow-y-scroll pb-44 bg-white border-l border-gray-200/60'>
-        <SheetHeader className='z-20 fixed top-0 pt-[26px] right-7 w-[338px] md:w-[330px] h-20 border-b border-gray-200/60 bg-white/95 backdrop-blur-xl'>
-          <SiteLogo settings={settings} theme='dark' />
+      <SheetContent className='overflow-y-scroll pb-44 bg-dark-card border-l border-white/10'>
+        <SheetHeader className='z-20 fixed top-0 pt-[26px] right-7 w-[338px] md:w-[330px] h-20 border-b border-white/[0.06] bg-dark-card/95 backdrop-blur-xl'>
+          <SiteLogo settings={settings} theme='light' />
         </SheetHeader>
-        <SheetTitle className='mt-16 px-0 py-6 antialiased font-normal text-gray-400 mono-label'>
+        <SheetTitle className='mt-16 px-0 py-6 antialiased font-mono text-sm text-white/40'>
           Navigate
         </SheetTitle>
-        <ul className='px-0 flex flex-col gap-4 text-gray-900'>
+        <ul className='px-0 flex flex-col gap-4 text-white'>
           {menuItems?.map((item) => {
             return (
               <React.Fragment key={item?._key}>
@@ -50,14 +50,14 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
                     )}
                     className="space-y-3.5"
                   >
-                    <CollapsibleTrigger className="relative flex items-center gap-2 text-3xl tracking-tight group text-gray-900">
+                    <CollapsibleTrigger className="relative flex items-center gap-2 text-3xl tracking-tight group text-white font-display">
                       <span className="relative">
                         {item.title} 
-                        <AnimatedUnderline className='h-[2px] bg-blue-600' />
+                        <AnimatedUnderline className='h-[2px] bg-white' />
                       </span>
                       <ChevronDown 
                         size={23} 
-                        className={cn('translate-y-0.5 rotate-0 transition-transform duration-200 text-blue-600', {
+                        className={cn('translate-y-0.5 rotate-0 transition-transform duration-200 text-white/40', {
                           'rotate-180': openItems[item._key]
                         })}
                       />
@@ -70,10 +70,10 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
                               router.push(resolveHref(item._type ?? '', item.slug ?? '') ?? '/');
                               setOpenItems(prev => ({ ...prev, [item.title ?? '']: false }));
                             }}
-                            className='relative block text-xl tracking-tight text-gray-500 hover:text-blue-600 group transition-colors duration-200'
+                            className='relative block text-xl tracking-tight text-white/50 hover:text-white group transition-colors duration-200'
                           >
                             {item.title}
-                            <AnimatedUnderline className='h-[1.5px] bg-blue-600' />
+                            <AnimatedUnderline className='h-[1.5px] bg-white' />
                           </button>
                         </SheetClose>
                       ))}                        
@@ -85,10 +85,10 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
                       onClick={() => (
                         router.push(resolveHref(item.pageReference?._type ?? '', item.pageReference?.slug ?? '') ?? '/')
                       )}
-                      className='relative block text-3xl tracking-tight group text-gray-900 hover:text-blue-600 transition-colors duration-200'
+                      className='relative block text-3xl tracking-tight group text-white hover:text-white/70 font-display transition-colors duration-200'
                     >
                       {item.title}
-                      <AnimatedUnderline className='h-[2px] bg-blue-600' />
+                      <AnimatedUnderline className='h-[2px] bg-white' />
                     </button>
                   </SheetClose>
                 )}
@@ -98,32 +98,32 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
         </ul>
         {showCompanyDetailsSlideOutMenu && (
           <>
-            <SheetTitle className='border-t border-gray-200/60 mt-8 px-0 pt-8 antialiased font-normal text-gray-400 mono-label'>
+            <SheetTitle className='border-t border-white/[0.06] mt-8 px-0 pt-8 antialiased font-mono text-sm text-white/40'>
               Contact
             </SheetTitle>
             <div className="mt-2 space-y-4">
               <a 
                 href={`mailto:${slideOutMenuSettings?.companyEmailAddress ?? ''}`} 
-                className="relative w-fit block text-2xl tracking-tight group text-gray-800 hover:text-blue-600 transition-colors duration-200"
+                className="relative w-fit block text-2xl tracking-tight group text-white/80 hover:text-white transition-colors duration-200"
               >
                 {slideOutMenuSettings?.companyEmailAddress ?? ''}
-                <AnimatedUnderline className='h-[2px] bg-blue-600' />
+                <AnimatedUnderline className='h-[2px] bg-white' />
               </a>
             </div>
-            <div className="mt-8 py-4 flex items-center gap-3 border-y border-gray-200/60">
+            <div className="mt-8 py-4 flex items-center gap-3 border-y border-white/[0.06]">
               {slideOutMenuSettings?.companySocialMediaLinks?.map((item) => (
                 <a 
                   key={item._key} 
                   href={item.profileUrl ?? ''} 
                   target="_blank" rel="noopener noreferrer"
-                  className="p-3 border border-gray-200 rounded-full hover:border-blue-200 hover:bg-blue-50 group transition-all duration-300"
+                  className="p-3 border border-white/10 rounded-full hover:border-white/20 hover:bg-white/5 group transition-all duration-300"
                 >
                   <Image
                     src={item.icon?.asset?.url ?? ''}
                     width={16}
                     height={16}
                     alt={`Follow us on ${item.title ?? ''}`}
-                    className="opacity-60 group-hover:opacity-100"
+                    className="invert opacity-60 group-hover:opacity-100"
                   />
                 </a>
               ))}
@@ -131,7 +131,7 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
           </>
         )}
         {slideOutMenuButtons && slideOutMenuButtons.length > 0 && (
-          <div className='pt-10 fixed bottom-1 right-0 w-full md:w-[380px] px-4 pb-4 bg-gradient-to-t from-white via-white/90 to-transparent'>
+          <div className='pt-10 fixed bottom-1 right-0 w-full md:w-[380px] px-4 pb-4 bg-gradient-to-t from-dark-card via-dark-card/90 to-transparent'>
             <ButtonRenderer buttons={slideOutMenuButtons} classNames="flex-col md:flex-row" />  
           </div>
         )}

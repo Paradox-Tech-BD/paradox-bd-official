@@ -2,7 +2,6 @@ import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
 import { PageBuilderType } from '@/types';
 import Heading from '@/components/shared/heading';
-import Container from '@/components/global/container';
 import ButtonRenderer from '@/components/shared/button-renderer';
 import PortableTextEditor from '@/components/portable-text/portable-text-editor';
 
@@ -25,27 +24,27 @@ export default function FeaturesMinimalBlock(props: FeaturesMinimalBlockProps) {
   return (
     <section
       {...(anchorId ? { id: anchorId } : {})} 
-      className={cn('px-4 xl:px-10 bg-gray-50', {
-        'border-t border-gray-200/60': enableBorderTop,
-        'border-b border-gray-200/60': enableBorderBottom,
+      className={cn('py-24 lg:py-32 bg-dark-card', {
+        'border-t border-white/[0.06]': enableBorderTop,
+        'border-b border-white/[0.06]': enableBorderBottom,
         'rounded-t-4xl': cornerRadiusTop === 'rounded',
         'rounded-b-4xl': cornerRadiusBottom === 'rounded'
       })}
     >
-      <Container className='py-16 md:py-28 border-x border-gray-200/60 border-dashed space-y-10 md:space-y-14'>
+      <div className='max-w-[1400px] mx-auto px-6 lg:px-12 space-y-12 md:space-y-16'>
         <div className='grid grid-cols-12 gap-y-12 md:gap-y-20 xl:gap-x-20'>
-          <div className='col-span-12 xl:col-span-5 max-w-[400px] md:max-w-full space-y-10 md:space-y-10'>
-            <div className='lg:flex justify-between xl:flex-col'>
-              <Heading tag="h2" size="xl" className='max-w-[420px] relative pr-2.5 py-3 text-balance leading-normal border-y border-gray-200/60 border-dashed bg-gray-50 pattern-bg--2 text-gray-900'>
-                <span className='relative z-20'>
+          <div className='col-span-12 xl:col-span-5 max-w-[400px] md:max-w-full space-y-8'>
+            <div className='lg:flex justify-between xl:flex-col gap-12'>
+              <div>
+                <span className='section-label mb-6 block'>Capabilities</span>
+                <Heading tag="h2" size="xl" className='max-w-[420px] text-balance text-white'>
                   {heading}
-                </span>
-                <EdgeBlur />
-              </Heading>
+                </Heading>
+              </div>
               {content && (
                 <PortableTextEditor 
                   data={content}
-                  classNames='max-w-[400px] mt-8 text-balance text-gray-500'
+                  classNames='max-w-[400px] mt-6 text-balance text-white/50 leading-relaxed'
                 />
               )}
             </div>
@@ -54,11 +53,11 @@ export default function FeaturesMinimalBlock(props: FeaturesMinimalBlockProps) {
             )}
           </div>
           <div className='col-span-12 xl:col-span-7'>
-            <div className='grid md:grid-cols-2 gap-y-3 md:gap-x-10'>
+            <div className='grid md:grid-cols-2 gap-y-0 md:gap-x-10'>
               {features?.map((feature: string) => (
-                <div key={feature} className='pb-3.5 flex items-center gap-3.5 border-b border-gray-200/60 border-dashed'>
-                  <Check size={18} className='text-blue-600 shrink-0' />
-                  <span className='text-sm md:text-base text-gray-600'>
+                <div key={feature} className='py-4 flex items-center gap-3.5 border-b border-white/[0.06]'>
+                  <Check size={18} className='text-white/40 shrink-0' />
+                  <span className='text-sm md:text-base text-white/60'>
                     {feature}
                   </span>
                 </div>
@@ -66,16 +65,7 @@ export default function FeaturesMinimalBlock(props: FeaturesMinimalBlockProps) {
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </section>
-  )
-}
-
-function EdgeBlur() {
-  return (
-    <div className='absolute inset-0 flex items-center justify-between pointer-events-none'>
-      <div className='relative bg-gradient-to-r from-gray-50 to-transparent h-full w-[100px]'></div>
-      <div className='bg-gradient-to-l from-gray-50 to-transparent h-full w-[100px]'></div>
-    </div>
   )
 }
