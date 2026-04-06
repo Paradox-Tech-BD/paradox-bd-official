@@ -27,18 +27,18 @@ export default function ServicesBlock(props: ServicesBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className={cn('px-4 xl:px-10', {
+      className={cn('px-4 xl:px-10 bg-lab-bg', {
         'pattern-bg': stegaClean(background) === 'pattern',
-        'rounded-t-4xl border-t border-t-gray-200/60': stegaClean(topCornerRadius) === 'rounded'
+        'rounded-t-4xl border-t border-lab-border': stegaClean(topCornerRadius) === 'rounded'
       })}
     >
       <Container 
         paddingTop={stegaClean(paddingTop) ?? undefined}
         paddingBottom={stegaClean(paddingBottom) ?? undefined}
-        className='space-y-10 border-x border-dashed'
+        className='space-y-10 border-x border-lab-border border-dashed'
       >
-        <div className='py-4 flex items-center justify-between gap-6 border-y border-dashed'>
-          <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance leading-tight'>
+        <div className='py-4 flex items-center justify-between gap-6 border-y border-lab-border border-dashed'>
+          <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance leading-tight text-slate-100'>
             {heading}
           </Heading>
           {buttons && buttons.length > 0 && (
@@ -69,25 +69,25 @@ function ServiceCard({ service }: {
   const { title, slug, shortDescription, image } = service;
 
   return (
-    <div aria-label={title ?? ''} className='relative pb-8 group border-b border-dashed'>
+    <div aria-label={title ?? ''} className='relative pb-8 group border-b border-lab-border border-dashed hover:border-lab-cyan/30 transition-colors duration-300'>
       <Link href={`/services/${slug}`} className='relative space-y-4 md:space-y-6'>
-        <div className='p-4 rounded-3xl border border-dashed backdrop-blur-md backdrop-opacity-50'>
+        <div className='p-3 rounded-3xl border border-lab-border bg-lab-card group-hover:border-lab-cyan/25 transition-colors duration-300'>
           <Image
             src={image?.asset?.url ?? ''}
             width={800}
             height={800}
             alt={image?.asset?.altText ?? ''}
-            className='aspect-[3/2] rounded-2xl'
+            className='aspect-[3/2] rounded-2xl object-cover'
           />
         </div>
-        <Heading tag="h2" size="md" className='pt-1 md:pt-0 text-balance'>
+        <Heading tag="h2" size="md" className='pt-1 md:pt-0 text-balance text-slate-100'>
           {title}
         </Heading>
-        <p className='text-sm md:text-base md:text-balance text-neutral-500'>
+        <p className='text-sm md:text-base md:text-balance text-slate-400'>
           {shortDescription}
         </p>
       </Link>
-      <AnimatedUnderline className='-translate-y-0.5' />
+      <AnimatedUnderline className='-translate-y-0.5 bg-lab-cyan' />
     </div>
   )
 }

@@ -17,11 +17,11 @@ export default function FeatureCardsBlock(props: FeatureCardsBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className='px-4 xl:px-10'
+      className='px-4 xl:px-10 bg-lab-bg'
     >
-      <Container className='py-16 md:py-28 px-4 space-y-8 md:space-y-6 border-x border-dashed'>
-        <div className='relative max-w-[60rem] mx-auto py-2 md:py-4 flex flex-col md:flex-row gap-30 md:gap-6 items-center justify-between border-y border-dashed pattern-bg--2'>
-          <Heading tag="h2" size="xl" className='relative col-span-7 py-1.5 text-balance leading-normal'>
+      <Container className='py-16 md:py-28 px-4 space-y-8 md:space-y-6 border-x border-lab-border border-dashed'>
+        <div className='relative max-w-[60rem] mx-auto py-2 md:py-4 flex flex-col md:flex-row gap-30 md:gap-6 items-center justify-between border-y border-lab-border border-dashed pattern-bg--2'>
+          <Heading tag="h2" size="xl" className='relative col-span-7 py-1.5 text-balance leading-normal text-slate-100'>
             <span className='relative z-10'>
               {heading}
             </span>
@@ -52,7 +52,7 @@ function FeatureCard({ feature }: {
   feature:  NonNullable<FeatureCardsBlockProps['features']>[number];
 }) {
   return (
-    <div className='border border-dashed rounded-3xl'>
+    <div className='border border-lab-border rounded-3xl bg-lab-card hover:border-lab-cyan/25 transition-colors duration-300 glow-cyan'>
       <div className='p-3'>
         <Image
           src={feature.image?.asset?.url ?? ''}
@@ -64,31 +64,31 @@ function FeatureCard({ feature }: {
       </div>
       <div className='mt-5 px-6 md:px-8 pb-2'>
         <div className='space-y-6'>
-          <Heading tag="h3" size="sm" className='relative py-2 font-semibold border-y border-y-gray-200/40 pattern-bg'>
+          <Heading tag="h3" size="sm" className='relative py-2 font-semibold border-y border-lab-border border-dashed text-slate-100'>
             {feature.title}
           </Heading>
-          <p className='text-balance text-sm text-gray-500'>
+          <p className='text-balance text-sm text-slate-400'>
             {feature.description}
           </p>
         </div>
       </div>
-      <div className='mt-4 space-y-3 border-t border-dashed'>
+      <div className='mt-4 space-y-3 border-t border-lab-border border-dashed'>
         {feature?.items?.map((item, index) => (
           <div 
             key={item} 
-            className={cn('flex items-start md:items-center gap-2 px-6 md:px-8 py-4 border-b border-dashed', {
+            className={cn('flex items-start md:items-center gap-2 px-6 md:px-8 py-4 border-b border-lab-border border-dashed', {
               'border-none pb-6': index === (feature?.items?.length ?? 0) - 1
             })}
           >
-            <CircleCheck className='h-4 w-4 text-green-600' />
-            <span className='text-balance text-sm'>
+            <CircleCheck className='h-4 w-4 text-lab-cyan shrink-0' />
+            <span className='text-balance text-sm text-slate-300'>
               {item}
             </span>
           </div>
         ))}
       </div>
       {feature?.button?.showButton && (
-        <div className='px-4 py-4 border-t border-dashed'>
+        <div className='px-4 py-4 border-t border-lab-border border-dashed'>
           <Button 
             variant={feature?.button.buttonVariant}
             buttonType={feature?.button.buttonType}
@@ -113,14 +113,14 @@ function CallToAction(props: FeatureCardsBlockProps) {
   } = props;
 
   return (
-    <div className='col-span-2 w-full p-8 flex flex-col md:flex-row items-center gap-8 border rounded-3xl pattern-bg--2'>
+    <div className='col-span-2 w-full p-8 flex flex-col md:flex-row items-center gap-8 border border-lab-border rounded-3xl pattern-bg--2 glow-cyan'>
       <div className="space-y-5 md:space-y-3">
-        <div className="font-medium text-xl text-balance">
+        <div className="font-medium text-xl text-balance text-slate-100">
           {callToActionHeading}
         </div>
         <PortableTextEditor 
           data={callToActionContent}
-          classNames='text-balance text-sm md:text-base text-gray-500'
+          classNames='text-balance text-sm md:text-base text-slate-400'
         />
       </div>
       {callToActionButtons && callToActionButtons.length > 0 && (
@@ -134,9 +134,9 @@ function CallToAction(props: FeatureCardsBlockProps) {
 
 function EdgeBlur() {
   return (
-    <div className='absolute inset-0 flex items-center justify-between'>
-      <div className='relative bg-gradient-to-r from-white to-transparent h-full w-[100px]'></div>
-      <div className='bg-gradient-to-l from-white to-transparent h-full w-[100px]'></div>
+    <div className='absolute inset-0 flex items-center justify-between pointer-events-none'>
+      <div className='relative bg-gradient-to-r from-lab-surface to-transparent h-full w-[100px]'></div>
+      <div className='bg-gradient-to-l from-lab-surface to-transparent h-full w-[100px]'></div>
     </div>
   )
 }

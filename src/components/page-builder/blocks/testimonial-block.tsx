@@ -22,17 +22,17 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className={cn('pb-10 md:pb-0 xl:px-10 pattern-bg border-y border-dashed', {
+      className={cn('pb-10 md:pb-0 xl:px-10 pattern-bg border-y border-lab-border', {
         'rounded-t-4xl': stegaClean(cornerRadiusTop) === 'rounded',
         'rounded-b-4xl': stegaClean(cornerRadiusBottom) === 'rounded'
       })}
     >
-      <Container className='py-16 md:py-28 space-y-10 border-x border-dashed'>
+      <Container className='py-16 md:py-28 space-y-10 border-x border-lab-border border-dashed'>
         <div>
-          <div className='w-fit mx-auto px-2 h-6 flex items-center justify-between rounded-full text-center text-sm font-medium tracking-tight text-white bg-black'>
+          <div className='w-fit mx-auto px-3 h-7 flex items-center justify-between rounded-full text-center text-xs font-medium tracking-widest uppercase bg-lab-cyan/10 border border-lab-cyan/30 text-lab-cyan'>
             {eyebrow}
           </div>
-          <h2 className='mt-6 py-2 text-center text-xl md:text-2xl font-semibold border-y w-fit mx-auto bg-gradient-to-r from-white/0 via-green-400/15 to-white/0'>
+          <h2 className='mt-6 py-2 text-center text-xl md:text-2xl font-semibold border-y border-lab-border w-fit mx-auto bg-gradient-to-r from-lab-bg/0 via-lab-cyan/10 to-lab-bg/0 text-slate-100'>
             {heading}
           </h2>
         </div>
@@ -45,13 +45,13 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className='border-lab-border text-slate-300 hover:border-lab-cyan/40 hover:text-lab-cyan bg-lab-card' />
+            <CarouselNext className='border-lab-border text-slate-300 hover:border-lab-cyan/40 hover:text-lab-cyan bg-lab-card' />
           </Carousel>
         ): (
           <TestimonialCard 
             testimonial={testimonials?.[0] ?? null} 
-            classNames='border border-gray-200/70 rounded-xl'
+            classNames='border border-lab-border rounded-xl'
           />
         )}       
       </Container>
@@ -64,9 +64,9 @@ function TestimonialCard({ testimonial, classNames }: {
   classNames?: string;
 }) {
   return (
-    <div className={cn('h-full mx-auto max-w-[38rem] md:max-w-[44rem] p-8 md:p-12 space-y-10 md:space-y-20 flex flex-col justify-between bg-white', classNames)}>
-      <h2 className='text-base md:text-xl text-pretty'>
-        {testimonial?.quote}
+    <div className={cn('h-full mx-auto max-w-[38rem] md:max-w-[44rem] p-8 md:p-12 space-y-10 md:space-y-20 flex flex-col justify-between bg-lab-card', classNames)}>
+      <h2 className='text-base md:text-xl text-pretty text-slate-200 italic'>
+        &ldquo;{testimonial?.quote}&rdquo;
       </h2>
       <div className='flex flex-col md:flex-row md:items-center justify-between'>
         <div className='flex items-center gap-4'>
@@ -75,13 +75,13 @@ function TestimonialCard({ testimonial, classNames }: {
             width={50}
             height={50}
             alt={testimonial?.name ?? ''}
-            className='w-12 h-12 rounded-full'
+            className='w-12 h-12 rounded-full border border-lab-border'
           />
           <div className='-space-y-0.5'>
-            <h3 className='text-sm md:text-base font-medium'>
+            <h3 className='text-sm md:text-base font-medium text-slate-200'>
               {testimonial?.name}
             </h3>
-            <p className='text-sm text-gray-500'>
+            <p className='text-sm text-slate-500'>
               {testimonial?.jobTitle}
             </p>
           </div>
@@ -92,7 +92,7 @@ function TestimonialCard({ testimonial, classNames }: {
             width={80}
             height={40}
             alt={`${testimonial?.company} Logo`}
-            className='hidden md:block'
+            className='hidden md:block opacity-60'
           />
         </div>
       </div>

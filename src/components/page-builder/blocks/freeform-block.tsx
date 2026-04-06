@@ -17,13 +17,13 @@ export default function FreeformBlock(props: FreeformBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})} 
-      className='px-4 md:px-10'
+      className='px-4 md:px-10 bg-lab-bg'
     >
       <Container
-        className={cn('py-16 md:py-28 border-x border-dashed', {
-          'border-y': stegaClean(border) === 'topBottom',
-          'border-t': stegaClean(border) === 'top',
-          'border-b': stegaClean(border) === 'bottom',
+        className={cn('py-16 md:py-28 border-x border-lab-border border-dashed', {
+          'border-y border-lab-border': stegaClean(border) === 'topBottom',
+          'border-t border-lab-border': stegaClean(border) === 'top',
+          'border-b border-lab-border': stegaClean(border) === 'bottom',
         })}
       >
         <div 
@@ -63,11 +63,11 @@ export default function FreeformBlock(props: FreeformBlockProps) {
                   {(item?._type === 'richTextObject' && item?.richTextContent) && (
                     <PortableTextEditor 
                       data={item?.richTextContent} 
-                      classNames='text-balance'
+                      classNames='text-balance text-slate-300'
                     />
                   )}
                   {(item?._type === 'singleImageObject' && item?.image?.asset?.url) && (
-                    <div className='p-3 border border-dashed rounded-3xl pattern-bg--2'>
+                    <div className='p-3 border border-lab-border rounded-3xl pattern-bg--2'>
                       <Image
                         src={item?.image?.asset?.url ?? ''}
                         width={800}

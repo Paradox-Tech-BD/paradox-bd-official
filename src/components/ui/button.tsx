@@ -6,15 +6,15 @@ import { cn, getAnchorHref, resolveHref } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "px-4 md:px-4 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50",
+  "px-4 md:px-5 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-xs decoration-transparent md:text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary: "text-white bg-blue-700 hover:bg-blue-600",
-        secondary: "text-white bg-black hover:bg-blue-700",
-        tertiary: "text-black hover:text-white border border-gray-300/80 hover:border-blue-500 bg-gray-200 hover:bg-blue-600",
-        outline: "text-black border border-gray-300/80 hover:border-black hover:bg-black backdrop-blur hover:text-white",
-        underline: "xl:px-0 mb-2 underline underline-offset-[10px] decoration-[1.5px] decoration-gray-800",
+        primary: "text-lab-bg bg-lab-cyan hover:bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.3)] hover:shadow-[0_0_24px_rgba(34,211,238,0.5)]",
+        secondary: "text-lab-text bg-lab-card border border-lab-border hover:border-lab-cyan/40 hover:bg-lab-surface",
+        tertiary: "text-lab-cyan border border-lab-cyan/30 hover:border-lab-cyan/70 bg-transparent hover:bg-lab-cyan/10",
+        outline: "text-slate-300 border border-slate-700 hover:border-lab-cyan/50 hover:text-lab-cyan bg-transparent backdrop-blur",
+        underline: "xl:px-0 mb-2 underline underline-offset-[10px] decoration-[1.5px] decoration-lab-cyan text-lab-cyan",
       },
       size: {
         default: "h-9 md:h-10",

@@ -57,16 +57,16 @@ export default function Form({ form }: { form: FormType; }) {
   return(
     <form 
       onSubmit={handleSubmit(onSubmit)} 
-      className="w-full max-w-xl p-6 md:p-8 space-y-6 border backdrop-blur-sm rounded-xl md:rounded-3xl"
+      className="w-full max-w-xl p-6 md:p-8 space-y-6 border border-lab-border backdrop-blur-sm rounded-xl md:rounded-3xl bg-lab-card glow-cyan"
     >
       {fields?.map((field) => (
         <div key={field.name} className="space-y-2">
-          <label htmlFor={formatFieldId(field.name ?? '')} className="text-sm font-medium">
-            {field.name} {field.isRequired && <span className="text-red-500">*</span>}
+          <label htmlFor={formatFieldId(field.name ?? '')} className="text-sm font-medium text-slate-300 mono-label">
+            {field.name} {field.isRequired && <span className="text-lab-cyan">*</span>}
           </label>
           <FieldRenderer field={field} register={register} />
           {errors[field.name as keyof typeof errors] && (
-            <p className="text-sm text-red-500">
+            <p className="text-sm text-red-400">
               {errors[field.name as keyof typeof errors]?.message as string}
             </p>
           )}
@@ -74,9 +74,9 @@ export default function Form({ form }: { form: FormType; }) {
       ))}
       <button
         type="submit"
-        className="group w-full flex items-center justify-between gap-2 px-6 py-3 rounded-full text-white bg-blue-700 hover:bg-blue-600 transition-all duration-300"
+        className="group w-full flex items-center justify-between gap-2 px-6 py-3 rounded-full text-lab-bg bg-lab-cyan hover:bg-cyan-300 font-medium text-sm transition-all duration-200 shadow-[0_0_16px_rgba(34,211,238,0.3)] hover:shadow-[0_0_24px_rgba(34,211,238,0.5)]"
       >
-        <span className='font-medium text-sm'>{submitButtonText}</span> <ArrowRight size={16} className='group-hover:translate-x-1 transition-transform duration-300' />
+        <span>{submitButtonText}</span> <ArrowRight size={16} className='group-hover:translate-x-1 transition-transform duration-300' />
       </button>
     </form>
   )
@@ -86,6 +86,7 @@ function FieldRenderer({ field, register }: {
   field: NonNullable<FormType['fields']>[number];
   register: UseFormRegister<Record<string, string>>;
 }) {
+  const baseClass = "w-full px-4 py-2.5 border border-lab-border rounded-lg bg-lab-surface text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-lab-cyan/50 focus:bg-lab-card transition-colors duration-200";
   switch (field.inputType) {
     case 'text':
     case 'email':
@@ -96,7 +97,7 @@ function FieldRenderer({ field, register }: {
           {...register(field.name ?? '')}
           type={field.inputType}
           placeholder={field.placeholder}
-          className="w-full px-4 py-2 border rounded-md bg-gray-50/60"
+          className={baseClass}
         />
       );
     case 'textarea':
@@ -106,7 +107,7 @@ function FieldRenderer({ field, register }: {
           {...register(field.name ?? '')}
           placeholder={field.placeholder}
           rows={4}
-          className="w-full px-4 py-2 border rounded-lg bg-gray-50/60"
+          className={baseClass}
         />
       );
     default:
