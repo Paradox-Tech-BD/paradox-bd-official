@@ -3,15 +3,15 @@ import { cn } from '@/lib/utils';
 import { cva, VariantProps } from 'class-variance-authority';
 
 const headingVariants = cva(
-  'font-semibold antialiased text-slate-100 tracking-tight leading-normal',
+  'font-semibold antialiased text-gray-900 tracking-tight leading-normal',
   {
     variants: {
       tag: {
         h1: '', h2: '', h3: '', h4: '', h5: '', h6: '',
       },
       size: {
-        xxxl: 'text-3xl md:text-[3.40rem] md:leading-[3.60rem]',
-        xxl: 'text-3xl md:text-5xl',
+        xxxl: 'font-instrumentSerif font-normal tracking-tight text-3xl md:text-[3.40rem] md:leading-[3.60rem]',
+        xxl: 'font-instrumentSerif font-normal tracking-tight text-3xl md:text-5xl',
         xl: 'text-2xl md:text-4xl',
         lg: 'text-xl md:text-3xl',
         md: 'text-xl md:text-2xl',

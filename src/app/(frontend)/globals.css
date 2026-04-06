@@ -2,60 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --bg-primary: #030b18;
-    --bg-surface: #07142a;
-    --bg-card: #0b1e38;
-    --accent-cyan: #22d3ee;
-    --accent-blue: #3b82f6;
-    --accent-purple: #a78bfa;
-    --border-subtle: rgba(34, 211, 238, 0.12);
-    --border-mid: rgba(34, 211, 238, 0.22);
-    --text-primary: #e2e8f0;
-    --text-muted: #64748b;
-  }
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
-  .glow-cyan {
-    box-shadow: 0 0 24px rgba(34, 211, 238, 0.15), 0 0 60px rgba(34, 211, 238, 0.05);
+
+  .font-display {
+    font-family: var(--font-instrument-serif), 'Georgia', serif;
   }
-  .glow-cyan-sm {
-    box-shadow: 0 0 12px rgba(34, 211, 238, 0.2);
-  }
-  .glow-text {
-    text-shadow: 0 0 24px rgba(34, 211, 238, 0.45);
+
+  .mono-label {
+    font-family: var(--font-jetbrains-mono), 'Courier New', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #2563eb;
+    font-weight: 500;
   }
 }
 
 html {
   scroll-behavior: smooth;
-  background-color: #030b18;
 }
 
 body {
-  background-color: #030b18;
-  color: #e2e8f0;
+  background-color: #ffffff;
+  color: #111827;
 }
 
 :target {
   scroll-margin-top: 100px;
 }
 
-/* Dark circuit-grid pattern for primary sections */
 .pattern-bg {
-  background-color: #030b18;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none'%3E%3Crect width='60' height='60' fill='none'/%3E%3Cpath d='M0 0h60v60H0z' stroke='%2322d3ee' stroke-opacity='0.05' stroke-width='0.5'/%3E%3Cpath d='M10 0v60M20 0v60M30 0v60M40 0v60M50 0v60M0 10h60M0 20h60M0 30h60M0 40h60M0 50h60' stroke='%2322d3ee' stroke-opacity='0.04' stroke-width='0.4'/%3E%3Ccircle cx='0' cy='0' r='1.2' fill='%2322d3ee' fill-opacity='0.2'/%3E%3Ccircle cx='60' cy='0' r='1.2' fill='%2322d3ee' fill-opacity='0.2'/%3E%3Ccircle cx='0' cy='60' r='1.2' fill='%2322d3ee' fill-opacity='0.2'/%3E%3Ccircle cx='60' cy='60' r='1.2' fill='%2322d3ee' fill-opacity='0.2'/%3E%3Ccircle cx='30' cy='30' r='1' fill='%2222d3ee' fill-opacity='0.15'/%3E%3C/g%3E%3C/svg%3E");
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.3'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3Cpath d='M6 5V0H5v5H0v1h5v94h1V6h94V5H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Subtle dot pattern for secondary sections */
 .pattern-bg--2 {
-  background-color: #07142a;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='1' cy='1' r='0.9' fill='%2222d3ee' fill-opacity='0.1'/%3E%3C/svg%3E");
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%239c9c9c' fill-opacity='0.3' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 
 .play-icon {
@@ -63,18 +49,7 @@ body {
 }
 
 .search-highlight {
-  background-color: rgba(34, 211, 238, 0.18);
-  color: #22d3ee;
-}
-
-/* Mono label style for technical callouts */
-.mono-label {
-  font-family: var(--font-geist-mono), 'Courier New', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #22d3ee;
-  opacity: 0.8;
+  background-color: rgb(187 247 208);
 }
 
 @keyframes logo-marquee-move {

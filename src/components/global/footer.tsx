@@ -22,16 +22,16 @@ export default function Footer({ settings, navigationSettings }: FooterProps) {
   } = navigationSettings?.footer ?? {};
 
   return (
-    <footer className='px-4 xl:px-10 border-t border-lab-border bg-lab-surface'>
-      <Container className='pt-14 md:pt-16 border-x border-lab-border border-dashed'>
+    <footer className='px-4 xl:px-10 border-t border-gray-200/60 bg-gray-50'>
+      <Container className='pt-14 md:pt-16 border-x border-gray-200/60 border-dashed'>
         <div className='w-full space-y-14 md:space-y-16'>
-          <div className='flex-none py-4 md:py-0 border-y border-lab-border border-dashed md:border-none'>
-            <SiteLogo settings={settings} location="footer" theme="light" />
+          <div className='flex-none py-4 md:py-0 border-y border-gray-200/60 border-dashed md:border-none'>
+            <SiteLogo settings={settings} location="footer" theme="dark" />
           </div>
           <FooterColumns columns={columns ?? []} />
         </div>
-        <div className='relative mt-10 md:mt-20 mb-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-1 md:gap-0 border-y border-lab-border border-dashed text-xs pattern-bg--2'>
-          <div className='z-20 relative text-slate-500'>
+        <div className='relative mt-10 md:mt-20 mb-8 py-6 flex flex-col md:flex-row md:items-center justify-between gap-1 md:gap-0 border-y border-gray-200/60 border-dashed text-xs pattern-bg--2'>
+          <div className='z-20 relative text-gray-400'>
             {copyright} © {new Date().getFullYear()}
           </div>
           <LegalMenuItems legalMenuItems={legalMenuItems ?? []} />
@@ -60,14 +60,14 @@ function FooterColumns({ columns }: {
   }> | null;
 }) {
   return (
-    <ul className='flex-1 grid md:grid-cols-2 lg:grid-cols-4 gap-0 md:gap-2 border-y border-lab-border border-dashed pattern-bg--2'>
+    <ul className='flex-1 grid md:grid-cols-2 lg:grid-cols-4 gap-0 md:gap-2 border-y border-gray-200/60 border-dashed pattern-bg--2'>
       {columns?.map((column, index) => (
         <li 
           key={column._key} 
-          className={cn('md:py-10 px-10 w-full space-y-7 border-x border-lab-border border-dashed bg-lab-card', { 
+          className={cn('md:py-10 px-10 w-full space-y-7 border-x border-gray-200/60 border-dashed bg-white', { 
             'pb-8': index === columns.length - 1 
           })}>
-          <Heading tag="h2" size="xs" className='relative mt-8 md:mt-0 py-2.5 font-semibold text-slate-300 border-y border-lab-border border-dashed pattern-bg--2'>
+          <Heading tag="h2" size="xs" className='relative mt-8 md:mt-0 py-2.5 font-semibold text-gray-900 border-y border-gray-200/60 border-dashed pattern-bg--2'>
             <span className='z-20 relative'>
               {column.title}
             </span>
@@ -79,22 +79,22 @@ function FooterColumns({ columns }: {
                 {item.linkType === 'internal' ? (
                   <Link 
                     href={`/${item?.pageReference?.slug}`}
-                    className='relative group text-sm md:text-base text-slate-400 hover:text-lab-cyan transition-colors duration-200'
+                    className='relative group text-sm md:text-base text-gray-500 hover:text-blue-600 transition-colors duration-200'
                   >
                     {item.title}
-                    <AnimatedUnderline className='bg-lab-cyan' />
+                    <AnimatedUnderline className='bg-blue-600' />
                   </Link>
                 ): (
                   <a 
                     href={item?.externalUrl ?? ''}
                     rel="noopener noreferrer" target="_blank"
-                    className='group flex items-center gap-2 text-slate-400 hover:text-lab-cyan transition-colors duration-200'
+                    className='group flex items-center gap-2 text-gray-500 hover:text-blue-600 transition-colors duration-200'
                   >
                     <span className='relative'>
                       {item.title}
-                      <AnimatedUnderline className='bg-lab-cyan' />
+                      <AnimatedUnderline className='bg-blue-600' />
                     </span>
-                    <ExternalLink size={14} className='group-hover:rotate-12 group-hover:text-lab-cyan transition-all duration-300' />
+                    <ExternalLink size={14} className='group-hover:rotate-12 group-hover:text-blue-600 transition-all duration-300' />
                   </a>
                 )}
               </li>
@@ -120,16 +120,16 @@ function LegalMenuItems({ legalMenuItems }: {
   return (
     <ul className='z-20 relative flex items-center gap-1'>
       {legalMenuItems?.map((item, index) => (
-        <li key={item._key} className='text-xs font-medium text-slate-500'>
+        <li key={item._key} className='text-xs font-medium text-gray-400'>
           <Link 
             href={`/${item?.pageReference?.slug}`}
-            className='relative group hover:text-lab-cyan transition-colors duration-200'
+            className='relative group hover:text-blue-600 transition-colors duration-200'
           >
             <span>{item.title}</span>
-            <AnimatedUnderline className='bg-lab-cyan' />
+            <AnimatedUnderline className='bg-blue-600' />
           </Link>
           {index !== legalMenuItems.length - 1 && (
-            <span className='ml-1 text-slate-700'>/</span>
+            <span className='ml-1 text-gray-300'>/</span>
           )}
         </li>
       ))}
@@ -140,8 +140,8 @@ function LegalMenuItems({ legalMenuItems }: {
 function EdgeBlur() {
   return (
     <div className='absolute inset-0 flex items-center justify-between pointer-events-none'>
-      <div className='relative bg-gradient-to-r from-lab-card to-transparent h-full w-[100px]'></div>
-      <div className='bg-gradient-to-l from-lab-card to-transparent h-full w-[100px]'></div>
+      <div className='relative bg-gradient-to-r from-white to-transparent h-full w-[100px]'></div>
+      <div className='bg-gradient-to-l from-white to-transparent h-full w-[100px]'></div>
     </div>
   )
 }

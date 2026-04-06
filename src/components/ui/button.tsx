@@ -10,11 +10,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "text-lab-bg bg-lab-cyan hover:bg-cyan-300 shadow-[0_0_16px_rgba(34,211,238,0.3)] hover:shadow-[0_0_24px_rgba(34,211,238,0.5)]",
-        secondary: "text-lab-text bg-lab-card border border-lab-border hover:border-lab-cyan/40 hover:bg-lab-surface",
-        tertiary: "text-lab-cyan border border-lab-cyan/30 hover:border-lab-cyan/70 bg-transparent hover:bg-lab-cyan/10",
-        outline: "text-slate-300 border border-slate-700 hover:border-lab-cyan/50 hover:text-lab-cyan bg-transparent backdrop-blur",
-        underline: "xl:px-0 mb-2 underline underline-offset-[10px] decoration-[1.5px] decoration-lab-cyan text-lab-cyan",
+        primary: "text-white bg-blue-700 hover:bg-blue-600",
+        secondary: "text-white bg-gray-900 hover:bg-blue-700",
+        tertiary: "text-gray-900 hover:text-white border border-gray-300/80 hover:border-blue-500 bg-gray-100 hover:bg-blue-600",
+        outline: "text-gray-900 border border-gray-300/80 hover:border-gray-900 hover:bg-gray-900 hover:text-white",
+        underline: "xl:px-0 mb-2 underline underline-offset-[10px] decoration-[1.5px] decoration-gray-800",
       },
       size: {
         default: "h-9 md:h-10",

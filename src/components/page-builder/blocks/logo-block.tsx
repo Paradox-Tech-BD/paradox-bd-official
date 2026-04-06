@@ -15,18 +15,18 @@ export default function LogoBlock(props: LogoBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className='px-4 md:px-10 border-b border-lab-border rounded-b-4xl bg-lab-surface'
+      className='px-4 md:px-10 border-b border-gray-200/60 rounded-b-4xl bg-gray-50'
     >
-      <Container className='px-0 border-x border-lab-border border-dashed'>
+      <Container className='px-0 border-x border-gray-200/60 border-dashed'>
         <div className='py-6 md:py-10'>
-          <div className='relative w-fit mx-auto py-2 px-10 mt-4 md:mt-7 pattern-bg--2 border-y border-lab-border'>
-            <h2 className='text-center font-geistMono text-xs md:text-sm uppercase font-medium text-lab-cyan/70 tracking-widest'> 
+          <div className='relative w-fit mx-auto py-2 px-10 mt-4 md:mt-7 pattern-bg--2 border-y border-gray-200/60'>
+            <h2 className='text-center font-geistMono text-xs md:text-sm uppercase font-medium text-blue-600/70 tracking-widest'> 
               {heading}
             </h2>
             <EdgeBlur />
           </div>
           <div className="relative mt-10 md:mt-16 mb-6 md:mb-8 overflow-clip">
-            <div className="relative z-30 flex items-center py-4 md:py-10 pl-[4.8rem] gap-16 md:gap-[10rem] w-max animate-logo-marquee border-y border-lab-border border-dashed">
+            <div className="relative z-30 flex items-center py-4 md:py-10 pl-[4.8rem] gap-16 md:gap-[10rem] w-max animate-logo-marquee border-y border-gray-200/60 border-dashed">
               {items.map((item, index) => (
                 <div key={item._key + index} className='opacity-50 hover:opacity-80 transition-opacity duration-300'>
                   {item.link ? (
@@ -69,8 +69,8 @@ export default function LogoBlock(props: LogoBlockProps) {
 function EdgeBlur() {
   return (
     <div className='absolute inset-0 flex items-center justify-between pointer-events-none'>
-      <div className='z-30 relative bg-gradient-to-r from-lab-surface to-transparent h-full w-[200px]'></div>
-      <div className='z-30 relative bg-gradient-to-l from-lab-surface to-transparent h-full w-[200px]'></div>
+      <div className='z-30 relative bg-gradient-to-r from-gray-50 to-transparent h-full w-[200px]'></div>
+      <div className='z-30 relative bg-gradient-to-l from-gray-50 to-transparent h-full w-[200px]'></div>
     </div>
   )
 }

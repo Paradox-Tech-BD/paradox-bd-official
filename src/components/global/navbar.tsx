@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Container from './container';
 import { Button } from '../ui/button';
 import useScroll from '@/hooks/use-scroll';
 import SiteLogo from '../shared/site-logo';
@@ -27,12 +26,20 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
   
   return (
     <header 
-      className={cn('z-40 fixed top-0 left-0 w-full py-5 border-b border-lab-border bg-lab-bg/85 backdrop-blur-xl transition-all duration-300 ease-in-out', {
-        'py-3 border-b border-lab-cyan/15 bg-lab-bg/95': hasScrolled
+      className={cn('z-40 fixed transition-all duration-500 ease-in-out', {
+        'top-0 left-0 w-full': !hasScrolled,
+        'top-3 left-3 right-3': hasScrolled,
       })}
     >
-      <Container className='flex items-center justify-between'>
-        <SiteLogo settings={settings} theme="light" />
+      <div 
+        className={cn(
+          'mx-auto flex items-center justify-between transition-all duration-500',
+          hasScrolled
+            ? 'bg-white/90 backdrop-blur-xl border border-gray-200 rounded-2xl shadow-sm max-w-5xl px-4 py-3'
+            : 'max-w-8xl px-4 md:px-8 py-5 md:py-6 bg-transparent'
+        )}
+      >
+        <SiteLogo settings={settings} theme="dark" />
         <div className='flex items-center gap-3'>
           <NavigationMenu className='hidden md:block'>
             <NavigationMenuList className='space-x-8 group/nav'>
@@ -42,20 +49,20 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                     <>
                       {item.menuItemType === 'group' ? (
                         <NavigationMenuItem>
-                          <NavigationMenuTrigger className='text-slate-300 hover:text-lab-cyan bg-transparent group-hover/nav:opacity-40 hover:!opacity-100 data-[state=open]:text-lab-cyan'>
+                          <NavigationMenuTrigger className='text-gray-600 hover:text-gray-900 bg-transparent group-hover/nav:opacity-40 hover:!opacity-100 data-[state=open]:text-blue-600 text-sm font-medium'>
                             {item.title}
                           </NavigationMenuTrigger>
-                          <NavigationMenuContent className='min-w-[180px] text-nowrap py-3 px-3 flex flex-col gap-2 bg-lab-card border border-lab-border'>
+                          <NavigationMenuContent className='min-w-[180px] text-nowrap py-3 px-3 flex flex-col gap-2 bg-white border border-gray-200 shadow-lg rounded-xl'>
                             {item.pageReferences?.map((page) => (
                               <Link 
                                 key={page.slug} 
                                 href={resolveHref(page._type, page.slug ?? '') ?? '/'}
-                                className='group py-1.5 pl-3 pr-2 flex items-center justify-between gap-6 rounded-lg border border-lab-border hover:border-lab-cyan/30 hover:bg-lab-surface text-slate-300 hover:text-lab-cyan transition-all duration-200'
+                                className='group py-1.5 pl-3 pr-2 flex items-center justify-between gap-6 rounded-lg border border-gray-100 hover:border-blue-200 hover:bg-blue-50/50 text-gray-600 hover:text-blue-600 transition-all duration-200'
                               >
                                 {page.title}
                                 <ChevronRight 
                                   size={14} 
-                                  className='text-slate-600 group-hover:text-lab-cyan group-hover:-translate-x-0.5 transition-all duration-300' 
+                                  className='text-gray-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all duration-300' 
                                 />
                               </Link>
                             ))}
@@ -65,13 +72,17 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                         <NavigationMenuItem>
                           <Link 
                             href={resolveHref(item?.pageReference?._type ?? '', item?.pageReference?.slug ?? '') ?? '/'}
-                            className={cn('relative overflow-hidden inline-flex text-sm transition-all duration-200 group-hover/nav:opacity-40 hover:!opacity-100 text-slate-300 hover:text-lab-cyan', {
-                              'text-lab-cyan': pathname.includes(`/${item.pageReference?.slug ?? ''}`)
+                            className={cn('relative inline-flex text-sm font-medium transition-all duration-200 group-hover/nav:opacity-40 hover:!opacity-100 text-gray-600 hover:text-gray-900 group', {
+                              'text-gray-900': pathname.includes(`/${item.pageReference?.slug ?? ''}`)
                             })}
                           >
                             <AnimatedText>
                               {item.title}
                             </AnimatedText>
+                            <span className={cn(
+                              'absolute -bottom-0.5 left-0 h-px bg-gray-900 transition-all duration-300',
+                              pathname.includes(`/${item.pageReference?.slug ?? ''}`) ? 'w-full' : 'w-0 group-hover:w-full'
+                            )} />
                           </Link>
                         </NavigationMenuItem>
                       )}
@@ -97,13 +108,13 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
               settings={settings} 
               navigationSettings={navigationSettings}
             >
-              <button aria-label='Open menu' className='p-2.5 border border-lab-border rounded-full cursor-pointer hover:border-lab-cyan/40 hover:bg-lab-surface transition-all duration-200'>
-                <Menu size={18} className='text-slate-300' />
+              <button aria-label='Open menu' className='p-2.5 border border-gray-200 rounded-full cursor-pointer hover:border-gray-300 hover:bg-gray-50 transition-all duration-200'>
+                <Menu size={18} className='text-gray-700' />
               </button>
             </SlideOutMenu>
           )}
         </div>
-      </Container>
+      </div>
     </header>
   )
 }

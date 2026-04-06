@@ -2,7 +2,7 @@
 import Navbar from './navbar';
 import Footer from './footer';
 import localFont from "next/font/local";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { Toaster } from 'react-hot-toast';
 import { usePathname } from 'next/navigation';
 import { GeneralSettingsQueryResult, NavigationSettingsQueryResult } from '../../../sanity.types';
@@ -17,6 +17,19 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
   weight: ["300", "400", "500", "600", "700"],
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
+  style: ["normal", "italic"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  weight: ["400", "500"],
 });
 
 const geistSans = localFont({
@@ -41,7 +54,7 @@ export default function ClientLayout({
   if (pathname.includes('/studio')) return (children);
   
   return (
-    <div className={`${spaceGrotesk.variable} ${geistSans.variable} ${geistMono.variable} font-spaceGrotesk antialiased grid min-h-[100dvh] grid-rows-[auto_1fr_auto] bg-lab-bg text-lab-text`}>
+    <div className={`${spaceGrotesk.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${geistSans.variable} ${geistMono.variable} font-spaceGrotesk antialiased grid min-h-[100dvh] grid-rows-[auto_1fr_auto]`}>
       <Navbar 
         settings={settings}
         navigationSettings={navigationSettings}
@@ -60,10 +73,9 @@ export default function ClientLayout({
           style: {
             borderRadius: '300px',
             padding: '4px 8px',
-            color: '#e2e8f0',
+            color: '#FFFFFF',
             fontWeight: '500',
-            backgroundColor: '#0b1e38',
-            border: '1px solid rgba(34,211,238,0.2)',
+            backgroundColor: '#000000'
           }
         }}
       />

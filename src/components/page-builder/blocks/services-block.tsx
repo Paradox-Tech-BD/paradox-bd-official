@@ -27,18 +27,18 @@ export default function ServicesBlock(props: ServicesBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className={cn('px-4 xl:px-10 bg-lab-bg', {
+      className={cn('px-4 xl:px-10 bg-white', {
         'pattern-bg': stegaClean(background) === 'pattern',
-        'rounded-t-4xl border-t border-lab-border': stegaClean(topCornerRadius) === 'rounded'
+        'rounded-t-4xl border-t border-gray-200/60': stegaClean(topCornerRadius) === 'rounded'
       })}
     >
       <Container 
         paddingTop={stegaClean(paddingTop) ?? undefined}
         paddingBottom={stegaClean(paddingBottom) ?? undefined}
-        className='space-y-10 border-x border-lab-border border-dashed'
+        className='space-y-10 border-x border-gray-200/60 border-dashed'
       >
-        <div className='py-4 flex items-center justify-between gap-6 border-y border-lab-border border-dashed'>
-          <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance leading-tight text-slate-100'>
+        <div className='py-4 flex items-center justify-between gap-6 border-y border-gray-200/60 border-dashed'>
+          <Heading tag="h2" size="xl" className='max-w-[40rem] text-balance leading-tight text-gray-900'>
             {heading}
           </Heading>
           {buttons && buttons.length > 0 && (
@@ -69,9 +69,9 @@ function ServiceCard({ service }: {
   const { title, slug, shortDescription, image } = service;
 
   return (
-    <div aria-label={title ?? ''} className='relative pb-8 group border-b border-lab-border border-dashed hover:border-lab-cyan/30 transition-colors duration-300'>
+    <div aria-label={title ?? ''} className='relative pb-8 group border-b border-gray-200/60 border-dashed hover:border-blue-200 transition-colors duration-300'>
       <Link href={`/services/${slug}`} className='relative space-y-4 md:space-y-6'>
-        <div className='p-3 rounded-3xl border border-lab-border bg-lab-card group-hover:border-lab-cyan/25 transition-colors duration-300'>
+        <div className='p-3 rounded-3xl border border-gray-200/60 bg-white group-hover:border-blue-200 transition-colors duration-300'>
           <Image
             src={image?.asset?.url ?? ''}
             width={800}
@@ -80,14 +80,14 @@ function ServiceCard({ service }: {
             className='aspect-[3/2] rounded-2xl object-cover'
           />
         </div>
-        <Heading tag="h2" size="md" className='pt-1 md:pt-0 text-balance text-slate-100'>
+        <Heading tag="h2" size="md" className='pt-1 md:pt-0 text-balance text-gray-900'>
           {title}
         </Heading>
-        <p className='text-sm md:text-base md:text-balance text-slate-400'>
+        <p className='text-sm md:text-base md:text-balance text-gray-500'>
           {shortDescription}
         </p>
       </Link>
-      <AnimatedUnderline className='-translate-y-0.5 bg-lab-cyan' />
+      <AnimatedUnderline className='-translate-y-0.5 bg-blue-600' />
     </div>
   )
 }

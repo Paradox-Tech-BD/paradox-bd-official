@@ -22,17 +22,17 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
   return (
     <section 
       {...(anchorId ? { id: anchorId } : {})}
-      className={cn('pb-10 md:pb-0 xl:px-10 pattern-bg border-y border-lab-border', {
+      className={cn('pb-10 md:pb-0 xl:px-10 pattern-bg border-y border-gray-200/60', {
         'rounded-t-4xl': stegaClean(cornerRadiusTop) === 'rounded',
         'rounded-b-4xl': stegaClean(cornerRadiusBottom) === 'rounded'
       })}
     >
-      <Container className='py-16 md:py-28 space-y-10 border-x border-lab-border border-dashed'>
+      <Container className='py-16 md:py-28 space-y-10 border-x border-gray-200/60 border-dashed'>
         <div>
-          <div className='w-fit mx-auto px-3 h-7 flex items-center justify-between rounded-full text-center text-xs font-medium tracking-widest uppercase bg-lab-cyan/10 border border-lab-cyan/30 text-lab-cyan'>
+          <div className='w-fit mx-auto px-3 h-7 flex items-center justify-between rounded-full text-center text-xs font-medium tracking-widest uppercase bg-blue-600/10 border border-blue-200 text-blue-600'>
             {eyebrow}
           </div>
-          <h2 className='mt-6 py-2 text-center text-xl md:text-2xl font-semibold border-y border-lab-border w-fit mx-auto bg-gradient-to-r from-lab-bg/0 via-lab-cyan/10 to-lab-bg/0 text-slate-100'>
+          <h2 className='mt-6 py-2 text-center text-xl md:text-2xl font-semibold border-y border-gray-200/60 w-fit mx-auto bg-gradient-to-r from-white via-blue-100 to-transparent text-gray-900'>
             {heading}
           </h2>
         </div>
@@ -45,13 +45,13 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className='border-lab-border text-slate-300 hover:border-lab-cyan/40 hover:text-lab-cyan bg-lab-card' />
-            <CarouselNext className='border-lab-border text-slate-300 hover:border-lab-cyan/40 hover:text-lab-cyan bg-lab-card' />
+            <CarouselPrevious className='border-gray-200/60 text-gray-600 hover:border-blue-200 hover:text-blue-600 bg-white' />
+            <CarouselNext className='border-gray-200/60 text-gray-600 hover:border-blue-200 hover:text-blue-600 bg-white' />
           </Carousel>
         ): (
           <TestimonialCard 
             testimonial={testimonials?.[0] ?? null} 
-            classNames='border border-lab-border rounded-xl'
+            classNames='border border-gray-200/60 rounded-xl'
           />
         )}       
       </Container>
@@ -64,8 +64,8 @@ function TestimonialCard({ testimonial, classNames }: {
   classNames?: string;
 }) {
   return (
-    <div className={cn('h-full mx-auto max-w-[38rem] md:max-w-[44rem] p-8 md:p-12 space-y-10 md:space-y-20 flex flex-col justify-between bg-lab-card', classNames)}>
-      <h2 className='text-base md:text-xl text-pretty text-slate-200 italic'>
+    <div className={cn('h-full mx-auto max-w-[38rem] md:max-w-[44rem] p-8 md:p-12 space-y-10 md:space-y-20 flex flex-col justify-between bg-white', classNames)}>
+      <h2 className='text-base md:text-xl text-pretty text-gray-800 italic'>
         &ldquo;{testimonial?.quote}&rdquo;
       </h2>
       <div className='flex flex-col md:flex-row md:items-center justify-between'>
@@ -75,13 +75,13 @@ function TestimonialCard({ testimonial, classNames }: {
             width={50}
             height={50}
             alt={testimonial?.name ?? ''}
-            className='w-12 h-12 rounded-full border border-lab-border'
+            className='w-12 h-12 rounded-full border border-gray-200/60'
           />
           <div className='-space-y-0.5'>
-            <h3 className='text-sm md:text-base font-medium text-slate-200'>
+            <h3 className='text-sm md:text-base font-medium text-gray-800'>
               {testimonial?.name}
             </h3>
-            <p className='text-sm text-slate-500'>
+            <p className='text-sm text-gray-400'>
               {testimonial?.jobTitle}
             </p>
           </div>
