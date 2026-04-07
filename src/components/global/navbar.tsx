@@ -33,10 +33,10 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
     >
       <nav 
         className={cn(
-          'mx-auto transition-all duration-500',
+          'mx-auto border rounded-2xl transition-[max-width,background-color,box-shadow,backdrop-filter] duration-500',
           hasScrolled
-            ? 'bg-dark-bg/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-lg max-w-[1200px]'
-            : 'bg-transparent max-w-[1400px]'
+            ? 'bg-dark-bg/80 backdrop-blur-xl border-white/10 shadow-lg max-w-[1200px]'
+            : 'bg-transparent border-transparent shadow-none max-w-[1400px]'
         )}
       >
         <div 
