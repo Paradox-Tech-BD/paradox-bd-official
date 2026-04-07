@@ -59,8 +59,8 @@ export default function TestimonialBlock(props: TestimonialBlockProps) {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
-              <CarouselNext className='border-dark-bg/10 text-dark-bg hover:border-dark-bg/30 bg-white' />
+              <CarouselPrevious className='h-11 w-11 rounded-2xl border border-dark-bg/15 bg-white/95 text-dark-bg shadow-[0_10px_30px_-16px_rgba(12,12,18,0.55)] ring-1 ring-dark-bg/[0.03] backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] hover:border-dark-bg/30 hover:shadow-[0_16px_34px_-16px_rgba(12,12,18,0.45)] active:scale-[0.98] disabled:border-dark-bg/10 disabled:bg-white/70 disabled:text-dark-bg/30 disabled:shadow-none' />
+              <CarouselNext className='h-11 w-11 rounded-2xl border border-dark-bg/15 bg-white/95 text-dark-bg shadow-[0_10px_30px_-16px_rgba(12,12,18,0.55)] ring-1 ring-dark-bg/[0.03] backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] hover:border-dark-bg/30 hover:shadow-[0_16px_34px_-16px_rgba(12,12,18,0.45)] active:scale-[0.98] disabled:border-dark-bg/10 disabled:bg-white/70 disabled:text-dark-bg/30 disabled:shadow-none' />
             </Carousel>
           ): (
             <TestimonialCard 
