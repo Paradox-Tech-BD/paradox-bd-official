@@ -78,7 +78,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                           <NavigationMenuItem>
                             <Link 
                               href={resolveHref(item?.pageReference?._type ?? '', item?.pageReference?.slug ?? '') ?? '/'}
-                              className={cn('relative inline-flex text-sm transition-all duration-300 group-hover/nav:opacity-40 hover:!opacity-100 group', {
+                              className={cn('relative inline-flex text-sm transition-all duration-300 group-hover/nav:opacity-40 hover:!opacity-100 group/menu-item', {
                                 'text-white': pathname.includes(`/${item.pageReference?.slug ?? ''}`),
                                 'text-white/60 hover:text-white': !pathname.includes(`/${item.pageReference?.slug ?? ''}`)
                               })}
@@ -88,7 +88,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                               </AnimatedText>
                               <span className={cn(
                                 'absolute -bottom-1 left-0 h-px bg-white transition-all duration-300',
-                                pathname.includes(`/${item.pageReference?.slug ?? ''}`) ? 'w-full' : 'w-0 group-hover:w-full'
+                                pathname.includes(`/${item.pageReference?.slug ?? ''}`) ? 'w-full' : 'w-0 group-hover/menu-item:w-full'
                               )} />
                             </Link>
                           </NavigationMenuItem>
