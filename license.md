@@ -1,7 +1,7 @@
-SiteEngine Copyright © 2025 - James Rea.
+Paradox-BD Copyright © 2025 - James Rea.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of the
-SiteEngine Next.js template and associated documentation files (the "Template"),
+Paradox-BD Next.js template and associated documentation files (the "Template"),
 to deal in the Template without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, and sublicense the Template, and
 to permit persons to whom the Template is furnished to do so, subject to the

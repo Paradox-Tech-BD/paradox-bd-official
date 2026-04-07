@@ -14,7 +14,7 @@ export default function InstallDemoButton() {
     <div className="flex flex-col items-center gap-6">
       <Heading tag="h2" size="xxl" className='max-w-[420px] relative pr-2.5 py-3 text-balance leading-normal text-white'>
         <span className='relative z-20'>
-          SiteEngine
+          Paradox-BD
         </span>
       </Heading>
       <button 
