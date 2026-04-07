@@ -39,7 +39,7 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
           Navigate
         </SheetTitle>
         <ul className='px-0 flex flex-col gap-4 text-white'>
-          {menuItems?.map((item) => {
+          {menuItems?.filter((item, index, self) => index === self.findIndex((t) => t.title === item.title))?.map((item) => {
             return (
               <React.Fragment key={item?._key}>
                 {item.menuItemType === 'group' ? (
@@ -63,16 +63,16 @@ export default function SlideOutMenu({ children, settings, navigationSettings }:
                       />
                     </CollapsibleTrigger>
                     <CollapsibleContent className="flex flex-col gap-y-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 transition-all duration-200">
-                      {item?.pageReferences?.map((item) => (
-                        <SheetClose key={item.title}>
+                      {item?.pageReferences?.filter((page, index, self) => index === self.findIndex((t) => t.slug === page.slug))?.map((page) => (
+                        <SheetClose key={page.title}>
                           <button 
                             onClick={() => {
-                              router.push(resolveHref(item._type ?? '', item.slug ?? '') ?? '/');
-                              setOpenItems(prev => ({ ...prev, [item.title ?? '']: false }));
+                              router.push(resolveHref(page._type ?? '', page.slug ?? '') ?? '/');
+                              setOpenItems(prev => ({ ...prev, [page.title ?? '']: false }));
                             }}
                             className='relative block text-xl tracking-tight text-white/50 hover:text-white group transition-colors duration-200'
                           >
-                            {item.title}
+                            {page.title}
                             <AnimatedUnderline className='h-[1.5px] bg-white' />
                           </button>
                         </SheetClose>

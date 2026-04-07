@@ -1,8 +1,4 @@
-# SiteEngine - Next.js & Sanity Template.
-
-A fully-featured starter template made with Next.js, Sanity, TypeScript, Tailwind & more.
-
-![Frame 2](https://github.com/user-attachments/assets/ef83c368-8954-4ed3-b370-7025c25e0d99)
+# Paradox BD
 
 ## Tech Stack
 
@@ -59,12 +55,3 @@ Next, run these commands in your terminal at the root of your project:
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
 | `npm run dev`| Starts local dev server at http://localhost:3000
- 
-
-## Author
-
-#### James Rea
-
-- LinkedIn ([@jamesreaco](https://linkedin.com/in/jamesreaco))
-- Website ([jamesrea.co](https://jamesrea.co))
-- X (Twitter) ([@jamesreaco](https://x.com/jamesreaco))
