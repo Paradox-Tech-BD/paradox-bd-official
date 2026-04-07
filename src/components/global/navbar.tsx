@@ -49,7 +49,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
           <div className='flex items-center gap-3'>
             <NavigationMenu className='hidden md:block'>
               <NavigationMenuList className='space-x-8 group/nav'>
-                {navbarMenuItems?.filter((item, index, self) => index === self.findIndex((t) => t.title === item.title))?.map((item) => (
+                {navbarMenuItems?.map((item) => (
                   <React.Fragment key={item._key}>
                     {!item.isButton ? (
                       <>
@@ -59,7 +59,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                               {item.title}
                             </NavigationMenuTrigger>
                             <NavigationMenuContent className='min-w-[180px] text-nowrap py-3 px-3 flex flex-col gap-1 bg-dark-card/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl'>
-                              {item.pageReferences?.filter((page, index, self) => index === self.findIndex((t) => t.slug === page.slug))?.map((page) => (
+                              {item.pageReferences?.map((page) => (
                                 <Link 
                                   key={page.slug} 
                                   href={resolveHref(page._type, page.slug ?? '') ?? '/'}
