@@ -59,7 +59,15 @@ export default function ClientLayout({
   if (pathname.includes('/studio')) return (children);
   
   return (
-    <div className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${geistSans.variable} ${geistMono.variable} font-sans antialiased grid min-h-[100dvh] grid-rows-[auto_1fr_auto]`}>
+    <div className={`${instrumentSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} ${spaceGrotesk.variable} ${geistSans.variable} ${geistMono.variable} font-sans antialiased grid min-h-[100dvh] grid-rows-[auto_1fr_auto] relative`}>
+      <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10">
+        <div className="absolute inset-0 lab-vignette" />
+        <div className="absolute inset-0 lab-grid opacity-75" />
+        <div className="absolute inset-0 lab-grid-fine opacity-45" />
+        <div className="absolute inset-0 lab-scanlines opacity-25" />
+        <div className="absolute inset-0 lab-fiducials opacity-[0.12]" />
+        <div className="absolute inset-0 scholar-noise" />
+      </div>
       <Navbar 
         settings={settings}
         navigationSettings={navigationSettings}

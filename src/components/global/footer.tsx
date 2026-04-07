@@ -22,7 +22,8 @@ export default function Footer({ settings, navigationSettings }: FooterProps) {
   } = navigationSettings?.footer ?? {};
 
   return (
-    <footer className='border-t border-white/[0.06] bg-dark-bg'>
+    <footer className='relative border-t border-white/[0.06] bg-dark-bg/85 backdrop-blur-xl'>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
         <div className='pt-16 md:pt-20 pb-8 space-y-16 md:space-y-20'>
           <div className='flex-none'>
@@ -62,7 +63,7 @@ function FooterColumns({ columns }: {
     <div className='grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12'>
       {columns?.map((column) => (
         <div key={column._key} className='space-y-6'>
-          <h3 className='text-sm font-medium text-white'>
+          <h3 className='font-mono uppercase tracking-[0.18em] text-[0.72rem] text-white/70'>
             {column.title}
           </h3>
           <ul className='space-y-3'>

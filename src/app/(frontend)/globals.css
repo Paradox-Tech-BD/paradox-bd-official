@@ -8,6 +8,7 @@
     --color-card: 20 20 30;
     --color-surface: 26 26 40;
     --color-border: 255 255 255;
+    --color-accent: 167 139 250;
   }
 }
 
@@ -20,7 +21,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+    font-family: var(--font-geist-mono), var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     font-size: 0.8rem;
     letter-spacing: 0.02em;
     color: rgba(255, 255, 255, 0.4);
@@ -35,7 +36,7 @@
   }
 
   .mono-label {
-    font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
+    font-family: var(--font-geist-mono), var(--font-jetbrains-mono), 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
     font-size: 0.8rem;
     letter-spacing: 0.02em;
     color: rgba(255, 255, 255, 0.4);
@@ -84,7 +85,89 @@ html {
 body {
   background-color: rgb(var(--color-bg));
   color: rgb(237, 237, 240);
-  font-family: var(--font-instrument-sans), 'Instrument Sans', system-ui, sans-serif;
+  font-family: var(--font-geist-sans), var(--font-instrument-sans), 'Instrument Sans', system-ui, sans-serif;
+}
+
+body {
+  position: relative;
+}
+
+.scholar-vignette {
+  background-image:
+    radial-gradient(900px 500px at 18% 8%, rgb(var(--color-accent) / 0.12), transparent 60%),
+    radial-gradient(900px 500px at 82% 10%, rgb(var(--color-border) / 0.06), transparent 62%),
+    radial-gradient(1200px 700px at 50% 0%, rgb(var(--color-surface) / 0.35), transparent 65%),
+    radial-gradient(900px 600px at 50% 110%, rgb(var(--color-card) / 0.55), transparent 65%);
+}
+
+.lab-vignette {
+  background-image:
+    radial-gradient(900px 520px at 16% 8%, rgb(var(--color-accent) / 0.11), transparent 62%),
+    radial-gradient(900px 520px at 84% 10%, rgb(var(--color-border) / 0.05), transparent 64%),
+    radial-gradient(1200px 760px at 50% 0%, rgb(var(--color-surface) / 0.38), transparent 66%),
+    radial-gradient(920px 640px at 50% 112%, rgb(var(--color-card) / 0.58), transparent 66%);
+}
+
+.scholar-grid {
+  background-image:
+    linear-gradient(to right, rgb(var(--color-border) / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-border) / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+  background-position: 0 0;
+}
+
+.lab-grid {
+  background-image:
+    linear-gradient(to right, rgb(var(--color-border) / 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-border) / 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: 0 0;
+}
+
+.scholar-grid-fine {
+  background-image:
+    linear-gradient(to right, rgb(var(--color-border) / 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-border) / 0.03) 1px, transparent 1px);
+  background-size: 14px 14px;
+  background-position: 0 0;
+}
+
+.lab-grid-fine {
+  background-image:
+    linear-gradient(to right, rgb(var(--color-border) / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--color-border) / 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: 0 0;
+}
+
+.lab-scanlines {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgb(var(--color-border) / 0.032),
+    rgb(var(--color-border) / 0.032) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+  mix-blend-mode: overlay;
+}
+
+.lab-fiducials {
+  background-image:
+    linear-gradient(to right, rgb(var(--color-border) / 0.14) 2px, transparent 2px),
+    linear-gradient(to bottom, rgb(var(--color-border) / 0.14) 2px, transparent 2px),
+    radial-gradient(circle at 18px 18px, rgb(var(--color-border) / 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at calc(100% - 18px) 18px, rgb(var(--color-border) / 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at 18px calc(100% - 18px), rgb(var(--color-border) / 0.12) 0 1px, transparent 2px),
+    radial-gradient(circle at calc(100% - 18px) calc(100% - 18px), rgb(var(--color-border) / 0.12) 0 1px, transparent 2px);
+  background-repeat: no-repeat;
+  background-size: 18px 18px, 18px 18px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-position: 18px 18px, 18px 18px, 0 0, 0 0, 0 0, 0 0;
+  opacity: 0.7;
+}
+
+.scholar-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.035;
 }
 
 :target {

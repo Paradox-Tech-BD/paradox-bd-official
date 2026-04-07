@@ -22,9 +22,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-instrument-sans)', 'Instrument Sans', 'system-ui', 'sans-serif'],
-        display: ['var(--font-instrument-serif)', 'Instrument Serif', 'Georgia', 'serif'],
-        mono: ['var(--font-jetbrains-mono)', 'JetBrains Mono', 'Courier New', 'monospace'],
+        sans: ['var(--font-geist-sans)', 'var(--font-instrument-sans)', 'Instrument Sans', 'system-ui', 'sans-serif'],
+        display: ['var(--font-space-grotesk)', 'var(--font-geist-sans)', 'var(--font-instrument-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'var(--font-jetbrains-mono)', 'JetBrains Mono', 'Courier New', 'monospace'],
         spaceGrotesk: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
         geistSans: ['var(--font-geist-sans)'],
         geistMono: ['var(--font-geist-mono)'],

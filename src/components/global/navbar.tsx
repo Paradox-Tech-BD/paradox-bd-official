@@ -35,7 +35,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
         className={cn(
           'mx-auto border rounded-2xl transition-[max-width,background-color,box-shadow,backdrop-filter] duration-500',
           hasScrolled
-            ? 'bg-dark-bg/80 backdrop-blur-xl border-white/10 shadow-lg max-w-[1200px]'
+            ? 'bg-dark-bg/70 backdrop-blur-2xl border-white/10 shadow-lg max-w-[1200px]'
             : 'bg-transparent border-transparent shadow-none max-w-[1400px]'
         )}
       >
@@ -55,7 +55,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                       <>
                         {item.menuItemType === 'group' ? (
                           <NavigationMenuItem>
-                            <NavigationMenuTrigger className='text-white/60 hover:text-white bg-transparent group-hover/nav:opacity-40 hover:!opacity-100 data-[state=open]:text-white text-sm'>
+                            <NavigationMenuTrigger className='font-mono uppercase tracking-[0.18em] text-[0.72rem] text-white/60 hover:text-white bg-transparent group-hover/nav:opacity-40 hover:!opacity-100 data-[state=open]:text-white'>
                               {item.title}
                             </NavigationMenuTrigger>
                             <NavigationMenuContent className='min-w-[180px] text-nowrap py-3 px-3 flex flex-col gap-1 bg-dark-card/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-xl'>
@@ -78,7 +78,7 @@ export default function Navbar({ settings, navigationSettings }: NavbarProps) {
                           <NavigationMenuItem>
                             <Link 
                               href={resolveHref(item?.pageReference?._type ?? '', item?.pageReference?.slug ?? '') ?? '/'}
-                              className={cn('relative inline-flex text-sm transition-all duration-300 group-hover/nav:opacity-40 hover:!opacity-100 group/menu-item', {
+                              className={cn('relative inline-flex font-mono uppercase tracking-[0.18em] text-[0.72rem] transition-all duration-300 group-hover/nav:opacity-40 hover:!opacity-100 group/menu-item', {
                                 'text-white': pathname.includes(`/${item.pageReference?.slug ?? ''}`),
                                 'text-white/60 hover:text-white': !pathname.includes(`/${item.pageReference?.slug ?? ''}`)
                               })}
