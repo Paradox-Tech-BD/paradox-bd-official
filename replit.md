@@ -105,7 +105,8 @@ src/
 - **Database** (Postgres):
   - `course_instructors` (id, clerk_user_id, course_id, created_at) — UNIQUE(clerk_user_id, course_id)
   - `enrollments` (id, clerk_user_id, course_id, status, payment_proof_url, approved_at, created_at) — UNIQUE(clerk_user_id, course_id)
-- **Env vars**: `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `NEXT_PUBLIC_CLERK_SIGN_IN_URL=/courses/sign-in`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL=/courses/sign-up`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/courses/dashboard`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/courses/dashboard`
+- **Env vars**: `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_WEBHOOK_SECRET` (for Svix signature verification), `NEXT_PUBLIC_CLERK_SIGN_IN_URL=/courses/sign-in`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL=/courses/sign-up`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/courses/dashboard`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/courses/dashboard`
+- **SQL setup**: `scripts/setup-db.sql` — run against DATABASE_URL to create tables
 
 ## Notes
 - npm install requires `--legacy-peer-deps` (React 19 peer conflict)

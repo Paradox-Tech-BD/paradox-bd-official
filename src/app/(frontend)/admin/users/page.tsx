@@ -27,7 +27,7 @@ export default function AdminUsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [assigningUser, setAssigningUser] = useState<string | null>(null);
-  const [selectedCourseId, setSelectedCourseId] = useState('');
+  const [courseSelections, setCourseSelections] = useState<Record<string, string>>({});
 
   const role = (user?.publicMetadata?.role as string) ?? 'learner';
 
@@ -56,13 +56,14 @@ export default function AdminUsersPage() {
   }, [isLoaded, role]);
 
   async function handleAssignInstructor(userId: string) {
-    if (!selectedCourseId) return;
+    const courseId = courseSelections[userId];
+    if (!courseId) return;
 
     try {
       const res = await fetch('/api/admin/assign-instructor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, courseId: selectedCourseId }),
+        body: JSON.stringify({ userId, courseId }),
       });
 
       if (!res.ok) {
@@ -74,12 +75,16 @@ export default function AdminUsersPage() {
       setUsers((prev) =>
         prev.map((u) =>
           u.id === userId
-            ? { ...u, role: 'instructor', assignedCourses: [...u.assignedCourses, selectedCourseId] }
+            ? { ...u, role: 'instructor', assignedCourses: [...u.assignedCourses, courseId] }
             : u
         )
       );
       setAssigningUser(null);
-      setSelectedCourseId('');
+      setCourseSelections((prev) => {
+        const next = { ...prev };
+        delete next[userId];
+        return next;
+      });
     } catch {
       alert('Failed to assign instructor');
     }
@@ -176,8 +181,8 @@ export default function AdminUsersPage() {
                         {assigningUser === u.id ? (
                           <div className='flex items-center gap-2'>
                             <select
-                              value={selectedCourseId}
-                              onChange={(e) => setSelectedCourseId(e.target.value)}
+                              value={courseSelections[u.id] ?? ''}
+                              onChange={(e) => setCourseSelections((prev) => ({ ...prev, [u.id]: e.target.value }))}
                               className='px-2 py-1 text-xs rounded bg-dark-surface border border-white/[0.08] text-white w-48 appearance-none'
                             >
                               <option value=''>Select a course</option>
@@ -191,13 +196,13 @@ export default function AdminUsersPage() {
                             </select>
                             <button
                               onClick={() => handleAssignInstructor(u.id)}
-                              disabled={!selectedCourseId}
+                              disabled={!courseSelections[u.id]}
                               className='px-2 py-1 text-xs rounded bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 transition-colors disabled:opacity-30 disabled:cursor-not-allowed'
                             >
                               Confirm
                             </button>
                             <button
-                              onClick={() => { setAssigningUser(null); setSelectedCourseId(''); }}
+                              onClick={() => { setAssigningUser(null); setCourseSelections((prev) => { const next = { ...prev }; delete next[u.id]; return next; }); }}
                               className='px-2 py-1 text-xs rounded text-white/30 hover:text-white/50 transition-colors'
                             >
                               Cancel
