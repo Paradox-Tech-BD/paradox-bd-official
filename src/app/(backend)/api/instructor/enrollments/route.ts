@@ -1,10 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireRole } from '@/lib/auth';
 import { getPool } from '@/lib/db';
-import { createClerkClient } from '@clerk/nextjs/server';
 import { sanityFetch } from '@/sanity/lib/live';
 
-const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY! });
+async function getClerkClient() {
+  const secretKey = process.env.CLERK_SECRET_KEY;
+  if (!secretKey) return null;
+  const { createClerkClient } = await import('@clerk/nextjs/server');
+  return createClerkClient({ secretKey });
+}
 
 export async function GET(req: NextRequest) {
   let userId: string;
@@ -42,18 +46,21 @@ export async function GET(req: NextRequest) {
     const uniqueCourseIds = Array.from(new Set(rows.map((r) => r.course_id).filter(Boolean)));
 
     const studentsById = new Map<string, { name: string; email: string; imageUrl: string }>();
-    await Promise.all(
-      uniqueStudentIds.map(async (id) => {
-        try {
-          const user = await clerk.users.getUser(id);
-          const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username || id;
-          const email = user.emailAddresses[0]?.emailAddress ?? '';
-          studentsById.set(id, { name, email, imageUrl: user.imageUrl });
-        } catch {
-          studentsById.set(id, { name: id, email: '', imageUrl: '' });
-        }
-      })
-    );
+    const clerk = await getClerkClient();
+    if (clerk) {
+      await Promise.all(
+        uniqueStudentIds.map(async (id) => {
+          try {
+            const user = await clerk.users.getUser(id);
+            const name = [user.firstName, user.lastName].filter(Boolean).join(' ') || user.username || id;
+            const email = user.emailAddresses[0]?.emailAddress ?? '';
+            studentsById.set(id, { name, email, imageUrl: user.imageUrl });
+          } catch {
+            studentsById.set(id, { name: id, email: '', imageUrl: '' });
+          }
+        })
+      );
+    }
 
     const coursesById = new Map<string, { title: string; slug: string }>();
     if (uniqueCourseIds.length > 0) {

@@ -6,10 +6,22 @@ import Link from 'next/link';
 import { BookOpen, Settings, GraduationCap } from 'lucide-react';
 
 export default async function DashboardPage() {
-  const { userId } = await auth();
+  let userId: string | null = null;
+  try {
+    const authResult = await auth();
+    userId = authResult.userId;
+  } catch {
+    userId = null;
+  }
+
   if (!userId) redirect('/courses/sign-in');
 
-  const role = await getUserRole(userId);
+  let role: Awaited<ReturnType<typeof getUserRole>> = 'learner';
+  try {
+    role = await getUserRole(userId);
+  } catch {
+    role = 'learner';
+  }
 
   return (
     <main className='overflow-hidden'>
