@@ -272,35 +272,57 @@ export default defineType({
       description: 'Show on the courses landing page featured section.'
     }),
     defineField({
+      name: 'sections',
+      title: 'Course Sections',
+      type: 'array',
+      group: 'curriculum',
+      of: [{ type: 'reference', to: [{ type: 'courseSection' }] }],
+      description: 'Reference course sections (each section contains lectures).'
+    }),
+    defineField({
       name: 'r2BucketName',
       title: 'R2 Bucket Name',
       type: 'string',
       group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Never exposed to frontend queries.'
     }),
     defineField({
       name: 'r2AccountId',
       title: 'R2 Account ID',
       type: 'string',
       group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Never exposed to frontend queries.'
     }),
     defineField({
       name: 'r2AccessKeyId',
       title: 'R2 Access Key ID',
       type: 'string',
       group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Sensitive credential — never exposed to frontend queries.'
     }),
     defineField({
       name: 'r2SecretAccessKey',
       title: 'R2 Secret Access Key',
       type: 'string',
       group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Sensitive credential — never exposed to frontend queries.'
     }),
     defineField({
       name: 'r2PublicUrl',
       title: 'R2 Public URL',
       type: 'url',
       group: 'r2Storage',
-      description: 'Public base URL for the R2 bucket, e.g. https://pub-xxx.r2.dev'
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Public base URL for the R2 bucket, e.g. https://pub-xxx.r2.dev'
     }),
     defineField({
       name: 'testimonials',

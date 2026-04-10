@@ -18,6 +18,9 @@ import {
   Github,
   Linkedin,
   Twitter,
+  Star,
+  Users,
+  BookOpen,
 } from 'lucide-react';
 
 interface PageProps {
@@ -106,8 +109,31 @@ export default async function InstructorPage({ params }: PageProps) {
                     <a href={instructor.socialLinks.twitter} target='_blank' rel='noopener noreferrer' className='p-2 rounded-full border border-white/[0.08] text-white/30 hover:text-white hover:border-white/20 transition-all'><Twitter size={16} /></a>
                   )}
                 </div>
+                <div className='grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-white/[0.06]'>
+                  <div className='text-center'>
+                    <div className='flex items-center justify-center gap-1'>
+                      <BookOpen size={12} className='text-violet-400' />
+                      <span className='text-sm font-medium text-white'>{instructor.courseCount ?? 0}</span>
+                    </div>
+                    <p className='text-[10px] text-white/30 mt-0.5'>Courses</p>
+                  </div>
+                  <div className='text-center'>
+                    <div className='flex items-center justify-center gap-1'>
+                      <Star size={12} className='text-amber-400 fill-amber-400' />
+                      <span className='text-sm font-medium text-white'>{instructor.avgRating?.toFixed(1) ?? '—'}</span>
+                    </div>
+                    <p className='text-[10px] text-white/30 mt-0.5'>Rating</p>
+                  </div>
+                  <div className='text-center'>
+                    <div className='flex items-center justify-center gap-1'>
+                      <Users size={12} className='text-blue-400' />
+                      <span className='text-sm font-medium text-white'>{(instructor.totalStudents ?? 0).toLocaleString()}</span>
+                    </div>
+                    <p className='text-[10px] text-white/30 mt-0.5'>Students</p>
+                  </div>
+                </div>
                 {instructor.expertise && instructor.expertise.length > 0 && (
-                  <div className='flex flex-wrap justify-center gap-1.5 mt-5 pt-5 border-t border-white/[0.06]'>
+                  <div className='flex flex-wrap justify-center gap-1.5 mt-4 pt-4 border-t border-white/[0.06]'>
                     {instructor.expertise.map((skill) => (
                       <span key={skill} className='px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/40 border border-white/[0.06]'>
                         {skill}

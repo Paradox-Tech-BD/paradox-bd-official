@@ -78,18 +78,18 @@ src/
 ```
 
 ## LMS (Courses System)
-- **Sanity schemas**: `course`, `courseCategory`, `courseTestimonial`, `instructor`, `coursesPage` (singleton)
-- **GROQ queries**: `src/sanity/lib/queries/documents/course.ts` — all courses, featured, by category, by slug, instructors, categories
+- **Sanity schemas**: `course`, `courseCategory`, `courseTestimonial`, `courseSection`, `courseLecture`, `instructor`, `coursesPage` (singleton)
+- **GROQ queries**: `src/sanity/lib/queries/documents/course.ts` — all courses, featured, by category, by slug, instructors (with avgRating/totalStudents), categories, recent testimonials
 - **Frontend routes**:
-  - `/courses` — marketing landing page (hero, featured courses, featured instructors)
-  - `/courses/all` — full course listing with category filter + search
+  - `/courses` — marketing landing page (hero, about/pitch section, featured courses, featured instructors, testimonials carousel)
+  - `/courses/all` — full course listing with category filter + search + pagination (9 per page)
   - `/courses/category/[slug]` — category-filtered listing
   - `/courses/[slug]` — Udemy-style course detail (curriculum accordion, instructor cards, testimonials, sticky pricing sidebar)
-  - `/courses/instructor/[slug]` — instructor profile with their courses
-- **Studio structure**: Courses section with All Courses, Categories, Instructors, Testimonials (orderable)
+  - `/courses/instructor/[slug]` — instructor profile with ratings/stats (courses, avg rating, total students) and their courses
+- **Studio structure**: Courses section with All Courses, Sections, Lectures, Categories, Instructors, Testimonials (orderable)
 - **Nav integration**: `coursesPage` added to `pageReferenceTypes`; `resolveHref` handles `course`, `instructor`, `coursesPage`
-- **Course R2 Storage**: Per-course Cloudflare R2 credentials stored in Sanity (admin-only field group)
-- **Course fields**: title, slug, excerpt, description (portable text), thumbnail, category, instructors, level, duration, price, rating, enrolledCount, curriculum (sections → lectures), whatYoullLearn, prerequisites, testimonials, paymentInstructions
+- **Course R2 Storage**: Per-course Cloudflare R2 credentials stored in Sanity (admin-only field group, readOnly/hidden for non-admin users)
+- **Course fields**: title, slug, excerpt, description (portable text), thumbnail, category, instructors, level, duration, price, rating, enrolledCount, curriculum (inline sections → lectures), sections (referenced courseSection docs → courseLecture docs), whatYoullLearn, prerequisites, testimonials, paymentInstructions
 - **Types**: Manually added to `sanity.types.ts` (typegen broken due to jsdom dependency issue)
 
 ## Notes

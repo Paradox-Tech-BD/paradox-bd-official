@@ -119,6 +119,18 @@ export const courseBySlugQuery = defineQuery(`*[_type == 'course' && slug.curren
       isFree
     }
   },
+  "sections": sections[]->{
+    _id,
+    title,
+    "lectures": lectures[]->{
+      _id,
+      title,
+      'slug': slug.current,
+      type,
+      duration,
+      isFree
+    }
+  },
   testimonials[]->{
     _id,
     name,
@@ -164,7 +176,21 @@ export const allInstructorsQuery = defineQuery(`*[_type == 'instructor'] | order
     altText
   },
   socialLinks,
-  "courseCount": count(*[_type == 'course' && published == true && references(^._id)])
+  "courseCount": count(*[_type == 'course' && published == true && references(^._id)]),
+  "avgRating": math::avg(*[_type == 'course' && published == true && references(^._id)].rating),
+  "totalStudents": math::sum(*[_type == 'course' && published == true && references(^._id)].enrolledCount)
+}`);
+
+export const recentCourseTestimonialsQuery = defineQuery(`*[_type == 'courseTestimonial'] | order(completionDate desc) [0...8] {
+  _id,
+  name,
+  rating,
+  quote,
+  completionDate,
+  avatar {
+    asset->{ url }
+  },
+  "courseName": course->title
 }`);
 
 export const instructorBySlugQuery = defineQuery(`*[_type == 'instructor' && slug.current == $slug][0] {
@@ -180,6 +206,9 @@ export const instructorBySlugQuery = defineQuery(`*[_type == 'instructor' && slu
     altText
   },
   socialLinks,
+  "courseCount": count(*[_type == 'course' && published == true && references(^._id)]),
+  "avgRating": math::avg(*[_type == 'course' && published == true && references(^._id)].rating),
+  "totalStudents": math::sum(*[_type == 'course' && published == true && references(^._id)].enrolledCount),
   "courses": *[_type == 'course' && published == true && references(^._id)] | order(_createdAt desc) {
     ${courseCardFields}
   },

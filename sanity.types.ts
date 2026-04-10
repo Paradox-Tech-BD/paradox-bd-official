@@ -10559,6 +10559,23 @@ export type AllInstructorsQueryResult = Array<{
     github: string | null;
   } | null;
   courseCount: number | null;
+  avgRating: number | null;
+  totalStudents: number | null;
+}>;
+
+// Variable: recentCourseTestimonialsQuery
+export type RecentCourseTestimonialsQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  rating: number | null;
+  quote: string | null;
+  completionDate: string | null;
+  avatar: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
+  courseName: string | null;
 }>;
 
 // Variable: instructorBySlugQuery
@@ -10582,6 +10599,9 @@ export type InstructorBySlugQueryResult = {
     linkedin: string | null;
     github: string | null;
   } | null;
+  courseCount: number | null;
+  avgRating: number | null;
+  totalStudents: number | null;
   courses: AllCoursesQueryResult;
   seo: {
     title: string | null;

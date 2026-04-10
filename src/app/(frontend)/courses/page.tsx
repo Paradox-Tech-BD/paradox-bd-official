@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Metadata } from 'next';
 import { processMetadata } from '@/lib/utils';
 import { sanityFetch } from '@/sanity/lib/live';
@@ -8,12 +7,15 @@ import Heading from '@/components/shared/heading';
 import CourseCard from './_components/course-card';
 import InstructorCard from './_components/instructor-card';
 import { PageBuilder } from '@/components/page-builder';
+import { PortableText } from '@portabletext/react';
 import { ArrowRight, BookOpen, Users, Award, Zap } from 'lucide-react';
+import TestimonialsCarousel from './_components/testimonials-carousel';
 import { CoursesPageQueryResult } from '../../../../sanity.types';
 import {
   coursesPageQuery,
   featuredCoursesQuery,
   allInstructorsQuery,
+  recentCourseTestimonialsQuery,
 } from '@/sanity/lib/queries/documents/course';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,10 +34,12 @@ export default async function CoursesPage() {
     { data: page },
     { data: featuredCourses },
     { data: instructors },
+    { data: testimonials },
   ] = await Promise.all([
     sanityFetch({ query: coursesPageQuery }),
     sanityFetch({ query: featuredCoursesQuery }),
     sanityFetch({ query: allInstructorsQuery }),
+    sanityFetch({ query: recentCourseTestimonialsQuery }),
   ]);
 
   const featuredInstructors = instructors?.filter(i => i.featured) ?? [];
@@ -83,8 +87,28 @@ export default async function CoursesPage() {
         </div>
       </section>
 
+      {(page?.aboutHeading || page?.aboutContent) && (
+        <section className='relative py-20 md:py-32 border-t border-white/[0.06]'>
+          <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
+            <div className='grid lg:grid-cols-2 gap-12 lg:gap-20 items-start'>
+              <div>
+                <span className='section-label'>About Our Academy</span>
+                <Heading tag="h2" size="xl" className='mt-4'>
+                  {page.aboutHeading ?? 'Why Learn With Us'}
+                </Heading>
+              </div>
+              {page.aboutContent && (
+                <div className='prose prose-invert prose-lg max-w-none text-white/50 prose-headings:text-white prose-strong:text-white/70'>
+                  <PortableText value={page.aboutContent} />
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
       {featuredCourses && featuredCourses.length > 0 && (
-        <section className='relative py-20 md:py-32'>
+        <section className='relative py-20 md:py-32 border-t border-white/[0.06]'>
           <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
             <div className='flex items-end justify-between mb-12'>
               <div>
@@ -144,6 +168,18 @@ export default async function CoursesPage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+
+      {testimonials && testimonials.length > 0 && (
+        <section className='relative py-20 md:py-32 border-t border-white/[0.06]'>
+          <div className='max-w-[1400px] mx-auto px-6 lg:px-12'>
+            <span className='section-label'>{page?.testimonialsHeading ?? 'What Our Students Say'}</span>
+            <Heading tag="h2" size="xl" className='mt-4 mb-12'>
+              Student Success Stories
+            </Heading>
+            <TestimonialsCarousel testimonials={testimonials} />
           </div>
         </section>
       )}

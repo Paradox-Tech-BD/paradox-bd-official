@@ -17,6 +17,8 @@ import projectCategory from "./documents/project-category";
 import course from "./documents/course";
 import courseCategory from "./documents/course-category";
 import courseTestimonial from "./documents/course-testimonial";
+import courseSection from "./documents/course-section";
+import courseLecture from "./documents/course-lecture";
 import instructor from "./documents/instructor";
 import servicesPage from "./singletons/pages/services-page";
 import blogPage from "./singletons/pages/blog-page";
@@ -44,6 +46,8 @@ const coreSchema = [
   course,
   courseCategory,
   courseTestimonial,
+  courseSection,
+  courseLecture,
   instructor,
   coursesPage,
 ];

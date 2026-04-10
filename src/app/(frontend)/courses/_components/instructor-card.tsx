@@ -3,16 +3,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Heading from '@/components/shared/heading';
 import { AllInstructorsQueryResult } from '../../../../../sanity.types';
-import { Globe, Github, Linkedin, Twitter } from 'lucide-react';
+import { Star, Users } from 'lucide-react';
 
 export default function InstructorCard({ instructor }: {
   instructor: AllInstructorsQueryResult[number];
 }) {
-  const { name, slug, title, bio, photo, expertise, courseCount, socialLinks } = instructor;
+  const { name, slug, title, bio, photo, expertise, courseCount, avgRating, totalStudents } = instructor;
 
   return (
     <article className='group hover-lift'>
-      <Link href={`/courses/instructor/${slug}`} className='block'>
+      <Link href={slug ? `/courses/instructor/${slug}` : '#'} className='block'>
         <div className='p-6 rounded-xl border border-white/[0.08] group-hover:border-white/[0.15] bg-dark-card transition-all duration-300'>
           <div className='flex items-start gap-4'>
             <div className='shrink-0 w-16 h-16 rounded-full overflow-hidden border-2 border-white/[0.08]'>
@@ -37,13 +37,27 @@ export default function InstructorCard({ instructor }: {
               {title && (
                 <p className='text-sm text-white/40 mt-1'>{title}</p>
               )}
-              {courseCount ? (
-                <p className='text-xs text-violet-400 mt-1'>{courseCount} course{courseCount !== 1 ? 's' : ''}</p>
-              ) : null}
             </div>
           </div>
+          <div className='flex items-center gap-4 mt-4 text-xs text-white/40'>
+            {courseCount ? (
+              <span>{courseCount} course{courseCount !== 1 ? 's' : ''}</span>
+            ) : null}
+            {avgRating ? (
+              <span className='flex items-center gap-1'>
+                <Star size={11} className='text-amber-400 fill-amber-400' />
+                {avgRating.toFixed(1)}
+              </span>
+            ) : null}
+            {totalStudents ? (
+              <span className='flex items-center gap-1'>
+                <Users size={11} />
+                {totalStudents.toLocaleString()} students
+              </span>
+            ) : null}
+          </div>
           {bio && (
-            <p className='text-sm text-white/40 leading-relaxed mt-4 line-clamp-3'>
+            <p className='text-sm text-white/40 leading-relaxed mt-3 line-clamp-3'>
               {bio}
             </p>
           )}
