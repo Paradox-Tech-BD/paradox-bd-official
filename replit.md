@@ -88,7 +88,7 @@ src/
   - `/courses/instructor/[slug]` — instructor profile with ratings/stats (courses, avg rating, total students) and their courses
 - **Studio structure**: Courses section with All Courses, Sections, Lectures, Categories, Instructors, Testimonials (orderable)
 - **Nav integration**: `coursesPage` added to `pageReferenceTypes`; `resolveHref` handles `course`, `instructor`, `coursesPage`
-- **Course R2 Storage**: Per-course Cloudflare R2 credentials stored in Sanity (admin-only field group, readOnly/hidden for non-admin users)
+- **Course R2 Storage**: Per-course R2 bucket name and public URL stored in Sanity (admin-only, readOnly/hidden for non-admin). Sensitive R2 credentials (account ID, access key, secret key) must be stored as server-side environment variables (R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY) — never in the CMS.
 - **Course fields**: title, slug, excerpt, description (portable text), thumbnail, category, instructors, level, duration, price, rating, enrolledCount, curriculum (inline sections → lectures), sections (referenced courseSection docs → courseLecture docs), whatYoullLearn, prerequisites, testimonials, paymentInstructions
 - **Types**: Manually added to `sanity.types.ts` (typegen broken due to jsdom dependency issue)
 
