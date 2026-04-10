@@ -286,7 +286,34 @@ export default defineType({
       group: 'r2Storage',
       readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
       hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
-      description: 'Non-sensitive bucket identifier. Actual R2 credentials (account ID, access key, secret key) must be stored as server-side environment variables — never in the CMS.'
+      description: 'Admin only. Bucket identifier for this course.'
+    }),
+    defineField({
+      name: 'r2AccountId',
+      title: 'R2 Account ID',
+      type: 'string',
+      group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Sensitive — never selected in public GROQ queries.'
+    }),
+    defineField({
+      name: 'r2AccessKeyId',
+      title: 'R2 Access Key ID',
+      type: 'string',
+      group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Sensitive credential — never selected in public GROQ queries.'
+    }),
+    defineField({
+      name: 'r2SecretAccessKey',
+      title: 'R2 Secret Access Key',
+      type: 'string',
+      group: 'r2Storage',
+      readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
+      description: 'Admin only. Sensitive credential — never selected in public GROQ queries.'
     }),
     defineField({
       name: 'r2PublicUrl',
@@ -295,7 +322,7 @@ export default defineType({
       group: 'r2Storage',
       readOnly: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
       hidden: ({ currentUser }) => !currentUser?.roles?.some(r => r.name === 'administrator'),
-      description: 'Public base URL for the R2 bucket, e.g. https://pub-xxx.r2.dev. Not a secret — safe to store in CMS.'
+      description: 'Admin only. Public base URL for the R2 bucket, e.g. https://pub-xxx.r2.dev'
     }),
     defineField({
       name: 'testimonials',
