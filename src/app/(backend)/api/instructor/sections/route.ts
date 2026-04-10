@@ -11,6 +11,15 @@ async function verifyInstructorCourse(userId: string, courseId: string): Promise
   return rows.length > 0;
 }
 
+async function getSectionCourseId(sectionId: number) {
+  const pool = getPool();
+  const { rows } = await pool.query<{ course_id: string }>(
+    'SELECT course_id FROM course_sections WHERE id = $1',
+    [sectionId]
+  );
+  return rows[0]?.course_id ?? null;
+}
+
 export async function GET(req: NextRequest) {
   let userId: string;
   try {
@@ -88,8 +97,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  let userId: string;
   try {
-    await requireRole('instructor');
+    userId = await requireRole('instructor');
   } catch {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -98,6 +108,11 @@ export async function PUT(req: NextRequest) {
     const { id, title, position } = await req.json();
     if (!id) {
       return NextResponse.json({ error: 'id required' }, { status: 400 });
+    }
+
+    const courseId = await getSectionCourseId(Number(id));
+    if (!courseId || !(await verifyInstructorCourse(userId, courseId))) {
+      return NextResponse.json({ error: 'Not your course' }, { status: 403 });
     }
 
     const pool = getPool();
@@ -132,8 +147,9 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  let userId: string;
   try {
-    await requireRole('instructor');
+    userId = await requireRole('instructor');
   } catch {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -142,6 +158,11 @@ export async function DELETE(req: NextRequest) {
     const { id } = await req.json();
     if (!id) {
       return NextResponse.json({ error: 'id required' }, { status: 400 });
+    }
+
+    const courseId = await getSectionCourseId(Number(id));
+    if (!courseId || !(await verifyInstructorCourse(userId, courseId))) {
+      return NextResponse.json({ error: 'Not your course' }, { status: 403 });
     }
 
     const pool = getPool();

@@ -2,9 +2,31 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireRole } from '@/lib/auth';
 import { getPool } from '@/lib/db';
 
+async function verifyInstructorCourse(userId: string, courseId: string): Promise<boolean> {
+  const pool = getPool();
+  const { rows } = await pool.query(
+    'SELECT 1 FROM course_instructors WHERE clerk_user_id = $1 AND course_id = $2',
+    [userId, courseId]
+  );
+  return rows.length > 0;
+}
+
+async function getLectureCourseId(lectureId: number) {
+  const pool = getPool();
+  const { rows } = await pool.query<{ course_id: string }>(
+    `SELECT s.course_id
+     FROM course_lectures l
+     JOIN course_sections s ON s.id = l.section_id
+     WHERE l.id = $1`,
+    [lectureId]
+  );
+  return rows[0]?.course_id ?? null;
+}
+
 export async function POST(req: NextRequest) {
+  let userId: string;
   try {
-    await requireRole('instructor');
+    userId = await requireRole('instructor');
   } catch {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -16,6 +38,11 @@ export async function POST(req: NextRequest) {
     }
 
     const pool = getPool();
+    const section = await pool.query<{ course_id: string }>('SELECT course_id FROM course_sections WHERE id = $1', [sectionId]);
+    if (section.rows.length === 0 || !(await verifyInstructorCourse(userId, section.rows[0].course_id))) {
+      return NextResponse.json({ error: 'Not your course' }, { status: 403 });
+    }
+
     const maxPos = await pool.query<{ max: number | null }>(
       'SELECT MAX(position) as max FROM course_lectures WHERE section_id = $1',
       [sectionId]
@@ -36,8 +63,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  let userId: string;
   try {
-    await requireRole('instructor');
+    userId = await requireRole('instructor');
   } catch {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -46,6 +74,11 @@ export async function PUT(req: NextRequest) {
     const { id, title, type, r2Key, duration, quizData, markdownContent, position } = await req.json();
     if (!id) {
       return NextResponse.json({ error: 'id required' }, { status: 400 });
+    }
+
+    const courseId = await getLectureCourseId(Number(id));
+    if (!courseId || !(await verifyInstructorCourse(userId, courseId))) {
+      return NextResponse.json({ error: 'Not your course' }, { status: 403 });
     }
 
     const pool = getPool();
@@ -79,8 +112,9 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  let userId: string;
   try {
-    await requireRole('instructor');
+    userId = await requireRole('instructor');
   } catch {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -89,6 +123,11 @@ export async function DELETE(req: NextRequest) {
     const { id } = await req.json();
     if (!id) {
       return NextResponse.json({ error: 'id required' }, { status: 400 });
+    }
+
+    const courseId = await getLectureCourseId(Number(id));
+    if (!courseId || !(await verifyInstructorCourse(userId, courseId))) {
+      return NextResponse.json({ error: 'Not your course' }, { status: 403 });
     }
 
     const pool = getPool();

@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { requireRole } from '@/lib/auth';
 import { getPool } from '@/lib/db';
 
+async function verifyInstructorCourse(userId: string, courseId: string): Promise<boolean> {
+  const pool = getPool();
+  const { rows } = await pool.query(
+    'SELECT 1 FROM course_instructors WHERE clerk_user_id = $1 AND course_id = $2',
+    [userId, courseId]
+  );
+  return rows.length > 0;
+}
+
 export async function GET(req: NextRequest) {
   let userId: string;
   try {
@@ -21,12 +30,12 @@ export async function GET(req: NextRequest) {
     const courseIds = coursesResult.rows.map((r) => r.course_id);
 
     if (courseIds.length === 0) {
-      return NextResponse.json({ messages: [] });
+      return NextResponse.json({ threads: [] });
     }
 
     const filterIds = courseId ? [courseId].filter((id) => courseIds.includes(id)) : courseIds;
     if (filterIds.length === 0) {
-      return NextResponse.json({ messages: [] });
+      return NextResponse.json({ threads: [] });
     }
 
     const { rows } = await pool.query(
@@ -72,6 +81,10 @@ export async function POST(req: NextRequest) {
     const { courseId, message, parentId } = await req.json();
     if (!courseId || !message) {
       return NextResponse.json({ error: 'courseId and message required' }, { status: 400 });
+    }
+
+    if (!(await verifyInstructorCourse(userId, courseId))) {
+      return NextResponse.json({ error: 'Not your course' }, { status: 403 });
     }
 
     const pool = getPool();
