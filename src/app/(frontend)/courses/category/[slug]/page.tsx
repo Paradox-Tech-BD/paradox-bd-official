@@ -1,6 +1,7 @@
 import React from 'react';
 import { sanityFetch } from '@/sanity/lib/live';
 import CourseListingPage from '../../_components/course-listing-page';
+import type { CourseCategoriesQueryResult } from '../../../../../../sanity.types';
 import {
   coursesByCategoryQuery,
   courseCategoriesQuery,
@@ -21,7 +22,7 @@ export default async function CourseCategoryPage({ params }: PageProps) {
     sanityFetch({ query: courseCategoriesQuery }),
   ]);
 
-  const category = categories?.find(c => c.slug === slug);
+  const category = categories?.find((c: CourseCategoriesQueryResult[number]) => c.slug === slug);
 
   return (
     <CourseListingPage

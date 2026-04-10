@@ -7,7 +7,7 @@ import { processMetadata } from '@/lib/utils';
 import { sanityFetch } from '@/sanity/lib/live';
 import Heading from '@/components/shared/heading';
 import CourseCard from '../../_components/course-card';
-import { InstructorBySlugQueryResult } from '../../../../../../sanity.types';
+import type { InstructorBySlugQueryResult, AllCoursesQueryResult } from '../../../../../../sanity.types';
 import {
   instructorBySlugQuery,
   instructorSlugsQuery,
@@ -134,7 +134,7 @@ export default async function InstructorPage({ params }: PageProps) {
                 </div>
                 {instructor.expertise && instructor.expertise.length > 0 && (
                   <div className='flex flex-wrap justify-center gap-1.5 mt-4 pt-4 border-t border-white/[0.06]'>
-                    {instructor.expertise.map((skill) => (
+                    {instructor.expertise.map((skill: string) => (
                       <span key={skill} className='px-2.5 py-1 rounded-full text-xs bg-white/[0.04] text-white/40 border border-white/[0.06]'>
                         {skill}
                       </span>
@@ -157,7 +157,7 @@ export default async function InstructorPage({ params }: PageProps) {
               <div>
                 <span className='section-label'>Courses ({instructor.courses.length})</span>
                 <div className='grid md:grid-cols-2 gap-6 mt-6'>
-                  {instructor.courses.map((course, index) => (
+                  {instructor.courses.map((course: AllCoursesQueryResult[number], index: number) => (
                     <div
                       key={course._id}
                       className='animate-fade-in-up'

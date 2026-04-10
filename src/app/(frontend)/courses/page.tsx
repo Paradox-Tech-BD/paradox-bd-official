@@ -10,7 +10,7 @@ import { PageBuilder } from '@/components/page-builder';
 import { PortableText } from '@portabletext/react';
 import { ArrowRight, BookOpen, Users, Award, Zap } from 'lucide-react';
 import TestimonialsCarousel from './_components/testimonials-carousel';
-import { CoursesPageQueryResult } from '../../../../sanity.types';
+import type { CoursesPageQueryResult, AllCoursesQueryResult, AllInstructorsQueryResult, RecentCourseTestimonialsQueryResult } from '../../../../sanity.types';
 import {
   coursesPageQuery,
   featuredCoursesQuery,
@@ -42,7 +42,7 @@ export default async function CoursesPage() {
     sanityFetch({ query: recentCourseTestimonialsQuery }),
   ]);
 
-  const featuredInstructors = instructors?.filter(i => i.featured) ?? [];
+  const featuredInstructors = (instructors ?? []).filter((i: AllInstructorsQueryResult[number]) => i.featured);
 
   return (
     <main className='overflow-hidden'>
@@ -126,7 +126,7 @@ export default async function CoursesPage() {
               </Link>
             </div>
             <div className='grid md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10'>
-              {featuredCourses.map((course, index) => (
+              {featuredCourses.map((course: AllCoursesQueryResult[number], index: number) => (
                 <div
                   key={course._id}
                   className='animate-fade-in-up'
@@ -158,7 +158,7 @@ export default async function CoursesPage() {
               Learn From the Best
             </Heading>
             <div className='grid md:grid-cols-2 xl:grid-cols-3 gap-6'>
-              {featuredInstructors.map((instructor, index) => (
+              {featuredInstructors.map((instructor: AllInstructorsQueryResult[number], index: number) => (
                 <div
                   key={instructor._id}
                   className='animate-fade-in-up'

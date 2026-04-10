@@ -7,7 +7,12 @@ import { processMetadata } from '@/lib/utils';
 import { sanityFetch } from '@/sanity/lib/live';
 import Heading from '@/components/shared/heading';
 import { PortableText } from '@portabletext/react';
-import { CourseBySlugQueryResult } from '../../../../../sanity.types';
+import type { CourseBySlugQueryResult } from '../../../../../sanity.types';
+
+type CurriculumSection = NonNullable<NonNullable<CourseBySlugQueryResult>['curriculum']>[number];
+type CurriculumLecture = NonNullable<CurriculumSection['lectures']>[number];
+type CourseInstructor = NonNullable<NonNullable<CourseBySlugQueryResult>['instructors']>[number];
+type CourseTestimonial = NonNullable<NonNullable<CourseBySlugQueryResult>['testimonials']>[number];
 import {
   courseBySlugQuery,
   courseSlugsQuery,
@@ -64,9 +69,9 @@ export default async function CourseDetailPage({ params }: PageProps) {
 
   if (course === null) notFound();
 
-  const totalLectures = course.curriculum?.reduce((acc, section) => acc + (section.lectures?.length ?? 0), 0) ?? 0;
-  const totalDuration = course.curriculum?.reduce((acc, section) =>
-    acc + (section.lectures?.reduce((lAcc, l) => lAcc + (l.duration ?? 0), 0) ?? 0), 0) ?? 0;
+  const totalLectures = course.curriculum?.reduce((acc: number, section: CurriculumSection) => acc + (section.lectures?.length ?? 0), 0) ?? 0;
+  const totalDuration = course.curriculum?.reduce((acc: number, section: CurriculumSection) =>
+    acc + (section.lectures?.reduce((lAcc: number, l: CurriculumLecture) => lAcc + (l.duration ?? 0), 0) ?? 0), 0) ?? 0;
 
   return (
     <main className='overflow-hidden'>
@@ -134,7 +139,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
               {course.instructors && course.instructors.length > 0 && (
                 <div className='flex items-center gap-3 animate-fade-in-up' style={{ animationDelay: '200ms' }}>
                   <div className='flex -space-x-2'>
-                    {course.instructors.map((instructor) => (
+                    {course.instructors.map((instructor: CourseInstructor) => (
                       <Link key={instructor._id} href={`/courses/instructor/${instructor.slug}`} className='block'>
                         <div className='w-10 h-10 rounded-full overflow-hidden border-2 border-dark-bg hover:scale-110 transition-transform'>
                           {instructor.photo?.asset?.url ? (
@@ -155,7 +160,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                     ))}
                   </div>
                   <span className='text-sm text-white/50'>
-                    by {course.instructors.map((i, idx) => (
+                    by {course.instructors.map((i: CourseInstructor, idx: number) => (
                       <React.Fragment key={i._id}>
                         <Link href={`/courses/instructor/${i.slug}`} className='text-white/70 hover:text-white transition-colors'>
                           {i.name}
@@ -174,7 +179,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   What You&apos;ll Learn
                 </Heading>
                 <div className='grid md:grid-cols-2 gap-3'>
-                  {course.whatYoullLearn.map((item, i) => (
+                  {course.whatYoullLearn.map((item: string, i: number) => (
                     <div key={i} className='flex items-start gap-3'>
                       <CheckCircle size={16} className='text-emerald-400 shrink-0 mt-0.5' />
                       <span className='text-sm text-white/60'>{item}</span>
@@ -216,7 +221,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   Instructor{course.instructors.length > 1 ? 's' : ''}
                 </Heading>
                 <div className='space-y-6'>
-                  {course.instructors.map((instructor) => (
+                  {course.instructors.map((instructor: CourseInstructor) => (
                     <div key={instructor._id} className='p-6 rounded-xl border border-white/[0.08] bg-dark-card'>
                       <div className='flex items-start gap-4'>
                         <Link href={`/courses/instructor/${instructor.slug}`}>
@@ -247,7 +252,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                           )}
                           {instructor.expertise && instructor.expertise.length > 0 && (
                             <div className='flex flex-wrap gap-1.5 mt-3'>
-                              {instructor.expertise.map((skill) => (
+                              {instructor.expertise.map((skill: string) => (
                                 <span key={skill} className='px-2 py-0.5 rounded-full text-[11px] bg-white/[0.04] text-white/40 border border-white/[0.06]'>
                                   {skill}
                                 </span>
@@ -285,7 +290,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   Student Reviews
                 </Heading>
                 <div className='grid md:grid-cols-2 gap-4'>
-                  {course.testimonials.map((testimonial) => (
+                  {course.testimonials.map((testimonial: CourseTestimonial) => (
                     <div key={testimonial._id} className='p-5 rounded-xl border border-white/[0.08] bg-dark-card'>
                       <div className='flex items-center gap-3 mb-3'>
                         <div className='w-10 h-10 rounded-full overflow-hidden bg-white/[0.06]'>
@@ -329,7 +334,7 @@ export default async function CourseDetailPage({ params }: PageProps) {
                   Prerequisites
                 </Heading>
                 <ul className='space-y-2'>
-                  {course.prerequisites.map((prereq, i) => (
+                  {course.prerequisites.map((prereq: string, i: number) => (
                     <li key={i} className='flex items-start gap-3 text-sm text-white/50'>
                       <span className='shrink-0 w-1.5 h-1.5 rounded-full bg-white/20 mt-1.5' />
                       {prereq}
