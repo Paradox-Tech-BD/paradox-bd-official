@@ -24,6 +24,7 @@ interface CurriculumAccordionProps {
 const lectureTypeIcons: Record<string, React.ElementType> = {
   video: PlayCircle,
   reading: FileText,
+  markdown: FileText,
   quiz: HelpCircle,
 };
 

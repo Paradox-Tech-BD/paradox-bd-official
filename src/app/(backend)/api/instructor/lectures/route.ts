@@ -51,8 +51,17 @@ export async function POST(req: NextRequest) {
 
     const { rows } = await pool.query(
       `INSERT INTO course_lectures (section_id, title, type, r2_key, duration, quiz_data, markdown_content, position)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-      [sectionId, title, type ?? 'video', r2Key ?? null, duration ?? null, quizData ? JSON.stringify(quizData) : null, markdownContent ?? null, position]
+       VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8) RETURNING *`,
+      [
+        sectionId,
+        title,
+        type ?? 'video',
+        r2Key ?? null,
+        duration ?? null,
+        quizData ? JSON.stringify(quizData) : null,
+        markdownContent ?? null,
+        position,
+      ]
     );
 
     return NextResponse.json({ lecture: rows[0] });
@@ -90,7 +99,7 @@ export async function PUT(req: NextRequest) {
     if (type !== undefined) { updates.push(`type = $${idx++}`); values.push(type); }
     if (r2Key !== undefined) { updates.push(`r2_key = $${idx++}`); values.push(r2Key); }
     if (duration !== undefined) { updates.push(`duration = $${idx++}`); values.push(duration); }
-    if (quizData !== undefined) { updates.push(`quiz_data = $${idx++}`); values.push(JSON.stringify(quizData)); }
+    if (quizData !== undefined) { updates.push(`quiz_data = $${idx++}::jsonb`); values.push(quizData === null ? null : JSON.stringify(quizData)); }
     if (markdownContent !== undefined) { updates.push(`markdown_content = $${idx++}`); values.push(markdownContent); }
     if (position !== undefined) { updates.push(`position = $${idx++}`); values.push(position); }
 

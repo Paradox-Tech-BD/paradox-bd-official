@@ -47,13 +47,13 @@ export default function SupportPage() {
       <p className='text-white/40 text-sm mb-8'>Threaded support messages per course</p>
       <div className='space-y-4'>
         {threads.length === 0 ? (
-          <div className='rounded-xl border border-white/[0.08] bg-[rgb(20,20,30)] p-10 text-center'>
+          <div className='rounded-xl border border-white/[0.08] bg-dark-card p-10 text-center'>
             <MessageSquare size={32} className='mx-auto text-white/20 mb-3' />
             <p className='text-white/40'>No support messages yet.</p>
           </div>
         ) : (
           threads.map((thread) => (
-            <div key={thread.id} className='rounded-xl border border-white/[0.08] bg-[rgb(20,20,30)] p-5'>
+            <div key={thread.id} className='rounded-xl border border-white/[0.08] bg-dark-card p-5'>
               <div className='flex items-start justify-between gap-4'>
                 <div>
                   <p className='text-xs text-white/30 mb-1'>{thread.course_id}</p>
@@ -70,7 +70,7 @@ export default function SupportPage() {
                   </div>
                 ))}
                 <div className='flex gap-2'>
-                  <input value={reply[thread.id] ?? ''} onChange={(e) => setReply((prev) => ({ ...prev, [thread.id]: e.target.value }))} placeholder='Reply to student' className='flex-1 px-3 py-2 rounded-lg bg-[rgb(12,12,18)] border border-white/[0.08] text-sm text-white' />
+                  <input value={reply[thread.id] ?? ''} onChange={(e) => setReply((prev) => ({ ...prev, [thread.id]: e.target.value }))} placeholder='Reply to student' className='flex-1 px-3 py-2 rounded-lg bg-dark-bg border border-white/[0.08] text-sm text-white' />
                   <button onClick={() => sendReply(thread.id, thread.course_id)} className='px-3 py-2 rounded-lg bg-violet-500/20 text-violet-300 border border-violet-500/20 text-sm inline-flex items-center gap-2'><Reply size={14} /> Reply</button>
                 </div>
               </div>

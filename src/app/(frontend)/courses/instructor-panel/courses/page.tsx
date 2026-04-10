@@ -41,7 +41,7 @@ export default function InstructorCoursesPage() {
       <p className='text-white/40 text-sm mb-8'>Manage your assigned courses and content</p>
 
       {courses.length === 0 ? (
-        <div className='rounded-xl border border-white/[0.08] bg-[rgb(20,20,30)] p-12 text-center'>
+        <div className='rounded-xl border border-white/[0.08] bg-dark-card p-12 text-center'>
           <BookOpen size={32} className='text-white/20 mx-auto mb-3' />
           <p className='text-white/40'>No courses assigned yet.</p>
           <p className='text-white/20 text-sm mt-1'>Contact an admin to be assigned to a course.</p>
@@ -52,7 +52,7 @@ export default function InstructorCoursesPage() {
             <Link
               key={course._id}
               href={`/courses/instructor-panel/courses/${course._id}`}
-              className='group rounded-xl border border-white/[0.08] bg-[rgb(20,20,30)] hover:border-white/[0.12] transition-colors'
+              className='group rounded-xl border border-white/[0.08] bg-dark-card hover:border-white/[0.12] transition-colors'
             >
               <div className='flex items-center gap-5 p-5'>
                 {course.thumbnail && (

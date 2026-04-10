@@ -8,6 +8,8 @@ import { sanityFetch } from '@/sanity/lib/live';
 import Heading from '@/components/shared/heading';
 import { PortableText } from '@portabletext/react';
 import type { CourseBySlugQueryResult } from '../../../../../sanity.types';
+import { getPool } from '@/lib/db';
+import { auth } from '@clerk/nextjs/server';
 
 type CurriculumSection = NonNullable<NonNullable<CourseBySlugQueryResult>['curriculum']>[number];
 type CurriculumLecture = NonNullable<CurriculumSection['lectures']>[number];
@@ -15,7 +17,6 @@ type CourseInstructor = NonNullable<NonNullable<CourseBySlugQueryResult>['instru
 type CourseTestimonial = NonNullable<NonNullable<CourseBySlugQueryResult>['testimonials']>[number];
 import {
   courseBySlugQuery,
-  courseSlugsQuery,
 } from '@/sanity/lib/queries/documents/course';
 import {
   Star,
@@ -35,18 +36,13 @@ import {
   Award,
 } from 'lucide-react';
 import CurriculumAccordion from '../_components/curriculum-accordion';
+import CourseSupport from './_components/course-support';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-  const { data } = await sanityFetch({
-    query: courseSlugsQuery,
-    perspective: "published",
-    stega: false,
-  });
-  return data;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -69,9 +65,90 @@ export default async function CourseDetailPage({ params }: PageProps) {
 
   if (course === null) notFound();
 
-  const totalLectures = course.curriculum?.reduce((acc: number, section: CurriculumSection) => acc + (section.lectures?.length ?? 0), 0) ?? 0;
-  const totalDuration = course.curriculum?.reduce((acc: number, section: CurriculumSection) =>
-    acc + (section.lectures?.reduce((lAcc: number, l: CurriculumLecture) => lAcc + (l.duration ?? 0), 0) ?? 0), 0) ?? 0;
+  type AccordionLecture = {
+    _key: string | null;
+    title: string | null;
+    type: string | null;
+    duration: number | null;
+    isFree: boolean | null;
+  };
+
+  type AccordionSection = {
+    _key: string | null;
+    title: string | null;
+    lectures: AccordionLecture[] | null;
+  };
+
+  const sanityCurriculum: AccordionSection[] = (course.curriculum ?? []).map((section: CurriculumSection) => ({
+    _key: section._key ?? null,
+    title: section.title ?? null,
+    lectures: (section.lectures ?? []).map((lecture: CurriculumLecture) => ({
+      _key: lecture._key ?? null,
+      title: lecture.title ?? null,
+      type: lecture.type ?? null,
+      duration: lecture.duration ?? null,
+      isFree: (lecture as any).isFree ?? null,
+    })),
+  }));
+
+  let curriculumForUi: AccordionSection[] = sanityCurriculum;
+  try {
+    if (process.env.DATABASE_URL) {
+      const pool = getPool();
+      const { rows } = await pool.query(
+        `SELECT s.id, s.title, s.position,
+          COALESCE(json_agg(
+            json_build_object('id', l.id, 'title', l.title, 'type', l.type, 'duration', l.duration, 'position', l.position)
+            ORDER BY l.position
+          ) FILTER (WHERE l.id IS NOT NULL), '[]') as lectures
+         FROM course_sections s
+         LEFT JOIN course_lectures l ON l.section_id = s.id
+         WHERE s.course_id = $1
+         GROUP BY s.id
+         ORDER BY s.position`,
+        [course._id]
+      );
+
+      const dbCurriculum: AccordionSection[] = rows.map((s: any) => ({
+        _key: String(s.id),
+        title: s.title,
+        lectures: (s.lectures ?? []).map((l: any) => ({
+          _key: String(l.id),
+          title: l.title,
+          type: l.type,
+          duration: l.duration,
+          isFree: null,
+        })),
+      }));
+
+      if (dbCurriculum.length > 0) {
+        curriculumForUi = dbCurriculum;
+      }
+    }
+  } catch {
+    // fallback to Sanity curriculum
+  }
+
+  const totalLectures = curriculumForUi.reduce((acc, section) => acc + (section.lectures?.length ?? 0), 0);
+  const totalDuration = curriculumForUi.reduce(
+    (acc, section) => acc + (section.lectures?.reduce((lAcc, l) => lAcc + (l.duration ?? 0), 0) ?? 0),
+    0
+  );
+
+  const { userId } = await auth();
+  let canUseSupport = false;
+  try {
+    if (userId && process.env.DATABASE_URL) {
+      const pool = getPool();
+      const enrolled = await pool.query(
+        `SELECT 1 FROM enrollments WHERE clerk_user_id = $1 AND course_id = $2 AND status = 'approved'`,
+        [userId, course._id]
+      );
+      canUseSupport = enrolled.rows.length > 0;
+    }
+  } catch {
+    canUseSupport = false;
+  }
 
   return (
     <main className='overflow-hidden'>
@@ -200,18 +277,30 @@ export default async function CourseDetailPage({ params }: PageProps) {
               </div>
             )}
 
-            {course.curriculum && course.curriculum.length > 0 && (
+            {curriculumForUi.length > 0 && (
               <div>
                 <div className='flex items-center justify-between mb-6'>
                   <Heading tag="h2" size="sm">
                     Curriculum
                   </Heading>
                   <span className='text-sm text-white/30'>
-                    {course.curriculum.length} sections &middot; {totalLectures} lectures
+                    {curriculumForUi.length} sections &middot; {totalLectures} lectures
                     {totalDuration > 0 && ` · ${Math.round(totalDuration / 60)}h ${totalDuration % 60}m`}
                   </span>
                 </div>
-                <CurriculumAccordion curriculum={course.curriculum} />
+                <CurriculumAccordion curriculum={curriculumForUi} />
+              </div>
+            )}
+
+            {canUseSupport && (
+              <div>
+                <div className='flex items-center justify-between mb-6'>
+                  <Heading tag="h2" size="sm">
+                    Support
+                  </Heading>
+                  <span className='text-sm text-white/30'>Message your instructor</span>
+                </div>
+                <CourseSupport courseId={course._id} />
               </div>
             )}
 
