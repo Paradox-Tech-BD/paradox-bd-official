@@ -12,7 +12,10 @@ import {
   ProjectBySlugQueryResult, 
   ProjectsPageQueryResult, 
   ServiceBySlugQueryResult, 
-  ServicesPageQueryResult 
+  ServicesPageQueryResult,
+  CoursesPageQueryResult,
+  CourseBySlugQueryResult,
+  InstructorBySlugQueryResult,
 } from '../../sanity.types';
 
 export function cn(...inputs: ClassValue[]) {
@@ -120,6 +123,12 @@ export function resolveHref(documentType?: string, slug?: string): string | unde
       return slug ? `/projects/${slug}` : undefined;
     case 'post':
       return slug ? `/blog/${slug}` : undefined;
+    case 'coursesPage':
+      return '/courses';
+    case 'course':
+      return slug ? `/courses/${slug}` : undefined;
+    case 'instructor':
+      return slug ? `/courses/instructor/${slug}` : undefined;
     default:
       return `/${slug}`;
   }
@@ -132,7 +141,10 @@ export type PageQueryResult =
   | BlogPageQueryResult 
   | PostBySlugQueryResult
   | ProjectsPageQueryResult
-  | ProjectBySlugQueryResult;
+  | ProjectBySlugQueryResult
+  | CoursesPageQueryResult
+  | CourseBySlugQueryResult
+  | InstructorBySlugQueryResult;
   
 export function processMetadata({ data }: {
   data: PageQueryResult;

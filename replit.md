@@ -77,6 +77,21 @@ src/
   sanity/         — Sanity schemas, queries, client
 ```
 
+## LMS (Courses System)
+- **Sanity schemas**: `course`, `courseCategory`, `courseTestimonial`, `instructor`, `coursesPage` (singleton)
+- **GROQ queries**: `src/sanity/lib/queries/documents/course.ts` — all courses, featured, by category, by slug, instructors, categories
+- **Frontend routes**:
+  - `/courses` — marketing landing page (hero, featured courses, featured instructors)
+  - `/courses/all` — full course listing with category filter + search
+  - `/courses/category/[slug]` — category-filtered listing
+  - `/courses/[slug]` — Udemy-style course detail (curriculum accordion, instructor cards, testimonials, sticky pricing sidebar)
+  - `/courses/instructor/[slug]` — instructor profile with their courses
+- **Studio structure**: Courses section with All Courses, Categories, Instructors, Testimonials (orderable)
+- **Nav integration**: `coursesPage` added to `pageReferenceTypes`; `resolveHref` handles `course`, `instructor`, `coursesPage`
+- **Course R2 Storage**: Per-course Cloudflare R2 credentials stored in Sanity (admin-only field group)
+- **Course fields**: title, slug, excerpt, description (portable text), thumbnail, category, instructors, level, duration, price, rating, enrolledCount, curriculum (sections → lectures), whatYoullLearn, prerequisites, testimonials, paymentInstructions
+- **Types**: Manually added to `sanity.types.ts` (typegen broken due to jsdom dependency issue)
+
 ## Notes
 - npm install requires `--legacy-peer-deps` (React 19 peer conflict)
 - Testimonial block intentionally inverts to white bg + dark text

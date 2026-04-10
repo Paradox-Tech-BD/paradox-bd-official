@@ -28,7 +28,8 @@ export const IndexPages = (
         .items([
           BlogItem(S),
           ProjectsItem(S),
-          ServicesItem(S)
+          ServicesItem(S),
+          CoursesPageItem(S),
         ])
     ) 
 )
@@ -84,5 +85,19 @@ export const ProjectsItem = (
       .schemaType('projectsPage')
       .documentId('projectsPage')
       .title('Projects')
+    )
+)
+
+export const CoursesPageItem = (
+  S: StructureBuilder, 
+) => (
+  S.listItem()
+    .title('Courses')
+    .child(
+      S.document()
+      .id('coursesPage')
+      .schemaType('coursesPage')
+      .documentId('coursesPage')
+      .title('Courses')
     )
 )

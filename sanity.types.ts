@@ -10322,6 +10322,280 @@ export type BlogSettingsQueryResult = {
   showPostsByCategory: boolean | null;
 } | null;
 
+// Variable: courseSlugsQuery
+export type CourseSlugsQueryResult = Array<{
+  params: { slug: string };
+}>;
+
+// Variable: coursesPageQuery
+export type CoursesPageQueryResult = {
+  _id: string;
+  _type: "coursesPage";
+  title: string | null;
+  slug: string | null;
+  heroHeading: string | null;
+  heroSubheading: string | null;
+  aboutHeading: string | null;
+  aboutContent: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  featuredHeading: string | null;
+  instructorsHeading: string | null;
+  testimonialsHeading: string | null;
+  pageBuilder: Array<Record<string, unknown>> | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    noIndex: boolean | null;
+    image: Record<string, unknown> | null;
+  } | null;
+} | null;
+
+// Variable: allCoursesQuery
+export type AllCoursesQueryResult = Array<{
+  _id: string;
+  _type: "course";
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  level: "beginner" | "intermediate" | "advanced" | null;
+  duration: string | null;
+  price: number | null;
+  originalPrice: number | null;
+  rating: number | null;
+  enrolledCount: number | null;
+  featured: boolean | null;
+  published: boolean | null;
+  thumbnail: {
+    asset: {
+      url: string | null;
+    } | null;
+    altText: string | null;
+  } | null;
+  category: {
+    _id: string;
+    title: string | null;
+    slug: string | null;
+  } | null;
+  instructors: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    title: string | null;
+    photo: {
+      asset: {
+        url: string | null;
+      } | null;
+      altText: string | null;
+    } | null;
+  }> | null;
+}>;
+
+// Variable: featuredCoursesQuery
+export type FeaturedCoursesQueryResult = AllCoursesQueryResult;
+
+// Variable: courseBySlugQuery
+export type CourseBySlugQueryResult = {
+  _id: string;
+  _type: "course";
+  title: string | null;
+  slug: string | null;
+  excerpt: string | null;
+  description: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  level: "beginner" | "intermediate" | "advanced" | null;
+  duration: string | null;
+  price: number | null;
+  originalPrice: number | null;
+  rating: number | null;
+  enrolledCount: number | null;
+  previewVideoUrl: string | null;
+  whatYoullLearn: Array<string> | null;
+  prerequisites: Array<string> | null;
+  paymentInstructions: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  thumbnail: {
+    asset: {
+      url: string | null;
+    } | null;
+    altText: string | null;
+  } | null;
+  category: {
+    _id: string;
+    title: string | null;
+    slug: string | null;
+  } | null;
+  instructors: Array<{
+    _id: string;
+    name: string | null;
+    slug: string | null;
+    title: string | null;
+    bio: string | null;
+    expertise: Array<string> | null;
+    photo: {
+      asset: {
+        url: string | null;
+      } | null;
+      altText: string | null;
+    } | null;
+    socialLinks: {
+      website: string | null;
+      twitter: string | null;
+      linkedin: string | null;
+      github: string | null;
+    } | null;
+  }> | null;
+  curriculum: Array<{
+    _key: string;
+    title: string | null;
+    lectures: Array<{
+      _key: string;
+      title: string | null;
+      type: string | null;
+      duration: number | null;
+      isFree: boolean | null;
+    }> | null;
+  }> | null;
+  testimonials: Array<{
+    _id: string;
+    name: string | null;
+    rating: number | null;
+    quote: string | null;
+    completionDate: string | null;
+    avatar: {
+      asset: {
+        url: string | null;
+      } | null;
+    } | null;
+  }> | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    noIndex: boolean | null;
+    image: Record<string, unknown> | null;
+  } | null;
+} | null;
+
+// Variable: courseCategoriesQuery
+export type CourseCategoriesQueryResult = Array<{
+  _id: string;
+  _type: "courseCategory";
+  title: string | null;
+  slug: string | null;
+  description: string | null;
+  courseCount: number | null;
+}>;
+
+// Variable: coursesByCategoryQuery
+export type CoursesByCategoryQueryResult = AllCoursesQueryResult;
+
+// Variable: allInstructorsQuery
+export type AllInstructorsQueryResult = Array<{
+  _id: string;
+  _type: "instructor";
+  name: string | null;
+  slug: string | null;
+  title: string | null;
+  bio: string | null;
+  expertise: Array<string> | null;
+  featured: boolean | null;
+  photo: {
+    asset: {
+      url: string | null;
+    } | null;
+    altText: string | null;
+  } | null;
+  socialLinks: {
+    website: string | null;
+    twitter: string | null;
+    linkedin: string | null;
+    github: string | null;
+  } | null;
+  courseCount: number | null;
+}>;
+
+// Variable: instructorBySlugQuery
+export type InstructorBySlugQueryResult = {
+  _id: string;
+  _type: "instructor";
+  name: string | null;
+  slug: string | null;
+  title: string | null;
+  bio: string | null;
+  expertise: Array<string> | null;
+  photo: {
+    asset: {
+      url: string | null;
+    } | null;
+    altText: string | null;
+  } | null;
+  socialLinks: {
+    website: string | null;
+    twitter: string | null;
+    linkedin: string | null;
+    github: string | null;
+  } | null;
+  courses: AllCoursesQueryResult;
+  seo: {
+    title: string | null;
+    description: string | null;
+    noIndex: boolean | null;
+    image: Record<string, unknown> | null;
+  } | null;
+} | null;
+
+// Variable: instructorSlugsQuery
+export type InstructorSlugsQueryResult = Array<{
+  params: { slug: string };
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {

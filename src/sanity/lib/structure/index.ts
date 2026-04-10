@@ -5,6 +5,7 @@ import { BlogItem } from "./items/blog-item";
 import { TestimonialsItem } from "./items/testimonials-item";
 import { ServicesItem } from "./items/services-item";
 import { ProjectsItem } from "./items/projects-item";
+import { CoursesItem } from "./items/courses-item";
 import { FormsItem } from "./items/forms-item";
 
 export const structure: StructureResolver = (
@@ -21,6 +22,7 @@ export const structure: StructureResolver = (
       S.divider(),
       ServicesItem(S, context),
       ProjectsItem(S, context),
+      CoursesItem(S, context),
       BlogItem(S, context),
       S.divider(),
       TestimonialsItem(S, context),

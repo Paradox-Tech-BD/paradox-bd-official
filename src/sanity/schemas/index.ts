@@ -14,9 +14,14 @@ import service from "./documents/service";
 import form from "./documents/form";
 import project from "./documents/project";
 import projectCategory from "./documents/project-category";
+import course from "./documents/course";
+import courseCategory from "./documents/course-category";
+import courseTestimonial from "./documents/course-testimonial";
+import instructor from "./documents/instructor";
 import servicesPage from "./singletons/pages/services-page";
 import blogPage from "./singletons/pages/blog-page";
 import projectsPage from "./singletons/pages/projects-page";
+import coursesPage from "./singletons/pages/courses-page";
 
 const coreSchema = [
   generalSettings,
@@ -36,6 +41,11 @@ const coreSchema = [
   service,
   servicesPage,
   projectsPage,
+  course,
+  courseCategory,
+  courseTestimonial,
+  instructor,
+  coursesPage,
 ];
 
 import { pageBuilder } from "./page-builder/page-builder";
