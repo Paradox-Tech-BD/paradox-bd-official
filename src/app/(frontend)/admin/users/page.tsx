@@ -14,13 +14,20 @@ interface ClerkUser {
   assignedCourses: string[];
 }
 
+interface SanityCourse {
+  _id: string;
+  title: string;
+  slug?: { current: string };
+}
+
 export default function AdminUsersPage() {
   const { user, isLoaded } = useUser();
   const [users, setUsers] = useState<ClerkUser[]>([]);
+  const [courses, setCourses] = useState<SanityCourse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [assigningUser, setAssigningUser] = useState<string | null>(null);
-  const [courseId, setCourseId] = useState('');
+  const [selectedCourseId, setSelectedCourseId] = useState('');
 
   const role = (user?.publicMetadata?.role as string) ?? 'learner';
 
@@ -32,27 +39,30 @@ export default function AdminUsersPage() {
       return;
     }
 
-    fetch('/api/admin/users')
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          setError(data.error);
+    Promise.all([
+      fetch('/api/admin/users').then((res) => res.json()),
+      fetch('/api/admin/courses').then((res) => res.json()),
+    ])
+      .then(([usersData, coursesData]) => {
+        if (usersData.error) {
+          setError(usersData.error);
         } else {
-          setUsers(data.users ?? []);
+          setUsers(usersData.users ?? []);
         }
+        setCourses(coursesData.courses ?? []);
       })
-      .catch(() => setError('Failed to load users'))
+      .catch(() => setError('Failed to load data'))
       .finally(() => setLoading(false));
   }, [isLoaded, role]);
 
   async function handleAssignInstructor(userId: string) {
-    if (!courseId.trim()) return;
+    if (!selectedCourseId) return;
 
     try {
       const res = await fetch('/api/admin/assign-instructor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, courseId: courseId.trim() }),
+        body: JSON.stringify({ userId, courseId: selectedCourseId }),
       });
 
       if (!res.ok) {
@@ -62,10 +72,14 @@ export default function AdminUsersPage() {
       }
 
       setUsers((prev) =>
-        prev.map((u) => (u.id === userId ? { ...u, role: 'instructor' } : u))
+        prev.map((u) =>
+          u.id === userId
+            ? { ...u, role: 'instructor', assignedCourses: [...u.assignedCourses, selectedCourseId] }
+            : u
+        )
       );
       setAssigningUser(null);
-      setCourseId('');
+      setSelectedCourseId('');
     } catch {
       alert('Failed to assign instructor');
     }
@@ -89,6 +103,8 @@ export default function AdminUsersPage() {
       </div>
     );
   }
+
+  const courseMap = new Map(courses.map((c) => [c._id, c.title]));
 
   return (
     <div className='min-h-screen bg-[rgb(12,12,18)] text-white p-6 md:p-10'>
@@ -142,8 +158,8 @@ export default function AdminUsersPage() {
                     {u.assignedCourses.length > 0 ? (
                       <div className='flex flex-wrap gap-1'>
                         {u.assignedCourses.map((cid) => (
-                          <span key={cid} className='inline-block px-1.5 py-0.5 rounded text-[10px] bg-violet-500/10 text-violet-400 border border-violet-500/20 truncate max-w-[120px]' title={cid}>
-                            {cid}
+                          <span key={cid} className='inline-block px-1.5 py-0.5 rounded text-[10px] bg-violet-500/10 text-violet-400 border border-violet-500/20 truncate max-w-[160px]' title={cid}>
+                            {courseMap.get(cid) ?? cid}
                           </span>
                         ))}
                       </div>
@@ -159,21 +175,29 @@ export default function AdminUsersPage() {
                       <>
                         {assigningUser === u.id ? (
                           <div className='flex items-center gap-2'>
-                            <input
-                              type='text'
-                              value={courseId}
-                              onChange={(e) => setCourseId(e.target.value)}
-                              placeholder='Sanity course _id'
-                              className='px-2 py-1 text-xs rounded bg-dark-surface border border-white/[0.08] text-white placeholder:text-white/20 w-48'
-                            />
+                            <select
+                              value={selectedCourseId}
+                              onChange={(e) => setSelectedCourseId(e.target.value)}
+                              className='px-2 py-1 text-xs rounded bg-dark-surface border border-white/[0.08] text-white w-48 appearance-none'
+                            >
+                              <option value=''>Select a course</option>
+                              {courses
+                                .filter((c) => !u.assignedCourses.includes(c._id))
+                                .map((c) => (
+                                  <option key={c._id} value={c._id}>
+                                    {c.title}
+                                  </option>
+                                ))}
+                            </select>
                             <button
                               onClick={() => handleAssignInstructor(u.id)}
-                              className='px-2 py-1 text-xs rounded bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 transition-colors'
+                              disabled={!selectedCourseId}
+                              className='px-2 py-1 text-xs rounded bg-violet-500/20 text-violet-400 hover:bg-violet-500/30 transition-colors disabled:opacity-30 disabled:cursor-not-allowed'
                             >
                               Confirm
                             </button>
                             <button
-                              onClick={() => { setAssigningUser(null); setCourseId(''); }}
+                              onClick={() => { setAssigningUser(null); setSelectedCourseId(''); }}
                               className='px-2 py-1 text-xs rounded text-white/30 hover:text-white/50 transition-colors'
                             >
                               Cancel

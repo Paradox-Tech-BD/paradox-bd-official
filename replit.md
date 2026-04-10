@@ -101,7 +101,7 @@ src/
 - **Dashboard pages**: `/courses/dashboard` (learner), `/courses/instructor-panel` (instructor/admin)
 - **Admin panel**: `/admin/users` — user list with role badges, assigned courses column, assign-instructor action
 - **Sanity Studio tool**: "Users" tab in Studio (iframe plugin → `/admin/users`)
-- **API routes**: `/api/admin/users` (GET — list users + assigned courses), `/api/admin/assign-instructor` (POST — assign user as instructor to course)
+- **API routes**: `/api/admin/users` (GET — list users + assigned courses), `/api/admin/courses` (GET — list courses for dropdown), `/api/admin/assign-instructor` (POST — assign user as instructor to course), `/api/webhooks/clerk` (POST — Clerk webhook, sets default role on user.created)
 - **Database** (Postgres):
   - `course_instructors` (id, clerk_user_id, course_id, created_at) — UNIQUE(clerk_user_id, course_id)
   - `enrollments` (id, clerk_user_id, course_id, status, payment_proof_url, approved_at, created_at) — UNIQUE(clerk_user_id, course_id)
