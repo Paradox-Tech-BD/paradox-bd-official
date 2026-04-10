@@ -96,7 +96,7 @@ src/
 - **Auth**: Clerk (`@clerk/nextjs` + `@clerk/themes`) with dark theme
 - **Roles**: `admin`, `instructor`, `learner` (default) — stored in Clerk `publicMetadata.role`
 - **Auth utilities**: `src/lib/auth.ts` (server-side `getUserRole`, `requireRole`), `src/hooks/use-user-role.ts` (client-side `useUserRole`)
-- **Middleware** (`middleware.ts`): Protects `/courses/dashboard`, `/courses/instructor-panel`, `/api/admin/*`, `/admin/*`. Admin-only for `/admin/*` and `/api/admin/*`. Instructor+admin for `/courses/instructor-panel/*`.
+- **Middleware** (`middleware.ts`): Authentication-only — ensures users are signed in for protected routes (`/courses/dashboard`, `/courses/instructor-panel`, `/api/admin/*`, `/admin/*`). Authorization (role checking) is handled by API routes via `requireRole()` and by pages via server/client-side role checks.
 - **Auth pages**: `/courses/sign-in`, `/courses/sign-up` (Clerk components with dark theme)
 - **Dashboard pages**: `/courses/dashboard` (learner), `/courses/instructor-panel` (instructor/admin)
 - **Admin panel**: `/admin/users` — user list with role badges, assigned courses column, assign-instructor action

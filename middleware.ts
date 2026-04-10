@@ -7,34 +7,9 @@ const isProtectedRoute = createRouteMatcher([
   '/admin(.*)',
 ]);
 
-const isAdminOnlyRoute = createRouteMatcher([
-  '/api/admin(.*)',
-  '/admin(.*)',
-]);
-
-const isInstructorRoute = createRouteMatcher([
-  '/courses/instructor-panel(.*)',
-]);
-
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
     await auth.protect();
-  }
-
-  if (isAdminOnlyRoute(req)) {
-    const { sessionClaims } = await auth();
-    const role = (sessionClaims?.publicMetadata as { role?: string })?.role;
-    if (role !== 'admin') {
-      return new Response('Forbidden', { status: 403 });
-    }
-  }
-
-  if (isInstructorRoute(req)) {
-    const { sessionClaims } = await auth();
-    const role = (sessionClaims?.publicMetadata as { role?: string })?.role;
-    if (role !== 'admin' && role !== 'instructor') {
-      return new Response('Forbidden', { status: 403 });
-    }
   }
 });
 
