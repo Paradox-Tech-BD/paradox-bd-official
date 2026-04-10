@@ -1,4 +1,4 @@
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "web", "postgresql-16"]
 [agent]
 expertMode = true
 
@@ -32,3 +32,11 @@ outputType = "webview"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[userenv]
+
+[userenv.shared]
+NEXT_PUBLIC_CLERK_SIGN_IN_URL = "/courses/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL = "/courses/sign-up"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL = "/courses/dashboard"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL = "/courses/dashboard"

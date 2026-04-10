@@ -92,6 +92,21 @@ src/
 - **Course fields**: title, slug, excerpt, description (portable text), thumbnail, category, instructors, level, duration, price, rating, enrolledCount, curriculum (inline sections → lectures), sections (referenced courseSection docs → courseLecture docs), whatYoullLearn, prerequisites, testimonials, paymentInstructions
 - **Types**: Manually added to `sanity.types.ts` (typegen broken due to jsdom dependency issue)
 
+## LMS Authentication & User System
+- **Auth**: Clerk (`@clerk/nextjs` + `@clerk/themes`) with dark theme
+- **Roles**: `admin`, `instructor`, `learner` (default) — stored in Clerk `publicMetadata.role`
+- **Auth utilities**: `src/lib/auth.ts` (server-side `getUserRole`, `requireRole`), `src/hooks/use-user-role.ts` (client-side `useUserRole`)
+- **Middleware** (`middleware.ts`): Protects `/courses/dashboard`, `/courses/instructor-panel`, `/api/admin/*`, `/admin/*`. Admin-only for `/admin/*` and `/api/admin/*`. Instructor+admin for `/courses/instructor-panel/*`.
+- **Auth pages**: `/courses/sign-in`, `/courses/sign-up` (Clerk components with dark theme)
+- **Dashboard pages**: `/courses/dashboard` (learner), `/courses/instructor-panel` (instructor/admin)
+- **Admin panel**: `/admin/users` — user list with role badges, assigned courses column, assign-instructor action
+- **Sanity Studio tool**: "Users" tab in Studio (iframe plugin → `/admin/users`)
+- **API routes**: `/api/admin/users` (GET — list users + assigned courses), `/api/admin/assign-instructor` (POST — assign user as instructor to course)
+- **Database** (Postgres):
+  - `course_instructors` (id, clerk_user_id, course_id, created_at) — UNIQUE(clerk_user_id, course_id)
+  - `enrollments` (id, clerk_user_id, course_id, status, payment_proof_url, approved_at, created_at) — UNIQUE(clerk_user_id, course_id)
+- **Env vars**: `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, `NEXT_PUBLIC_CLERK_SIGN_IN_URL=/courses/sign-in`, `NEXT_PUBLIC_CLERK_SIGN_UP_URL=/courses/sign-up`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/courses/dashboard`, `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/courses/dashboard`
+
 ## Notes
 - npm install requires `--legacy-peer-deps` (React 19 peer conflict)
 - Testimonial block intentionally inverts to white bg + dark text

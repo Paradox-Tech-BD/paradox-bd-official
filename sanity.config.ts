@@ -9,6 +9,7 @@ import { resolve } from '@/sanity/presentation/resolve';
 import { simplerColorInput } from 'sanity-plugin-simpler-color-input'
 import { defaultDocumentNode } from '@/sanity/lib/structure/default-document-node';
 import { apiVersion, dataset, projectId, studioUrl, useCdn } from '@/sanity/lib/api';
+import { usersToolPlugin } from '@/sanity/plugins/users-tool';
 
 const config = defineConfig({
   title: process.env.NEXT_PUBLIC_SITE_NAME,
@@ -33,7 +34,8 @@ const config = defineConfig({
     }),
     media(),
     visionTool(),
-    simplerColorInput()
+    simplerColorInput(),
+    usersToolPlugin()
   ],
   schema: schema,
 })
