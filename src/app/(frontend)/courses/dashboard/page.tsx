@@ -1,5 +1,4 @@
 import { auth } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import Heading from '@/components/shared/heading';
 import { getUserRole } from '@/lib/auth';
 import Link from 'next/link';
@@ -14,11 +13,9 @@ export default async function DashboardPage() {
     userId = null;
   }
 
-  if (!userId) redirect('/courses/sign-in');
-
   let role: Awaited<ReturnType<typeof getUserRole>> = 'learner';
   try {
-    role = await getUserRole(userId);
+    role = await getUserRole(userId ?? undefined);
   } catch {
     role = 'learner';
   }
@@ -43,11 +40,21 @@ export default async function DashboardPage() {
             </div>
           </Link>
 
-          <div className='p-6 rounded-xl border border-white/[0.08] bg-dark-card'>
-            <GraduationCap size={24} className='text-emerald-400' />
-            <h3 className='mt-4 text-lg font-medium text-white'>My Enrollments</h3>
-            <p className='mt-2 text-sm text-white/40'>No enrollments yet. Start learning today!</p>
-          </div>
+          {userId ? (
+            <div className='p-6 rounded-xl border border-white/[0.08] bg-dark-card'>
+              <GraduationCap size={24} className='text-emerald-400' />
+              <h3 className='mt-4 text-lg font-medium text-white'>My Enrollments</h3>
+              <p className='mt-2 text-sm text-white/40'>Your enrollments will appear here.</p>
+            </div>
+          ) : (
+            <Link href='/courses/sign-in' className='group hover-lift'>
+              <div className='p-6 rounded-xl border border-white/[0.08] group-hover:border-white/[0.15] bg-dark-card transition-all duration-300'>
+                <GraduationCap size={24} className='text-emerald-400' />
+                <h3 className='mt-4 text-lg font-medium text-white'>Sign In</h3>
+                <p className='mt-2 text-sm text-white/40'>Sign in to view your enrollments and access paid courses.</p>
+              </div>
+            </Link>
+          )}
 
           {(role === 'admin' || role === 'instructor') && (
             <Link href='/courses/instructor-panel' className='group hover-lift'>
@@ -62,7 +69,7 @@ export default async function DashboardPage() {
 
         <div className='mt-8 p-4 rounded-lg border border-white/[0.06] bg-dark-surface'>
           <p className='text-xs text-white/30'>
-            Role: <span className='text-white/50 font-medium'>{role}</span>
+            Role: <span className='text-white/50 font-medium'>{userId ? role : 'signed out'}</span>
           </p>
         </div>
       </div>

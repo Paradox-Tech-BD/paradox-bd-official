@@ -3,7 +3,6 @@ import { NextResponse } from 'next/server';
 
 const isProtectedRoute = createRouteMatcher([
   '/courses/instructor-panel(.*)',
-  '/courses/dashboard(.*)',
   '/api/admin(.*)',
   '/admin(.*)',
 ]);
@@ -25,7 +24,7 @@ async function getUserRole(userId: string): Promise<string> {
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
-    await auth.protect();
+    await auth.protect({ unauthenticatedUrl: new URL('/courses/sign-in', req.url).toString() });
   }
 
   if (isAdminOnlyRoute(req)) {
